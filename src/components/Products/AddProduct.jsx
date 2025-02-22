@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import plus from "../../assets/img/icons/plus.svg"
-import upload from "../../assets/img/icons/upload.svg"
+import plus from "../../assets/img/icons/plus.svg";
+import upload from "../../assets/img/icons/upload.svg";
 import { setProductVED } from "../../config/actions/settingsActions";
 
 const AddProduct = () => {
