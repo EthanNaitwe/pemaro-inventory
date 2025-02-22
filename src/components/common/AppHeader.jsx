@@ -1,24 +1,33 @@
 import logo from "../../assets/img/logo.png";
 import smallLogo from "../../assets/img/logo-small.png";
+import avatar1 from "../..//assets/img/profiles/avator1.jpg";
 import closesImg from "../../assets/img/icons/closes.svg";
 import searchImg from "../../assets/img/icons/search.svg";
 import notificationImg from "../../assets/img/icons/notification-bing.svg";
 import logoutImg from "../../assets/img/icons/log-out.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setProductVED, setSaleVED, setSelectedSidebarMenu } from "../../config/actions/settingsActions";
 
 
 const AppHeader = () => {
+    const dispatch = useDispatch();
     const { selectedSidebarMenu } = useSelector((state) => state.settings);
+
+    const sidebarMenuClick = () => {
+        dispatch(setSelectedSidebarMenu('index'))
+        dispatch(setProductVED(''))
+        dispatch(setSaleVED(''))
+    }
     return (
         <div className="header">
-            {`: /${selectedSidebarMenu}`}
+            {/* {`: /${selectedSidebarMenu}`} */}
             <div className="header-left active">
-                <a href="/index" className="logo">
+                <span className="logo" onClick={() => sidebarMenuClick()}>
                     <img src={logo} className="App-logo" alt="logo" />
-                </a>
-                <a href="/index" className="logo-small">
+                </span>
+                <span className="logo-small">
                     <img src={smallLogo} className="App-logo" alt="logo" />
-                </a>
+                </span>
                 <a id="toggle_btn" href="javascript:void(0);">
                 </a>
             </div>
@@ -30,7 +39,7 @@ const AppHeader = () => {
                 </span>
             </a>
             <ul className="nav user-menu">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                     <div className="top-nav-search">
                         <a href="javascript:void(0);" className="responsive-search">
                             <i className="fa fa-search"></i>
@@ -49,8 +58,8 @@ const AppHeader = () => {
                             </a>
                         </form>
                     </div>
-                </li>
-                <li className="nav-item dropdown has-arrow flag-nav">
+                </li> */}
+                {/* <li className="nav-item dropdown has-arrow flag-nav">
                     <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
                         <img src="/assets/img/flags/us1.png" alt="" height="20" />
                     </a>
@@ -72,8 +81,8 @@ const AppHeader = () => {
                             German
                         </a>
                     </div>
-                </li>
-                <li className="nav-item dropdown">
+                </li> */}
+                {/* <li className="nav-item dropdown">
                     <a href="javascript:void(0);" className="dropdown-toggle nav-link" data-bs-toggle="dropdown">
 
 
@@ -175,11 +184,11 @@ const AppHeader = () => {
                             <a href="/activities">View all Notifications</a>
                         </div>
                     </div>
-                </li>
+                </li> */}
                 <li className="nav-item dropdown has-arrow main-drop">
                     <a href="javascript:void(0);" className="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
                         <span className="user-img">
-                            <img src="/assets/img/profiles/avator1.jpg" alt="" />
+                            <img src={avatar1} alt="" />
                             <span className="status online"></span>
                         </span>
                     </a>
@@ -187,7 +196,7 @@ const AppHeader = () => {
                         <div className="profilename">
                             <div className="profileset">
                                 <span className="user-img">
-                                    <img src="/assets/img/profiles/avator1.jpg" alt="" />
+                                    <img src={avatar1} alt="" />
                                     <span className="status online"></span>
                                 </span>
                                 <div className="profilesets">
