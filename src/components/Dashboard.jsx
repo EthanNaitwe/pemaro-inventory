@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import logo from "../assets/img/logo.png";
 import smallLogo from "../assets/img/logo-small.png";
 import closesImg from "../assets/img/icons/closes.svg";
@@ -9,18 +10,19 @@ import dash4Img from "../assets/img/icons/dash4.svg";
 import dash3Img from "../assets/img/icons/dash3.svg";
 import dash2Img from "../assets/img/icons/dash2.svg";
 import dash1Img from "../assets/img/icons/dash1.svg";
-import placesImg from "../assets/img/icons/places.svg";
-import users1Img from "../assets/img/icons/users1.svg";
-import return1Img from "../assets/img/icons/return1.svg";
-import transfer1Img from "../assets/img/icons/transfer1.svg";
-import quotation1Img from "../assets/img/icons/quotation1.svg";
-import expense1Img from "../assets/img/icons/expense1.svg";
-import purchase1Img from "../assets/img/icons/purchase1.svg";
-import sales1Img from "../assets/img/icons/sales1.svg";
-import productImg from "../assets/img/icons/product.svg";
-import dashboardImg from "../assets/img/icons/dashboard.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import SideBarMenu from "./common/SideBarMenu";
+import { fetchUserRequest } from "../config/actions/userActions";
 
 const Dashboard = () => {
+    const dispatch = useDispatch();
+    const { selectedSidebarMenu } = useSelector((state) => state.settings);
+
+    useEffect(() => {
+        dispatch(fetchUserRequest());
+    }, [selectedSidebarMenu])
+
     return (
         <div className="main-wrapper">
             <div className="header">
@@ -87,7 +89,7 @@ const Dashboard = () => {
                     </li>
                     <li className="nav-item dropdown">
                         <a href="javascript:void(0);" className="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-                            
+
 
                             <img src={notificationImg} alt="img" />
                             <span className="badge rounded-pill">4</span>
@@ -232,86 +234,7 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
-            <div className="sidebar" id="sidebar">
-                <div className="sidebar-inner slimscroll">
-                    <div id="sidebar-menu" className="sidebar-menu">
-                        <ul>
-                            <li className="active">
-                                <a href="/index">
-                                    <img src={dashboardImg} alt="img" />
-                                    <span>
-                                        Dashboard
-                                    </span>
-                                </a>
-                            </li>
-                            <li className="">
-                                <a href="/productlist">
-                                    <img src={productImg} alt="img" />
-                                    <span>Product</span>
-                                    {/* <span className="menu-arrow"></span> */}
-                                </a>
-                            </li>
-                            <li className="">
-                                <a href="/saleslist">
-                                    <img src={sales1Img} alt="img" />
-                                    <span>Sales</span>
-                                    {/* <span className="menu-arrow"></span> */}
-                                </a>
-                            </li>
-                            <li className="">
-                                <a href="/purchaselist">
-                                    <img src={purchase1Img} alt="img" />
-                                    <span>Purchase</span>
-                                    {/* <span className="menu-arrow"></span> */}
-                                </a>
-                            </li>
-                            <li className="">
-                                <a href="/expenselist">
-                                    <img src={expense1Img} alt="img" />
-                                    <span>Expense</span>
-                                    {/* <span className="menu-arrow"></span> */}
-                                </a>
-                            </li>
-                            <li className="">
-                                <a href="/quotationList">
-                                    <img src={quotation1Img} alt="img" />
-                                    <span>Quotation</span>
-                                    {/* <span className="menu-arrow"></span> */}
-                                </a>
-                            </li>
-                            <li className="">
-                                <a href="/transferlist">
-                                    <img src={transfer1Img} alt="img" />
-                                    <span>Transfer</span>
-                                    {/* <span className="menu-arrow"></span> */}
-                                </a>
-                            </li>
-                            <li className="">
-                                <a href="/salesreturnlist">
-                                    <img src={return1Img} alt="img" />
-                                    <span>Return</span>
-                                    {/* <span className="menu-arrow"></span> */}
-                                </a>
-                            </li>
-                            <li className="">
-                                <a href="/customerlist">
-                                    <img src={users1Img} alt="img" />
-                                    <span>People</span>
-                                    {/* <span className="menu-arrow"></span> */}
-                                </a>
-                            </li>
-                            <li className="">
-                                <a href="/newcountry">
-                                    <img src={placesImg} alt="img" />
-                                    <span>Places</span>
-                                    {/* <span className="menu-arrow"></span> */}
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <SideBarMenu />
             <div className="page-wrapper">
                 <div className="content">
                     <div className="row">
@@ -323,7 +246,7 @@ const Dashboard = () => {
                                     </span>
                                 </div>
                                 <div className="dash-widgetcontent">
-                                    <h5>$<span className="counters" data-count="307144.00">$307,144.00</span></h5>
+                                    <h5>UGX <span className="counters" data-count="307000">307,000</span></h5>
                                     <h6>Total Purchase Due</h6>
                                 </div>
                             </div>
@@ -336,7 +259,7 @@ const Dashboard = () => {
                                     </span>
                                 </div>
                                 <div className="dash-widgetcontent">
-                                    <h5>$<span className="counters" data-count="4385.00">$4,385.00</span></h5>
+                                    <h5>UGX <span className="counters" data-count="4000">4,000</span></h5>
                                     <h6>Total Sales Due</h6>
                                 </div>
                             </div>
@@ -349,7 +272,7 @@ const Dashboard = () => {
                                     </span>
                                 </div>
                                 <div className="dash-widgetcontent">
-                                    <h5>$<span className="counters" data-count="385656.50">385,656.50</span></h5>
+                                    <h5>UGX <span className="counters" data-count="385000">385,000</span></h5>
                                     <h6>Total Sale Amount</h6>
                                 </div>
                             </div>
@@ -362,7 +285,7 @@ const Dashboard = () => {
                                     </span>
                                 </div>
                                 <div className="dash-widgetcontent">
-                                    <h5>$<span className="counters" data-count="40000.00">400.00</span></h5>
+                                    <h5>UGX <span className="counters" data-count="40000.00">40000</span></h5>
                                     <h6>Total Sale Amount</h6>
                                 </div>
                             </div>
