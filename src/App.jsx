@@ -6,13 +6,17 @@ import "./assets/css/bootstrap.min.css";
 import "./assets/css/animate.css";
 import "./assets/css/style.css";
 
-import Dashboard from "./components/Dashboard";
+import PageWrapper from "./components/PageWrapper";
+import AppHeader from "./components/common/AppHeader";
+import SideBarMenu from "./components/common/SideBarMenu";
 
 function App() {
 
   return (
     <>
-      <Dashboard />
+      <AppHeader />
+      <SideBarMenu />
+      <PageWrapper />
     </>
   )
 }
