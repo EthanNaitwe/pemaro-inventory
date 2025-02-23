@@ -1,4 +1,4 @@
-import logo from "../../assets/img/logo.png";
+import logo from "../../assets/img/Vaalz.png";
 import smallLogo from "../../assets/img/logo-small.png";
 import avatar1 from "../..//assets/img/profiles/avator1.jpg";
 import closesImg from "../../assets/img/icons/closes.svg";
