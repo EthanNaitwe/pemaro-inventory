@@ -9,15 +9,17 @@ import "./assets/css/style.css";
 import PageWrapper from "./components/PageWrapper";
 import AppHeader from "./components/common/AppHeader";
 import SideBarMenu from "./components/common/SideBarMenu";
+import { useSelector } from "react-redux";
 
 function App() {
+  const { mobSideBar } = useSelector((state) => state.settings);
 
   return (
-    <>
+    <div className={`main-wrapper ${mobSideBar ? 'slide-nav' : ''}`}>
       <AppHeader />
       <SideBarMenu />
       <PageWrapper />
-    </>
+    </div>
   )
 }
 

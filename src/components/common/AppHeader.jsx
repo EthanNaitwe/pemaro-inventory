@@ -6,12 +6,12 @@ import searchImg from "../../assets/img/icons/search.svg";
 import notificationImg from "../../assets/img/icons/notification-bing.svg";
 import logoutImg from "../../assets/img/icons/log-out.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { setProductVED, setSaleVED, setSelectedSidebarMenu } from "../../config/actions/settingsActions";
+import { setProductVED, setSaleVED, setSelectedSidebarMenu, showMobSideBar } from "../../config/actions/settingsActions";
 
 
 const AppHeader = () => {
     const dispatch = useDispatch();
-    const { selectedSidebarMenu } = useSelector((state) => state.settings);
+    const { mobSideBar } = useSelector((state) => state.settings);
 
     const sidebarMenuClick = () => {
         dispatch(setSelectedSidebarMenu('index'))
@@ -31,7 +31,8 @@ const AppHeader = () => {
                 <a id="toggle_btn" href="javascript:void(0);">
                 </a>
             </div>
-            <a id="mobile_btn" className="mobile_btn" href="#sidebar">
+            <a id="mobile_btn" className="mobile_btn" onClick={() => dispatch(showMobSideBar(!mobSideBar))}
+            >
                 <span className="bar-icon">
                     <span></span>
                     <span></span>
