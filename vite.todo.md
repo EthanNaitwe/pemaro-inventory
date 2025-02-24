@@ -1,0 +1,4 @@
+ - Create an App intercepter such that when we always have app_url/some_text.
+ - If `some_text` isn't available, set `some_error_variable` to true.
+ - The `some_text` can either be the word `admin` or a valid uuid. If not set `some_error_variable` to true.
+ - 

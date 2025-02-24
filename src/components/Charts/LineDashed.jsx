@@ -5,11 +5,11 @@ const LineDashed = () => {
     const [state, setState] = useState({
 
         series: [{
-            name: "Purchases",
+            name: 'Purchases',
             data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
         },
         {
-            name: "Sales",
+            name: 'Sales',
             data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
         }
         ],
@@ -75,7 +75,7 @@ const LineDashed = () => {
 
     });
     return (
-        <ReactApexChart options={state.options} series={state.series} type="line" height={350} />
+        <ReactApexChart options={state.options} series={state.series} type='line' height={350} />
     )
 }
 
