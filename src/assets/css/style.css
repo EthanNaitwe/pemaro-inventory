@@ -2564,6 +2564,7 @@ div.dataTables_wrapper div.dataTables_info {
 .header .header-left .logo {
   display: inline-block;
   line-height: 0;
+  cursor: pointer;
 }
 .header .header-left .logo img {
   width: 140px;
@@ -3542,6 +3543,9 @@ span.select2-container.select2-container--default.select2-container--open {
 .sidebar .sidebar-menu > ul > li.submenu ul li a:hover:after {
   background: #FF9F43;
   border: 1px solid #FF9F43;
+}
+.sidebar .sidebar-menu .sidebar-menu-item {
+  cursor: pointer;
 }
 .sidebar .nav-link {
   padding: 10px;
