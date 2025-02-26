@@ -1,7 +1,6 @@
-import { setProductVED, setSelectedSidebarMenu } from '../../config/actions/settingsActions';
+import { setProductVED, setSelectedSidebarMenu } from '../../config/store/actions/settingsActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { menu } from '../../helpers/menuHelper';
-import { useEffect } from 'react';
+import { menu } from '../../config/helpers/menuHelper';
 
 const SideBarMenu = () => {
     const dispatch = useDispatch();
@@ -11,11 +10,6 @@ const SideBarMenu = () => {
         dispatch(setSelectedSidebarMenu(payload))
         dispatch(setProductVED(''))
     }
-
-    useEffect(() => {
-        console.log('selectedSidebarMenu', selectedSidebarMenu)
-    }, [selectedSidebarMenu])
-
 
     return (
         <div className='sidebar' id='sidebar'>

@@ -8,7 +8,7 @@ import deleteImg from '../../assets/img/icons/delete.svg';
 import prod8 from '../../assets/img/product/product8.jpg';
 import prod1 from '../../assets/img/product/product1.jpg';
 import { useDispatch } from 'react-redux';
-import { setSaleVED } from '../../config/actions/settingsActions';
+import { setSaleVED } from '../../config/store/actions/settingsActions';
 
 const AddSales = () => {
     const dispatch = useDispatch();
@@ -106,7 +106,7 @@ const AddSales = () => {
                                                 <a className='product-img'>
                                                     <img src={prod7} alt='product' />
                                                 </a>
-                                                <a href='javascript:void(0);'>Apple Earpods</a>
+                                                <span>Apple Earpods</span>
                                             </td>
                                             <td>1.00</td>
                                             <td>15000.00</td>
@@ -114,9 +114,9 @@ const AddSales = () => {
                                             <td>0.00</td>
                                             <td>1500.00</td>
                                             <td>
-                                                <a href='javascript:void(0);' className='delete-set'>
+                                                <span className='delete-set'>
                                                     <img src={deleteImg} alt='svg' />
-                                                </a>
+                                                </span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -125,7 +125,7 @@ const AddSales = () => {
                                                 <a className='product-img'>
                                                     <img src={prod8} alt='product' />
                                                 </a>
-                                                <a href='javascript:void(0);'>iPhone 11</a>
+                                                <span>iPhone 11</span>
                                             </td>
                                             <td>1.00</td>
                                             <td>1500.00</td>
@@ -133,9 +133,9 @@ const AddSales = () => {
                                             <td>0.00</td>
                                             <td>1500.00</td>
                                             <td>
-                                                <a href='javascript:void(0);' className='delete-set'>
+                                                <span className='delete-set'>
                                                     <img src={deleteImg} alt='svg' />
-                                                </a>
+                                                </span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -144,7 +144,7 @@ const AddSales = () => {
                                                 <a className='product-img'>
                                                     <img src={prod1} alt='product' />
                                                 </a>
-                                                <a href='javascript:void(0);'>Macbook pro</a>
+                                                <span>Macbook pro</span>
                                             </td>
                                             <td>1.00</td>
                                             <td>1500.00</td>
@@ -152,9 +152,9 @@ const AddSales = () => {
                                             <td>0.00</td>
                                             <td>1500.00</td>
                                             <td>
-                                                <a href='javascript:void(0);' className='delete-set'>
+                                                <span className='delete-set'>
                                                     <img src={deleteImg} alt='svg' />
-                                                </a>
+                                                </span>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -222,8 +222,8 @@ const AddSales = () => {
                                 </div>
                             </div>
                             <div className='col-lg-12'>
-                                <a href='javascript:void(0);' className='btn btn-submit me-2'>Submit</a>
-                                <a href='javascript:void(0);' className='btn btn-cancel'>Cancel</a>
+                                <span className='btn btn-submit me-2'>Submit</span>
+                                <span className='btn btn-cancel'>Cancel</span>
                             </div>
                         </div>
                     </div>

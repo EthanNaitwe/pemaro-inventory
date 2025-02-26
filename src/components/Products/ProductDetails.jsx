@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { setProductVED } from '../../config/actions/settingsActions'
+import { setProductVED } from '../../config/store/actions/settingsActions'
 
 import printer from '../../assets/img/icons/printer.svg';
 import barcode from '../../assets/img/barcode1.png';

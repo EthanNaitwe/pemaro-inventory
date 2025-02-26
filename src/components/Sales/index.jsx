@@ -1,19 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import plus from '../../assets/img/icons/plus.svg';
-import { setSaleVED } from '../../config/actions/settingsActions';
-import { useEffect } from 'react';
+import { setSaleVED } from '../../config/store/actions/settingsActions';
 
 const SalesList = () => {
     const dispatch = useDispatch();
-    const { saleVED } = useSelector((state) => state.settings);
-    useEffect(() => {
-        console.log('saleVED', saleVED);
-    }, [saleVED])
-
     return (
         <div>
             <div>
-
                 <div className='page-wrapper'>
                     <div className='content'>
                         <div className='page-header'>
@@ -103,49 +96,49 @@ const SalesList = () => {
                                                 <td className='text-red'>100.00</td>
                                                 <td>Admin</td>
                                                 <td className='text-center'>
-                                                    <a className='action-set' href='javascript:void(0);' data-bs-toggle='dropdown'
+                                                    <span className='action-set' data-bs-toggle='dropdown'
                                                         aria-expanded='true'>
                                                         <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </a>
+                                                    </span>
                                                     <ul className='dropdown-menu'>
                                                         <li>
-                                                            <a href='sales-details.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
                                                                 Sale Detail
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='edit-sales.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
                                                                 Edit Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#showpayment'>
                                                                 <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
                                                                 Show Payments
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#createpayment'>
                                                                 <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
                                                                 Create Payment
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
                                                                 Download pdf
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);'
+                                                            <span
                                                                 className='dropdown-item confirm-text'>
                                                                 <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
                                                                 Delete Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -167,50 +160,50 @@ const SalesList = () => {
                                                 <td className='text-red'>100.00</td>
                                                 <td>Admin</td>
                                                 <td className='text-center'>
-                                                    <a className='action-set' href='javascript:void(0);' data-bs-toggle='dropdown'
+                                                    <span className='action-set' data-bs-toggle='dropdown'
                                                         aria-expanded='true'>
                                                         <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </a>
+                                                    </span>
                                                     <ul className='dropdown-menu'>
                                                         <li>
-                                                            <a href='sales-details.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
                                                                 Sale Detail
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='edit-sales.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
                                                                 Edit Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#showpayment'>
                                                                 <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
                                                                 Show Payments
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#createpayment'>
                                                                 <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
                                                                 Create Payment
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/download.svg' className='me-2'
                                                                     alt='img' />
                                                                 Download pdf
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);'
+                                                            <span
                                                                 className='dropdown-item confirm-text'>
                                                                 <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
                                                                 Delete Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -232,49 +225,49 @@ const SalesList = () => {
                                                 <td>0.00</td>
                                                 <td>Admin</td>
                                                 <td className='text-center'>
-                                                    <a className='action-set' href='javascript:void(0);' data-bs-toggle='dropdown'
+                                                    <span className='action-set' data-bs-toggle='dropdown'
                                                         aria-expanded='true'>
                                                         <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </a>
+                                                    </span>
                                                     <ul className='dropdown-menu'>
                                                         <li>
-                                                            <a href='sales-details.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
                                                                 Sale Detail
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='edit-sales.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
                                                                 Edit Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span
                                                                 data-bs-toggle='modal' data-bs-target='#showpayment'>
                                                                 <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
                                                                 Show Payments
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#createpayment'>
                                                                 <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
                                                                 Create Payment
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
                                                                 Download pdf
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);'
+                                                            <span
                                                                 className='dropdown-item confirm-text'>
                                                                 <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
                                                                 Delete Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -296,49 +289,49 @@ const SalesList = () => {
                                                 <td>0.00</td>
                                                 <td>Admin</td>
                                                 <td className='text-center'>
-                                                    <a className='action-set' href='javascript:void(0);' data-bs-toggle='dropdown'
+                                                    <span className='action-set' data-bs-toggle='dropdown'
                                                         aria-expanded='true'>
                                                         <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </a>
+                                                    </span>
                                                     <ul className='dropdown-menu'>
                                                         <li>
-                                                            <a href='sales-details.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
                                                                 Sale Detail
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='edit-sales.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
                                                                 Edit Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#showpayment'>
                                                                 <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
                                                                 Show Payments
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#createpayment'>
                                                                 <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
                                                                 Create Payment
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
                                                                 Download pdf
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);'
+                                                            <span
                                                                 className='dropdown-item confirm-text'>
                                                                 <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
                                                                 Delete Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -360,49 +353,49 @@ const SalesList = () => {
                                                 <td className='text-green'>100.00</td>
                                                 <td>Admin</td>
                                                 <td className='text-center'>
-                                                    <a className='action-set' href='javascript:void(0);' data-bs-toggle='dropdown'
+                                                    <span className='action-set' data-bs-toggle='dropdown'
                                                         aria-expanded='true'>
                                                         <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </a>
+                                                    </span>
                                                     <ul className='dropdown-menu'>
                                                         <li>
-                                                            <a href='sales-details.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
                                                                 Sale Detail
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='edit-sales.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
                                                                 Edit Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#showpayment'>
                                                                 <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
                                                                 Show Payments
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#createpayment'>
                                                                 <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
                                                                 Create Payment
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
                                                                 Download pdf
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);'
+                                                            <span
                                                                 className='dropdown-item confirm-text'>
                                                                 <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
                                                                 Delete Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -424,49 +417,49 @@ const SalesList = () => {
                                                 <td className='text-red'>100.00</td>
                                                 <td>Admin</td>
                                                 <td className='text-center'>
-                                                    <a className='action-set' href='javascript:void(0);' data-bs-toggle='dropdown'
+                                                    <span className='action-set' data-bs-toggle='dropdown'
                                                         aria-expanded='true'>
                                                         <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </a>
+                                                    </span>
                                                     <ul className='dropdown-menu'>
                                                         <li>
-                                                            <a href='sales-details.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
                                                                 Sale Detail
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='edit-sales.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
                                                                 Edit Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#showpayment'>
                                                                 <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
                                                                 Show Payments
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#createpayment'>
                                                                 <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
                                                                 Create Payment
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
                                                                 Download pdf
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);'
+                                                            <span
                                                                 className='dropdown-item confirm-text'>
                                                                 <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
                                                                 Delete Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -488,49 +481,49 @@ const SalesList = () => {
                                                 <td className='text-red'>100.00</td>
                                                 <td>Admin</td>
                                                 <td className='text-center'>
-                                                    <a className='action-set' href='javascript:void(0);' data-bs-toggle='dropdown'
+                                                    <span className='action-set' data-bs-toggle='dropdown'
                                                         aria-expanded='true'>
                                                         <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </a>
+                                                    </span>
                                                     <ul className='dropdown-menu'>
                                                         <li>
-                                                            <a href='sales-details.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
                                                                 Sale Detail
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='edit-sales.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
                                                                 Edit Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#showpayment'>
                                                                 <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
                                                                 Show Payments
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#createpayment'>
                                                                 <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
                                                                 Create Payment
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
                                                                 Download pdf
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);'
+                                                            <span
                                                                 className='dropdown-item confirm-text'>
                                                                 <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
                                                                 Delete Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -552,50 +545,50 @@ const SalesList = () => {
                                                 <td>0.00</td>
                                                 <td>Admin</td>
                                                 <td className='text-center'>
-                                                    <a className='action-set' href='javascript:void(0);' data-bs-toggle='dropdown'
+                                                    <span className='action-set' data-bs-toggle='dropdown'
                                                         aria-expanded='true'>
                                                         <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </a>
+                                                    </span>
                                                     <ul className='dropdown-menu'>
                                                         <li>
-                                                            <a href='sales-details.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
                                                                 Sale Detail
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='edit-sales.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
                                                                 Edit Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#showpayment'>
                                                                 <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
                                                                 Show Payments
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#createpayment'>
                                                                 <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
                                                                 Create Payment
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
                                                                 Download pdf
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);'
+                                                            <span
                                                                 className='dropdown-item confirm-text'>
                                                                 <img src='assets/img/icons/delete1.svg' className='me-2'
                                                                     alt='img' />
                                                                 Delete Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -617,49 +610,49 @@ const SalesList = () => {
                                                 <td>0.00</td>
                                                 <td>Admin</td>
                                                 <td className='text-center'>
-                                                    <a className='action-set' href='javascript:void(0);' data-bs-toggle='dropdown'
+                                                    <span className='action-set' data-bs-toggle='dropdown'
                                                         aria-expanded='true'>
                                                         <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </a>
+                                                    </span>
                                                     <ul className='dropdown-menu'>
                                                         <li>
-                                                            <a href='sales-details.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
                                                                 Sale Detail
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='edit-sales.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
                                                                 Edit Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#showpayment'>
                                                                 <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
                                                                 Show Payments
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#createpayment'>
                                                                 <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
                                                                 Create Payment
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
                                                                 Download pdf
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);'
+                                                            <span
                                                                 className='dropdown-item confirm-text'>
                                                                 <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
                                                                 Delete Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -681,49 +674,49 @@ const SalesList = () => {
                                                 <td>0.00</td>
                                                 <td>Admin</td>
                                                 <td className='text-center'>
-                                                    <a className='action-set' href='javascript:void(0);' data-bs-toggle='dropdown'
+                                                    <span className='action-set' data-bs-toggle='dropdown'
                                                         aria-expanded='true'>
                                                         <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </a>
+                                                    </span>
                                                     <ul className='dropdown-menu'>
                                                         <li>
-                                                            <a href='sales-details.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
                                                                 Sale Detail
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='edit-sales.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
                                                                 Edit Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#showpayment'>
                                                                 <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
                                                                 Show Payments
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#createpayment'>
                                                                 <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
                                                                 Create Payment
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
                                                                 Download pdf
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);'
+                                                            <span
                                                                 className='dropdown-item confirm-text'>
                                                                 <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
                                                                 Delete Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -745,49 +738,49 @@ const SalesList = () => {
                                                 <td>0.00</td>
                                                 <td>Admin</td>
                                                 <td className='text-center'>
-                                                    <a className='action-set' href='javascript:void(0);' data-bs-toggle='dropdown'
+                                                    <span className='action-set' data-bs-toggle='dropdown'
                                                         aria-expanded='true'>
                                                         <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </a>
+                                                    </span>
                                                     <ul className='dropdown-menu'>
                                                         <li>
-                                                            <a href='sales-details.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
                                                                 Sale Detail
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='edit-sales.html' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
                                                                 Edit Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#showpayment'>
                                                                 <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
                                                                 Show Payments
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'
+                                                            <span className='dropdown-item'
                                                                 data-bs-toggle='modal' data-bs-target='#createpayment'>
                                                                 <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
                                                                 Create Payment
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);' className='dropdown-item'>
+                                                            <span className='dropdown-item'>
                                                                 <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
                                                                 Download pdf
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                         <li>
-                                                            <a href='javascript:void(0);'
+                                                            <span
                                                                 className='dropdown-item confirm-text'>
                                                                 <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
                                                                 Delete Sale
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -828,16 +821,16 @@ const SalesList = () => {
                                             <td>$ 0.00 </td>
                                             <td>Cash</td>
                                             <td>
-                                                <a className='me-2' href='javascript:void(0);'>
+                                                <span className='me-2'>
                                                     <img src='assets/img/icons/printer.svg' alt='img' />
-                                                </a>
-                                                <a className='me-2' href='javascript:void(0);' data-bs-target='#editpayment'
+                                                </span>
+                                                <span className='me-2' data-bs-target='#editpayment'
                                                     data-bs-toggle='modal' data-bs-dismiss='modal'>
                                                     <img src='assets/img/icons/edit.svg' alt='img' />
-                                                </a>
-                                                <a className='me-2 confirm-text' href='javascript:void(0);'>
+                                                </span>
+                                                <span className='me-2 confirm-text'>
                                                     <img src='assets/img/icons/delete.svg' alt='img' />
-                                                </a>
+                                                </span>
                                             </td>
                                         </tr>
                                     </tbody>

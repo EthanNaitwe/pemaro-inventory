@@ -14,152 +14,104 @@ import prod17 from '../../assets/img/product/product17.jpg';
 import eye from '../../assets/img/icons/eye.svg';
 import edit from '../../assets/img/icons/edit.svg';
 import deleteImg from '../../assets/img/icons/delete.svg';
-import { setProductVED } from '../../config/actions/settingsActions';
-import { useDispatch, useSelector, } from 'react-redux';
-import { useEffect } from 'react';
+import { setProductVED } from '../../config/store/actions/settingsActions';
+import { useDispatch } from 'react-redux';
 
 const ProductsList = () => {
     const dispatch = useDispatch();
-    const { productVED } = useSelector((state) => state.settings);
-
-    useEffect(() => {
-        console.log('productVED', productVED)
-    }, [productVED])
-
 
     const products = [
         {
             id: 0,
             img: prod1,
             name: 'Macbook pro',
-            sku: 'PT001',
-            category: 'Computers',
-            brand: 'N/D',
+            design: 'PT001',
+            artNo: 'PT001',
+            color: 'Green',
+            size: 'L',
             price: '1500.00',
             unit: 'pc',
             qty: '100.00',
-            createdBy: 'Admin',
+            createdBy: 'Bryan',
         },
-        // {
-        //     id: 1, 
-        //     img: prod2, 
-        //     name: 'Orange',
-        //     sku: 'PT002', 
-        //     category: 'Fruits',
-        //     brand: 'N/D',
-        //     price: '10.00', 
-        //     unit: 'pc',
-        //     qty: '100.00',
-        //     createdBy: 'Admin',
-        // },
-        // {
-        //     id: 2,
-        //     img: prod3,
-        //     name: 'Pineapple',
-        //     sku: 'PT003',
-        //     category: 'Fruits',
-        //     brand: 'N/D',
-        //     price: '10.00',
-        //     unit: 'pc',
-        //     qty: '100.00',
-        //     createdBy: 'Admin',
-        // },
         {
             id: 3,
             img: prod4,
             name: 'Strawberry',
-            sku: 'PT004',
-            category: 'Fruits',
-            brand: 'N/D',
+            design: 'PT004',
+            artNo: 'PT004',
+            color: 'Navy Blue',
+            size: 'XL',
             price: '10.00',
             unit: 'pc',
             qty: '100.00',
-            createdBy: 'Admin',
+            createdBy: 'Brenda',
         },
         // {
-        //     id: 4,
-        //     img: prod5,
-        //     name: 'Avocat',
-        //     sku: 'PT005',
-        //     category: 'Accessories',
-        //     brand: 'N/D',
+        //     id: 5,
+        //     img: prod6,
+        //     name: 'Macbook Pro',
+        //     design: 'PT006',
+        //     artNo: 'PT006',
+        //     color: 'Black',
+        //     size: 'S',
         //     price: '10.00',
         //     unit: 'pc',
-        //     qty: '150.00',
+        //     qty: '100.00',
         //     createdBy: 'Admin',
         // },
-        {
-            id: 5,
-            img: prod6,
-            name: 'Macbook Pro',
-            sku: 'PT006',
-            category: 'Shoes',
-            brand: 'N/D',
-            price: '10.00',
-            unit: 'pc',
-            qty: '100.00',
-            createdBy: 'Admin',
-        },
-        {
-            id: 6,
-            img: prod7,
-            name: 'Apple Earpods',
-            sku: 'PT007',
-            category: 'Shoes',
-            brand: 'N/D',
-            price: '10.00',
-            unit: 'pc',
-            qty: '100.00',
-            createdBy: 'Admin',
-        },
-        {
-            id: 7,
-            img: prod8,
-            name: 'iPhone 11',
-            sku: 'PT008',
-            category: 'Fruits',
-            brand: 'N/D',
-            price: '10.00',
-            unit: 'pc',
-            qty: '100.00',
-            createdBy: 'Admin',
-        },
-        {
-            id: 8,
-            img: prod9,
-            name: 'Samsung',
-            sku: 'PT009',
-            category: 'Earphones',
-            brand: 'N/D',
-            price: '10.00',
-            unit: 'pc',
-            qty: '100.00',
-            createdBy: 'Admin',
-        },
         // {
-        //     id: 9,
-        //     img: prod11,
-        //     name: 'Banana',
-        //     sku: 'PT0010',
-        //     category: 'Health Care',
-        //     brand: 'N/D',
+        //     id: 6,
+        //     img: prod7,
+        //     name: 'Apple Earpods',
+        //     design: 'PT007',
+        //     artNo: 'PT007',
+        //     color: 'Black',
+        //     size: 'L',
+        //     price: '10.00',
+        //     unit: 'pc',
+        //     qty: '100.00',
+        //     createdBy: 'Admin',
+        // },
+        // {
+        //     id: 7,
+        //     img: prod8,
+        //     name: 'iPhone 11',
+        //     design: 'PT008',
+        //     artNo: 'PT008',
+        //     color: 'Black',
+        //     size: 'XL',
+        //     price: '10.00',
+        //     unit: 'pc',
+        //     qty: '100.00',
+        //     createdBy: 'Admin',
+        // },
+        // {
+        //     id: 8,
+        //     img: prod9,
+        //     name: 'Samsung',
+        //     design: 'PT009',
+        //     artNo: 'PT009',
+        //     color: 'Black',
+        //     size: 'XL',
+        //     price: '10.00',
+        //     unit: 'pc',
+        //     qty: '100.00',
+        //     createdBy: 'Admin',
+        // },
+        // {
+        //     id: 10,
+        //     img: prod17,
+        //     name: 'Limon',
+        //     design: 'PT0011',
+        //     artNo: 'PT0011',
+        //     color: 'Black',
+        //     size: 'XXL',
         //     price: '10.00',
         //     unit: 'kg',
         //     qty: '100.00',
         //     createdBy: 'Admin',
-        // },
-        {
-            id: 10,
-            img: prod17,
-            name: 'Limon',
-            sku: 'PT0011',
-            category: 'Health Care',
-            brand: 'N/D',
-            price: '10.00',
-            unit: 'kg',
-            qty: '100.00',
-            createdBy: 'Admin',
-        }
+        // }
     ];
 
 
@@ -213,14 +165,14 @@ const ProductsList = () => {
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div className='col-lg col-sm-6 col-12'>
+                                            {/* <div className='col-lg col-sm-6 col-12'>
                                                 <div className='form-group'>
                                                     <select className='form-select'>
                                                         <option>Brand</option>
                                                         <option>N/D</option>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className='col-lg col-sm-6 col-12 '>
                                                 <div className='form-group'>
                                                     <select className='form-select'>
@@ -252,14 +204,15 @@ const ProductsList = () => {
                                             </label>
                                         </th>
                                         <th>Product Name</th>
-                                        <th>SKU</th>
-                                        <th>Category </th>
-                                        <th>Brand</th>
+                                        <th>Quantity</th>
+                                        {/* <th>Design</th> */}
+                                        <th>Art Number</th>
+                                        <th>Color</th>
+                                        <th>Sizes</th>
                                         <th>price</th>
-                                        <th>Unit</th>
-                                        <th>Qty</th>
+                                        {/* <th>Unit</th> */}
                                         <th>Created By</th>
-                                        <th>Action</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -278,12 +231,13 @@ const ProductsList = () => {
                                                     </span>
                                                     {item.name}
                                                 </td>
-                                                <td>{item.sku}</td>
-                                                <td>{item.category}</td>
-                                                <td>{item.brand}</td>
-                                                <td>{item.price}</td>
-                                                <td>{item.unit}</td>
                                                 <td>{item.qty}</td>
+                                                {/* <td>{item.design}</td> */}
+                                                <td>{item.artNo}</td>
+                                                <td>{item.color}</td>
+                                                <td>{item.size}</td>
+                                                <td>{item.price}</td>
+                                                {/* <td>{item.unit}</td> */}
                                                 <td>{item.createdBy}</td>
                                                 <td>
                                                     <span className='me-3' onClick={() => dispatch(setProductVED('view-product'))}>

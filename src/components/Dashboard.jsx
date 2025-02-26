@@ -117,32 +117,6 @@ const Dashboard = () => {
                             <div className='card-header pb-0 d-flex justify-content-between align-items-center'>
                                 <h5 className='card-title mb-0'>Purchase & Sales</h5>
                                 <div className='graph-sets'>
-                                    {/* <ul>
-                                        <li>
-                                            <span>Sales</span>
-                                        </li>
-                                        <li>
-                                            <span>Purchase</span>
-                                        </li>
-                                    </ul> */}
-                                    {/* <div className='dropdown'>
-                                        <button className='btn btn-white btn-sm dropdown-toggle' type='button'
-                                            id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
-                                            2022
-                                            <img src={dropdownImg} alt='img' className='ms-2' />
-                                        </button>
-                                        <ul className='dropdown-menu' aria-labelledby='dropdownMenuButton'>
-                                            <li>
-                                                <a href='javascript:void(0);' className='dropdown-item'>2022</a>
-                                            </li>
-                                            <li>
-                                                <a href='javascript:void(0);' className='dropdown-item'>2021</a>
-                                            </li>
-                                            <li>
-                                                <a href='javascript:void(0);' className='dropdown-item'>2020</a>
-                                            </li>
-                                        </ul>
-                                    </div> */}
                                 </div>
                             </div>
                             <div className='card-body'>
@@ -157,18 +131,10 @@ const Dashboard = () => {
                             <div className='card-header pb-0 d-flex justify-content-between align-items-center'>
                                 <h4 className='card-title mb-0'>Recently Added Products</h4>
                                 <div className='dropdown'>
-                                    <a href='javascript:void(0);' data-bs-toggle='dropdown' aria-expanded='false'
+                                    <span data-bs-toggle='dropdown' aria-expanded='false'
                                         className='dropset'>
                                         <i className='fa fa-ellipsis-v'></i>
-                                    </a>
-                                    {/* <ul className='dropdown-menu' aria-labelledby='dropdownMenuButton'>
-                                        <li>
-                                            <a href='/productlist' className='dropdown-item'>Product List</a>
-                                        </li>
-                                        <li>
-                                            <a href='/addproduct' className='dropdown-item'>Product Add</a>
-                                        </li>
-                                    </ul> */}
+                                    </span>
                                 </div>
                             </div>
                             <div className='card-body'>
@@ -185,40 +151,40 @@ const Dashboard = () => {
                                             <tr>
                                                 <td>1</td>
                                                 <td className='productimgname'>
-                                                    <a href='/productlist' className='product-img'>
+                                                    <span className='product-img'>
                                                         <img src={prod22} alt='product' />
-                                                    </a>
-                                                    <a href='/productlist'>Apple Earpods</a>
+                                                    </span>
+                                                    <span>Apple Earpods</span>
                                                 </td>
                                                 <td>$891.2</td>
                                             </tr>
                                             <tr>
                                                 <td>2</td>
                                                 <td className='productimgname'>
-                                                    <a href='/productlist' className='product-img'>
+                                                    <span className='product-img'>
                                                         <img src={prod23} alt='product' />
-                                                    </a>
-                                                    <a href='/productlist'>iPhone 11</a>
+                                                    </span>
+                                                    <span>iPhone 11</span>
                                                 </td>
                                                 <td>$668.51</td>
                                             </tr>
                                             <tr>
                                                 <td>3</td>
                                                 <td className='productimgname'>
-                                                    <a href='/productlist' className='product-img'>
+                                                    <span className='product-img'>
                                                         <img src={prod24} alt='product' />
-                                                    </a>
-                                                    <a href='/productlist'>samsung</a>
+                                                    </span>
+                                                    <span>samsung</span>
                                                 </td>
                                                 <td>$522.29</td>
                                             </tr>
                                             <tr>
                                                 <td>4</td>
                                                 <td className='productimgname'>
-                                                    <a href='/productlist' className='product-img'>
+                                                    <span className='product-img'>
                                                         <img src={prod6} alt='product' />
-                                                    </a>
-                                                    <a href='/productlist'>Macbook Pro</a>
+                                                    </span>
+                                                    <span>Macbook Pro</span>
                                                 </td>
                                                 <td>$291.01</td>
                                             </tr>
