@@ -1,7 +1,8 @@
 import { useDispatch } from 'react-redux';
 import plus from '../../assets/img/icons/plus.svg';
 import upload from '../../assets/img/icons/upload.svg';
-import { setProductVED } from '../../config/actions/settingsActions';
+import { setProductVED } from '../../config/store/actions/settingsActions';
+import { clothSizes, discount, tax } from '../../config/helpers/formInputHelpers';
 
 const AddProduct = () => {
     const dispatch = useDispatch();
@@ -31,56 +32,71 @@ const AddProduct = () => {
                             </div>
                             <div className='col-lg-3 col-sm-6 col-12'>
                                 <div className='form-group'>
-                                    <label>Category</label>
+                                    <label>Size</label>
                                     <select className='form-select'>
-                                        <option>Choose Category</option>
-                                        <option>Computers</option>
+                                        <option value=''>Choose Size</option>
+                                        {clothSizes.map((i) => (
+                                            <option
+                                                key={i.value}
+                                                value="S">
+                                                {i.label}
+                                            </option>
+                                        ))}
                                     </select>
-                                </div>
-                            </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
-                                <div className='form-group'>
-                                    <label>Sub Category</label>
-                                    <select className='form-select'>
-                                        <option>Choose Sub Category</option>
-                                        <option>Fruits</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
-                                <div className='form-group'>
-                                    <label>Brand</label>
-                                    <select className='form-select'>
-                                        <option>Choose Brand</option>
-                                        <option>Brand</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
-                                <div className='form-group'>
-                                    <label>Unit</label>
-                                    <select className='form-select'>
-                                        <option>Choose Unit</option>
-                                        <option>Unit</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
-                                <div className='form-group'>
-                                    <label>SKU</label>
-                                    <input type='text' />
-                                </div>
-                            </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
-                                <div className='form-group'>
-                                    <label>Minimum Qty</label>
-                                    <input type='text' />
                                 </div>
                             </div>
                             <div className='col-lg-3 col-sm-6 col-12'>
                                 <div className='form-group'>
                                     <label>Quantity</label>
+                                    <input type="number" min={1} />
+                                </div>
+                            </div>
+                            <div className='col-lg-3 col-sm-6 col-12'>
+                                <div className='form-group'>
+                                    <label>Art Number</label>
                                     <input type='text' />
+                                </div>
+                            </div>
+                            <div className='col-lg-3 col-sm-6 col-12'>
+                                <div className='form-group'>
+                                    <label>Price</label>
+                                    <input type='number' />
+                                </div>
+                            </div>
+                            <div className='col-lg-3 col-sm-6 col-12'>
+                                <div className='form-group'>
+                                    <label>Color</label>
+                                    <input type='text' />
+                                </div>
+                            </div>
+                            <div className='col-lg-3 col-sm-6 col-12'>
+                                <div className='form-group'>
+                                    <label>Tax</label>
+                                    <select className='form-select'>
+                                        <option value=''>Choose Tax</option>
+                                        {tax.map((tx, i) => (
+                                            <option
+                                                key={i}
+                                                value={tx}>
+                                                {`${tx}%`}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className='col-lg-3 col-sm-6 col-12'>
+                                <div className='form-group'>
+                                    <label>Discount Type</label>
+                                    <select className='form-select'>
+                                        <option>Percentage</option>
+                                        {discount.map((dsc, i) => (
+                                            <option
+                                                key={i}
+                                                value={dsc}>
+                                                {`${dsc}%`}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
                             <div className='col-lg-3 col-sm-6 col-12'>
@@ -101,43 +117,9 @@ const AddProduct = () => {
                                     <textarea className='form-control'></textarea>
                                 </div>
                             </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
-                                <div className='form-group'>
-                                    <label>Tax</label>
-                                    <select className='form-select'>
-                                        <option>Choose Tax</option>
-                                        <option>2%</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
-                                <div className='form-group'>
-                                    <label>Discount Type</label>
-                                    <select className='form-select'>
-                                        <option>Percentage</option>
-                                        <option>10%</option>
-                                        <option>20%</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
-                                <div className='form-group'>
-                                    <label>Price</label>
-                                    <input type='text' />
-                                </div>
-                            </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
-                                <div className='form-group'>
-                                    <label> Status</label>
-                                    <select className='form-select'>
-                                        <option>Closed</option>
-                                        <option>Open</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div className='col-lg-12'>
-                                <a href='javascript:void(0);' className='btn btn-submit me-2'>Submit</a>
-                                <a href='productlist.html' className='btn btn-cancel'>Cancel</a>
+                                <span className='btn btn-submit me-2'>Submit</span>
+                                <span className='btn btn-cancel'>Cancel</span>
                             </div>
                         </div>
                     </div>

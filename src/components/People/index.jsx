@@ -21,12 +21,6 @@ const PeopleList = () => {
                                 <h4>Customer List</h4>
                                 <h6>Manage your Customers</h6>
                             </div>
-                            {/* <div className='page-btn'>
-                                <a href='addcustomer.html' className='btn btn-added'>
-                                    <img src={plus} alt='img' />
-                                    Add Customer
-                                </a>
-                            </div> */}
                         </div>
                         <div className='card'>
                             <div className='card-body'>
@@ -92,26 +86,15 @@ const PeopleList = () => {
                                                     </label>
                                                 </td>
                                                 <td className='productimgname'>
-                                                    <a href='javascript:void(0);' className='product-img'>
+                                                    <span className='product-img'>
                                                         <img src={customer1} alt='product' />
-                                                    </a>
-                                                    <a href='javascript:void(0);'>Thomas</a>
+                                                    </span>
+                                                    <span>Thomas</span>
                                                 </td>
                                                 <td>201</td>
                                                 <td>Thomas</td>
                                                 <td>+12163547758 </td>
-                                                {/* <td><a href='/cdn-cgi/l/email-protection' className='__cf_email__'
-                                                    data-cfemail='53273b3c3e322013362b323e233f367d303c3e'>[email&#160;protected]</a>
-                                                </td> */}
                                                 <td>USA</td>
-                                                {/* <td>
-                                                    <span className='me-3'>
-                                                        <img src={edit} alt='img' />
-                                                    </span>
-                                                    <a className='me-3 confirm-text' href='javascript:void(0);'>
-                                                        <img src={deleteImg} alt='img' />
-                                                    </a>
-                                                </td> */}
                                             </tr>
                                             <tr>
                                                 <td>
@@ -121,26 +104,15 @@ const PeopleList = () => {
                                                     </label>
                                                 </td>
                                                 <td className='productimgname'>
-                                                    <a href='javascript:void(0);' className='product-img'>
+                                                    <span className='product-img'>
                                                         <img src={customer2} alt='product' />
-                                                    </a>
-                                                    <a href='javascript:void(0);'>Benjamin</a>
+                                                    </span>
+                                                    <span>Benjamin</span>
                                                 </td>
                                                 <td>202</td>
                                                 <td>Benjamin</td>
                                                 <td>123-456-888</td>
-                                                {/* <td><a href='/cdn-cgi/l/email-protection' className='__cf_email__'
-                                                    data-cfemail='c6a5b3b5b2a9aba3b486a3bea7abb6aaa3e8a5a9ab'>[email&#160;protected]</a>
-                                                </td> */}
                                                 <td>USA</td>
-                                                {/* <td>
-                                                    <span className='me-3'>
-                                                        <img src={edit} alt='img' />
-                                                    </span>
-                                                    <a className='me-3 confirm-text' href='javascript:void(0);'>
-                                                        <img src={deleteImg} alt='img' />
-                                                    </a>
-                                                </td> */}
                                             </tr>
                                             <tr>
                                                 <td>
@@ -150,26 +122,15 @@ const PeopleList = () => {
                                                     </label>
                                                 </td>
                                                 <td className='productimgname'>
-                                                    <a href='javascript:void(0);' className='product-img'>
+                                                    <span className='product-img'>
                                                         <img src={customer3} alt='product' />
-                                                    </a>
-                                                    <a href='javascript:void(0);'>James</a>
+                                                    </span>
+                                                    <span>James</span>
                                                 </td>
                                                 <td>521</td>
                                                 <td>James</td>
                                                 <td>123-456-888</td>
-                                                {/* <td><a href='/cdn-cgi/l/email-protection' className='__cf_email__'
-                                                    data-cfemail='395a4c4a4d56545c4b795c41585449555c175a5654'>[email&#160;protected]</a>
-                                                </td> */}
                                                 <td>USA</td>
-                                                {/* <td>
-                                                    <span className='me-3'>
-                                                        <img src={edit} alt='img' />
-                                                    </span>
-                                                    <a className='me-3 confirm-text' href='javascript:void(0);'>
-                                                        <img src={deleteImg} alt='img' />
-                                                    </a>
-                                                </td> */}
                                             </tr>
                                             <tr>
                                                 <td>
@@ -179,26 +140,15 @@ const PeopleList = () => {
                                                     </label>
                                                 </td>
                                                 <td className='productimgname'>
-                                                    <a href='javascript:void(0);' className='product-img'>
+                                                    <span className='product-img'>
                                                         <img src={customer3} alt='product' />
-                                                    </a>
-                                                    <a href='javascript:void(0);'>Bruklin</a>
+                                                    </span>
+                                                    <span>Bruklin</span>
                                                 </td>
                                                 <td>555</td>
                                                 <td>Bruklin</td>
                                                 <td>123-456-888</td>
-                                                {/* <td><a href='/cdn-cgi/l/email-protection' className='__cf_email__'
-                                                    data-cfemail='93f1e1e6f8fffafdd3f6ebf2fee3fff6bdf0fcfe'>[email&#160;protected]</a>
-                                                </td> */}
                                                 <td>Thailand</td>
-                                                {/* <td>
-                                                    <span className='me-3'>
-                                                        <img src={edit} alt='img' />
-                                                    </span>
-                                                    <a className='me-3 confirm-text' href='javascript:void(0);'>
-                                                        <img src={deleteImg} alt='img' />
-                                                    </a>
-                                                </td> */}
                                             </tr>
                                             <tr>
                                                 <td>
@@ -208,27 +158,15 @@ const PeopleList = () => {
                                                     </label>
                                                 </td>
                                                 <td className='productimgname'>
-                                                    <a href='javascript:void(0);' className='product-img'>
+                                                    <span className='product-img'>
                                                         <img src={customer4} alt='product' />
-                                                    </a>
-                                                    <a href='javascript:void(0);'>Beverly</a>
+                                                    </span>
+                                                    <span>Beverly</span>
                                                 </td>
                                                 <td>325</td>
                                                 <td>Beverly</td>
                                                 <td>+12163547758 </td>
-                                                {/* <td><a href='/cdn-cgi/l/email-protection' className='__cf_email__'
-                                                    data-cfemail='baf8dfccdfc8d6c3fadfc2dbd7cad6df94d9d5d7'>[email&#160;protected]</a>
-                                                </td> */}
                                                 <td>Phuket island</td>
-                                                {/* <td>
-
-                                                    <span className='me-3'>
-                                                        <img src={edit} alt='img' />
-                                                    </span>
-                                                    <a className='me-3 confirm-text' href='javascript:void(0);'>
-                                                        <img src={deleteImg} alt='img' />
-                                                    </a>
-                                                </td> */}
                                             </tr>
                                             <tr>
                                                 <td>
@@ -238,27 +176,15 @@ const PeopleList = () => {
                                                     </label>
                                                 </td>
                                                 <td className='productimgname'>
-                                                    <a href='javascript:void(0);' className='product-img'>
+                                                    <span className='product-img'>
                                                         <img src={customer5} alt='product' />
-                                                    </a>
-                                                    <a href='javascript:void(0);'>B. Huber</a>
+                                                    </span>
+                                                    <span>B. Huber</span>
                                                 </td>
                                                 <td>589</td>
                                                 <td>B. Huber </td>
                                                 <td>123-456-888</td>
-                                                {/* <td><a href='/cdn-cgi/l/email-protection' className='__cf_email__'
-                                                    data-cfemail='266e5344435466435e474b564a430845494b'>[email&#160;protected]</a>
-                                                </td> */}
                                                 <td>Germany</td>
-                                                {/* <td>
-
-                                                    <span className='me-3'>
-                                                        <img src={edit} alt='img' />
-                                                    </span>
-                                                    <a className='me-3 confirm-text' href='javascript:void(0);'>
-                                                        <img src={deleteImg} alt='img' />
-                                                    </a>
-                                                </td> */}
                                             </tr>
                                             <tr>
                                                 <td>
@@ -268,27 +194,15 @@ const PeopleList = () => {
                                                     </label>
                                                 </td>
                                                 <td className='productimgname'>
-                                                    <a href='javascript:void(0);' className='product-img'>
+                                                    <span className='product-img'>
                                                         <img src={customer6} alt='product' />
-                                                    </a>
-                                                    <a href='javascript:void(0);'>James Stawberry</a>
+                                                    </span>
+                                                    <span>James Stawberry</span>
                                                 </td>
                                                 <td>254</td>
                                                 <td>James Stawberry</td>
                                                 <td>+12163547758 </td>
-                                                {/* <td><a href='/cdn-cgi/l/email-protection' className='__cf_email__'
-                                                    data-cfemail='85e6f0f6f1eae8e0f7c5e0fde4e8f5e9e0abe6eae8'>[email&#160;protected]</a>
-                                                </td> */}
                                                 <td>Angola</td>
-                                                {/* <td>
-
-                                                    <span className='me-3'>
-                                                        <img src={edit} alt='img' />
-                                                    </span>
-                                                    <a className='me-3 confirm-text' href='javascript:void(0);'>
-                                                        <img src={deleteImg} alt='img' />
-                                                    </a>
-                                                </td> */}
                                             </tr>
                                             <tr>
                                                 <td>
@@ -298,28 +212,15 @@ const PeopleList = () => {
                                                     </label>
                                                 </td>
                                                 <td className='productimgname'>
-                                                    <a href='javascript:void(0);' className='product-imgs'>
+                                                    <span className='product-imgs'>
                                                         WC
-                                                    </a>
-                                                    <a href='javascript:void(0);'>James Stawberry</a>
+                                                    </span>
+                                                    <span>James Stawberry</span>
                                                 </td>
                                                 <td>681</td>
                                                 <td>Fred john</td>
                                                 <td>123-456-888</td>
-                                                {/* <td><a href='/cdn-cgi/l/email-protection' className='__cf_email__'
-                                                    data-cfemail='62080d0a0c22071a030f120e074c010d0f'>[email&#160;protected]</a>
-                                                </td> */}
                                                 <td>Albania</td>
-
-                                                {/* <td>
-
-                                                    <span className='me-3'>
-                                                        <img src={edit} alt='img' />
-                                                    </span>
-                                                    <a className='me-3 confirm-text' href='javascript:void(0);'>
-                                                        <img src={deleteImg} alt='img' />
-                                                    </a>
-                                                </td> */}
                                             </tr>
                                             <tr>
                                                 <td>
@@ -329,27 +230,15 @@ const PeopleList = () => {
                                                     </label>
                                                 </td>
                                                 <td className='productimgname'>
-                                                    <a href='javascript:void(0);' className='product-img'>
+                                                    <span className='product-img'>
                                                         <img src={customer5} alt='product' />
-                                                    </a>
-                                                    <a href='javascript:void(0);'>B. Huber</a>
+                                                    </span>
+                                                    <span>B. Huber</span>
                                                 </td>
                                                 <td>589</td>
                                                 <td>B. Huber </td>
                                                 <td>123-456-888</td>
-                                                {/* <td><a href='/cdn-cgi/l/email-protection' className='__cf_email__'
-                                                    data-cfemail='38704d5a5d4a785d40595548545d165b5755'>[email&#160;protected]</a>
-                                                </td> */}
                                                 <td>Germany</td>
-                                                {/* <td>
-
-                                                    <span className='me-3'>
-                                                        <img src={edit} alt='img' />
-                                                    </span>
-                                                    <a className='me-3 confirm-text' href='javascript:void(0);'>
-                                                        <img src={deleteImg} alt='img' />
-                                                    </a>
-                                                </td> */}
                                             </tr>
                                             <tr>
                                                 <td>
@@ -359,27 +248,15 @@ const PeopleList = () => {
                                                     </label>
                                                 </td>
                                                 <td className='productimgname'>
-                                                    <a href='javascript:void(0);' className='product-img'>
+                                                    <span className='product-img'>
                                                         <img src={customer6} alt='product' />
-                                                    </a>
-                                                    <a href='javascript:void(0);'>James Stawberry</a>
+                                                    </span>
+                                                    <span>James Stawberry</span>
                                                 </td>
                                                 <td>254</td>
                                                 <td>James Stawberry</td>
                                                 <td>+12163547758 </td>
-                                                {/* <td><a href='/cdn-cgi/l/email-protection' className='__cf_email__'
-                                                    data-cfemail='2a495f595e45474f586a4f524b475a464f04494547'>[email&#160;protected]</a>
-                                                </td> */}
                                                 <td>Angola</td>
-                                                {/* <td>
-
-                                                    <span className='me-3'>
-                                                        <img src={edit} alt='img' />
-                                                    </span>
-                                                    <a className='me-3 confirm-text' href='javascript:void(0);'>
-                                                        <img src={deleteImg} alt='img' />
-                                                    </a>
-                                                </td> */}
                                             </tr>
                                             <tr>
                                                 <td>
@@ -389,28 +266,15 @@ const PeopleList = () => {
                                                     </label>
                                                 </td>
                                                 <td className='productimgname'>
-                                                    <a href='javascript:void(0);' className='product-imgs'>
+                                                    <span className='product-imgs'>
                                                         WC
-                                                    </a>
-                                                    <a href='javascript:void(0);'>James Stawberry</a>
+                                                    </span>
+                                                    <span>James Stawberry</span>
                                                 </td>
                                                 <td>681</td>
                                                 <td>Fred john</td>
                                                 <td>123-456-888</td>
-                                                {/* <td><a href='/cdn-cgi/l/email-protection' className='__cf_email__'
-                                                    data-cfemail='b8d2d7d0d6f8ddc0d9d5c8d4dd96dbd7d5'>[email&#160;protected]</a>
-                                                </td> */}
                                                 <td>Albania</td>
-
-                                                {/* <td>
-
-                                                    <span className='me-3'>
-                                                        <img src={edit} alt='img' />
-                                                    </span>
-                                                    <a className='me-3 confirm-text' href='javascript:void(0);'>
-                                                        <img src={deleteImg} alt='img' />
-                                                    </a>
-                                                </td> */}
                                             </tr>
                                             <tr>
                                                 <td>
@@ -420,27 +284,15 @@ const PeopleList = () => {
                                                     </label>
                                                 </td>
                                                 <td className='productimgname'>
-                                                    <a href='javascript:void(0);' className='product-img'>
+                                                    <span className='product-img'>
                                                         <img src={customer5} alt='product' />
-                                                    </a>
-                                                    <a href='javascript:void(0);'>B. Huber</a>
+                                                    </span>
+                                                    <span>B. Huber</span>
                                                 </td>
                                                 <td>589</td>
                                                 <td>B. Huber </td>
                                                 <td>123-456-888</td>
-                                                {/* <td><a href='/cdn-cgi/l/email-protection' className='__cf_email__'
-                                                    data-cfemail='4c04392e293e0c29342d213c2029622f2321'>[email&#160;protected]</a>
-                                                </td> */}
                                                 <td>Germany</td>
-                                                {/* <td>
-
-                                                    <span className='me-3'>
-                                                        <img src={edit} alt='img' />
-                                                    </span>
-                                                    <a className='me-3 confirm-text' href='javascript:void(0);'>
-                                                        <img src={deleteImg} alt='img' />
-                                                    </a>
-                                                </td> */}
                                             </tr>
                                             <tr>
                                                 <td>
@@ -450,27 +302,15 @@ const PeopleList = () => {
                                                     </label>
                                                 </td>
                                                 <td className='productimgname'>
-                                                    <a href='javascript:void(0);' className='product-img'>
+                                                    <span className='product-img'>
                                                         <img src={customer6} alt='product' />
-                                                    </a>
-                                                    <a href='javascript:void(0);'>James Stawberry</a>
+                                                    </span>
+                                                    <span>James Stawberry</span>
                                                 </td>
                                                 <td>254</td>
                                                 <td>James Stawberry</td>
                                                 <td>+12163547758 </td>
-                                                {/* <td><a href='/cdn-cgi/l/email-protection' className='__cf_email__'
-                                                    data-cfemail='b1d2c4c2c5dedcd4c3f1d4c9d0dcc1ddd49fd2dedc'>[email&#160;protected]</a>
-                                                </td> */}
                                                 <td>Angola</td>
-                                                {/* <td>
-
-                                                    <span className='me-3'>
-                                                        <img src={edit} alt='img' />
-                                                    </span>
-                                                    <a className='me-3 confirm-text' href='javascript:void(0);'>
-                                                        <img src={deleteImg} alt='img' />
-                                                    </a>
-                                                </td> */}
                                             </tr>
                                             <tr>
                                                 <td>
@@ -480,28 +320,15 @@ const PeopleList = () => {
                                                     </label>
                                                 </td>
                                                 <td className='productimgname'>
-                                                    <a href='javascript:void(0);' className='product-imgs'>
+                                                    <span className='product-imgs'>
                                                         WC
-                                                    </a>
-                                                    <a href='javascript:void(0);'>James Stawberry</a>
+                                                    </span>
+                                                    <span>James Stawberry</span>
                                                 </td>
                                                 <td>681</td>
                                                 <td>Fred john</td>
                                                 <td>123-456-888</td>
-                                                {/* <td><a href='/cdn-cgi/l/email-protection' className='__cf_email__'
-                                                    data-cfemail='1c767374725c79647d716c7079327f7371'>[email&#160;protected]</a>
-                                                </td> */}
                                                 <td>Albania</td>
-
-                                                {/* <td>
-
-                                                    <span className='me-3'>
-                                                        <img src={edit} alt='img' />
-                                                    </span>
-                                                    <a className='me-3 confirm-text' href='javascript:void(0);'>
-                                                        <img src={deleteImg} alt='img' />
-                                                    </a>
-                                                </td> */}
                                             </tr>
                                         </tbody>
                                     </table>
@@ -539,16 +366,16 @@ const PeopleList = () => {
                                             <td>$ 1500.00 </td>
                                             <td>Cash</td>
                                             <td>
-                                                <a className='me-2' href='javascript:void(0);'>
+                                                <span className='me-2'>
                                                     <img src={printer} alt='img' />
-                                                </a>
-                                                <a className='me-2' href='javascript:void(0);' data-bs-target='#editpayment'
+                                                </span>
+                                                <span className='me-2' data-bs-target='#editpayment'
                                                     data-bs-toggle='modal' data-bs-dismiss='modal'>
                                                     <img src={edit} alt='img' />
-                                                </a>
-                                                <a className='me-2 confirm-text' href='javascript:void(0);'>
+                                                </span>
+                                                <span className='me-2 confirm-text'>
                                                     <img src={deleteImg} alt='img' />
-                                                </a>
+                                                </span>
                                             </td>
                                         </tr>
                                     </tbody>
