@@ -3,8 +3,11 @@ import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import App from './App.jsx'
 import AuthProvider from './config/interceptors/AuthProvider.jsx'
+import { setupAxiosInterceptors } from './config/interceptors/axiosInterceptor.js'
 import { store } from './config/store/index.js'
 import './index.css'
+
+setupAxiosInterceptors(store);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

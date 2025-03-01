@@ -25,7 +25,7 @@ const ForgotPassword = () => {
                                 </div>
                             </div>
                             <div className="form-login">
-                                <a className="btn btn-login" href="signin.html">Submit</a>
+                                <span className="btn btn-login">Submit</span>
                             </div>
                         </div>
                     </div>

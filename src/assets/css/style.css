@@ -3832,7 +3832,7 @@ div.dataTables_wrapper div.dataTables_info {
   padding: 0;
 }
 
-.header .mobile-user-menu .dropdown-menu a {
+.header .mobile-user-menu .dropdown-menu span {
   color: #333;
   line-height: 40px;
   padding: 0 10px;
@@ -5381,7 +5381,8 @@ span.select2-container.select2-container--default.select2-container--open {
   font-size: 12px;
 }
 
-.productimgname img {
+.productimgname img,
+.product-img-def {
   margin-right: 10px;
 }
 

@@ -1,4 +1,4 @@
-import { SET_SELECTED_SIDEBAR_MENU, SET_PRODUCT_VED, SET_SALE_VED, SHOW_MOBILE_SIDEBAR, SET_AUTH_ROUTE, SET_IS_AUTHENTICATED } from '../actions/settingsActions';
+import { LOGOUT_USER, SET_AUTH_ROUTE, SET_IS_AUTHENTICATED, SET_PRODUCT_VED, SET_SALE_VED, SET_SELECTED_SIDEBAR_MENU, SHOW_MOBILE_SIDEBAR } from '../actions/settingsActions';
 
 const initialState = {
     selectedSidebarMenu: 'product-list',
@@ -23,6 +23,9 @@ export const settingsReducer = (state = initialState, action) => {
             return { ...state, authRoute: action.payload };
         case SET_SALE_VED:
             return { ...state, saleVED: action.payload };
+        case LOGOUT_USER:
+            localStorage.removeItem("token");
+            return { ...state, isAuthenticated: false, authRoute: 'login' };
         default:
             return state;
     }

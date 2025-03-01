@@ -1,17 +1,31 @@
-import logo from '../../assets/img/vaalz-logo.png';
-import user1 from '../../assets/img/icons/users1.svg';
-import mail from '../../assets/img/icons/mail.svg';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import mail from '../../assets/img/icons/mail.svg';
+import user1 from '../../assets/img/icons/users1.svg';
+import logo from '../../assets/img/vaalz-logo.png';
 import { setAuthRoute } from '../../config/store/actions/settingsActions';
+import { createUserRequest } from '../../config/store/actions/userActions';
 
 const Register = () => {
     const dispatch = useDispatch();
     const { authRoute } = useSelector((state) => state.settings);
+    const { creating } = useSelector((state) => state.users);
 
     useEffect(() => {
         console.log('authRoute', authRoute);
     }, [authRoute])
+
+    const { register, watch } = useForm();
+    const registerInputs = watch(["full_name", "email", "phone_number", "password"]);
+    const [full_name, email, phone_number, password] = registerInputs;
+    const userData = {
+        surname: "Admin",
+        other_names: full_name,
+        phone_number,
+        password,
+        email,
+    }
 
     return (
         <div>
@@ -32,26 +46,45 @@ const Register = () => {
                                 <div className="form-login">
                                     <label>Full Name</label>
                                     <div className="form-addons">
-                                        <input type="text" placeholder="Enter your full name" />
+                                        <input type="text" placeholder="Enter your full name" {...register("full_name")} />
                                         <img src={user1} alt="img" />
                                     </div>
                                 </div>
                                 <div className="form-login">
                                     <label>Email</label>
                                     <div className="form-addons">
-                                        <input type="text" placeholder="Enter your email address" />
+                                        <input type="text" placeholder="Enter your email address" {...register("email")} />
                                         <img src={mail} alt="img" />
+                                    </div>
+                                </div>
+                                <div className="form-login">
+                                    <label>Phone Number</label>
+                                    <div className="form-addons">
+                                        <input type="number" placeholder="Enter your Phone Number" {...register("phone_number")} />
+                                        {/* <img src={mail} alt="img" /> */}
                                     </div>
                                 </div>
                                 <div className="form-login">
                                     <label>Password</label>
                                     <div className="pass-group">
-                                        <input type="password" className="pass-input" placeholder="Enter your password" />
-                                        <span className="fas toggle-password fa-eye-slash"></span>
+                                        <input type="password" className="pass-input" placeholder="Enter your password" {...register("password")} />
+                                        {/* <span className="fas toggle-password fa-eye-slash"></span> */}
                                     </div>
                                 </div>
-                                <div className="form-login">
-                                    <a className="btn btn-login">Sign Up</a>
+                                <div className="form-login"
+                                >
+                                    <button
+                                        disabled //</div>={creating || some(registerInputs, (item) => isEmpty(item))}
+                                        className="btn btn-login"
+                                        onClick={() => {
+                                            dispatch(createUserRequest(userData));
+                                        }}
+                                    >
+                                        Sign Up{' '}
+                                        {creating && <div className="spinner-border spinner-border-sm" role="status">
+                                            <span className="sr-only">Loading...</span>
+                                        </div>}
+                                    </button>
                                 </div>
                                 <div className="signinform text-center">
                                     <h4>Already a user? <span className="hover-a" onClick={() => {

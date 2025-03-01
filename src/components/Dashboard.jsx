@@ -1,12 +1,12 @@
 
-import dash4Img from '../assets/img/icons/dash4.svg';
-import dash3Img from '../assets/img/icons/dash3.svg';
-import dash2Img from '../assets/img/icons/dash2.svg';
 import dash1Img from '../assets/img/icons/dash1.svg';
-import prod6 from '../assets/img/product/product6.jpg';
+import dash2Img from '../assets/img/icons/dash2.svg';
+import dash3Img from '../assets/img/icons/dash3.svg';
+import dash4Img from '../assets/img/icons/dash4.svg';
 import prod22 from '../assets/img/product/product22.jpg';
 import prod23 from '../assets/img/product/product23.jpg';
 import prod24 from '../assets/img/product/product24.jpg';
+import prod6 from '../assets/img/product/product6.jpg';
 import LineDashed from './Charts/LineDashed';
 
 const Dashboard = () => {
