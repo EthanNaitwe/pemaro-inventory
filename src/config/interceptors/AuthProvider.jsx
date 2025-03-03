@@ -13,6 +13,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     console.log('isAuthenticated: ....', isAuthenticated);
     const token = localStorage.getItem("token");
+
     if (!token) {
       dispatch(setIsAuthenticated(false));
     } else {

@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
-import rootSaga from './sagas/rootSaga';
-import { userReducer } from './reducers/userReducer';
+import createSagaMiddleware from 'redux-saga';
+import { productsReducer } from './reducers/productsReducer';
 import { settingsReducer } from './reducers/settingsReducer';
+import { usersReducer } from './reducers/usersReducer';
+import rootSaga from './sagas/rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -15,8 +16,9 @@ middlewares.push(logger);
 
 export const store = configureStore({
     reducer: {
-        user: userReducer,
+        users: usersReducer,
         settings: settingsReducer,
+        products: productsReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),

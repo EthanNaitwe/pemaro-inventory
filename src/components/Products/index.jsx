@@ -1,24 +1,36 @@
-import plus from '../../assets/img/icons/plus.svg'
+/* eslint-disable react-hooks/exhaustive-deps */
+import plus from '../../assets/img/icons/plus.svg';
 import search from '../../assets/img/icons/search-whites.svg';
 import prod1 from '../../assets/img/product/product1.jpg';
-import prod2 from '../../assets/img/product/product2.jpg';
-import prod3 from '../../assets/img/product/product3.jpg';
+// import prod2 from '../../assets/img/product/product2.jpg';
+// import prod3 from '../../assets/img/product/product3.jpg';
 import prod4 from '../../assets/img/product/product4.jpg';
-import prod5 from '../../assets/img/product/product5.jpg';
-import prod6 from '../../assets/img/product/product6.jpg';
-import prod7 from '../../assets/img/product/product7.jpg';
-import prod8 from '../../assets/img/product/product8.jpg';
-import prod9 from '../../assets/img/product/product9.jpg';
-import prod11 from '../../assets/img/product/product11.jpg';
-import prod17 from '../../assets/img/product/product17.jpg';
-import eye from '../../assets/img/icons/eye.svg';
-import edit from '../../assets/img/icons/edit.svg';
+// import prod5 from '../../assets/img/product/product5.jpg';
+// import prod6 from '../../assets/img/product/product6.jpg';
+// import prod7 from '../../assets/img/product/product7.jpg';
+// import prod8 from '../../assets/img/product/product8.jpg';
+// import prod9 from '../../assets/img/product/product9.jpg';
+// import prod11 from '../../assets/img/product/product11.jpg';
+// import prod17 from '../../assets/img/product/product17.jpg';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import deleteImg from '../../assets/img/icons/delete.svg';
-import { setProductVED } from '../../config/store/actions/settingsActions';
-import { useDispatch } from 'react-redux';
+import edit from '../../assets/img/icons/edit.svg';
+import eye from '../../assets/img/icons/eye.svg';
+import { getProductsRequest } from '../../config/store/actions/productActions';
+import { logoutUser, setProductVED } from '../../config/store/actions/settingsActions';
+import { capitalize, toUpper } from 'lodash';
 
 const ProductsList = () => {
     const dispatch = useDispatch();
+    const { allProducts } = useSelector((state) => state.products);
+    // useEffect(() => {
+    //     console.log('prod', prod);
+    // }, [prod])
+
+    useEffect(() => {
+        dispatch(getProductsRequest());
+    }, [])
 
     const products = [
         {
@@ -122,9 +134,16 @@ const ProductsList = () => {
                     <div className='page-title'>
                         <h4>Product List</h4>
                         <h6>Manage your products</h6>
+
+
                     </div>
                     <div className='page-btn'>
-                        <div className='btn btn-added' onClick={() => dispatch(setProductVED('add-product'))}>
+                        <div className='btn btn-added' onClick={() => {
+
+                            console.log('Not Loading.... 01')
+                            dispatch(logoutUser());
+                            // dispatch(setProductVED('add-product'))
+                        }}>
                             <img src={plus} alt='img'
                                 className='me-1' />
                             Add New Product
@@ -209,14 +228,15 @@ const ProductsList = () => {
                                         <th>Art Number</th>
                                         <th>Color</th>
                                         <th>Sizes</th>
-                                        <th>price</th>
+                                        <th>Price (UGX)</th>
                                         {/* <th>Unit</th> */}
-                                        <th>Created By</th>
+                                        {/* <th>Created By</th> */}
+
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {products.map((item) => {
+                                    {allProducts.map((item, i) => {
                                         return (
                                             <tr key={item.id}>
                                                 <td>
@@ -227,18 +247,18 @@ const ProductsList = () => {
                                                 </td>
                                                 <td className='productimgname'>
                                                     <span className='product-img'>
-                                                        <img src={item.img} alt='product' />
+                                                        {item.img ? <img src={item.img} alt='product' /> : <i className="product-img-def fas fa-solid fa-person-dress fa-xl"></i>}
                                                     </span>
                                                     {item.name}
                                                 </td>
-                                                <td>{item.qty}</td>
+                                                <td>{item.quantity}</td>
                                                 {/* <td>{item.design}</td> */}
-                                                <td>{item.artNo}</td>
-                                                <td>{item.color}</td>
+                                                <td>{toUpper(item.artNumber)}</td>
+                                                <td>{capitalize(item.color)}</td>
                                                 <td>{item.size}</td>
                                                 <td>{item.price}</td>
                                                 {/* <td>{item.unit}</td> */}
-                                                <td>{item.createdBy}</td>
+                                                {/* <td>{item.createdBy}</td> */}
                                                 <td>
                                                     <span className='me-3' onClick={() => dispatch(setProductVED('view-product'))}>
                                                         <img src={eye} alt='img' />

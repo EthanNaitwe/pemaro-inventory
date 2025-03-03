@@ -5,5 +5,5 @@ export const clothSizes = [
     { value: "M", label: "Medium" },
     { value: "L", label: "Large" },
     { value: "XL", label: "Extra Large" },
-    { value: "XXL", label: "Extra Extra Large" },
+    { value: "2XL", label: "Extra Extra Large" },
 ];
