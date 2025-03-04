@@ -25,14 +25,14 @@ const AddProduct = () => {
         });
 
 
+    const onSubmit = (data) => console.log('data', data);
+
+    const productInputs = watch(["name", "size", "quantity", "artNumber", "color", "tax", "description", "percentage"]);
+
     useEffect(() => {
         console.log('errors', errors);
         console.log('productInputs', productInputs);
     }, [errors, productInputs])
-
-    const onSubmit = (data) => console.log('data', data);
-
-    const productInputs = watch(["name", "size", "quantity", "artNumber", "color", "tax", "description", "percentage"]);
 
     return (
         <div className='page-wrapper'>
