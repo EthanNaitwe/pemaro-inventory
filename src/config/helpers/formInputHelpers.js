@@ -7,3 +7,8 @@ export const clothSizes = [
     { value: "XL", label: "Extra Large" },
     { value: "2XL", label: "Extra Extra Large" },
 ];
+
+// Function to get a menu item by key
+export const getSizeLabel = (key) => {
+    return clothSizes.find((item) => item.value === key).label;
+};
