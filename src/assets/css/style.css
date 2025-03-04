@@ -3757,6 +3757,7 @@ div.dataTables_wrapper div.dataTables_info {
 
 .header .menu-drop-user .logout {
   color: #f62d51;
+  cursor: pointer;
 }
 
 @media (max-width: 991px) {
@@ -3774,6 +3775,7 @@ div.dataTables_wrapper div.dataTables_info {
 }
 
 .header .user-img {
+  cursor: pointer;
   display: inline-block;
   position: relative;
 }
