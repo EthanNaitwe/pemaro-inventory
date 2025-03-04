@@ -30,10 +30,8 @@ const AddProduct = () => {
             resolver: yupResolver(schema),
         });
 
-    const onSubmit = (data) => {
+    const onSubmit = (data) =>
         dispatch(createProductRequest(data));
-        console.log('data', data)
-    };
 
     return (
         <div className='page-wrapper'>
