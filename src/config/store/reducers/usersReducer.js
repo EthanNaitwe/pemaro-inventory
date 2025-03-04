@@ -6,7 +6,9 @@ const initialState = {
     error: null,
     creating: false,
     logging: false,
+
     authUser: {},
+    profileError: null,
 };
 
 export const usersReducer = (state = initialState, action) => {
@@ -28,18 +30,17 @@ export const usersReducer = (state = initialState, action) => {
         case LOGIN_USER_REQUEST:
             return { ...state, logging: true };
         case LOGIN_USER_SUCCESS:
-            console.log('action.payload', action.payload);
             localStorage.setItem("token", action.payload.token);
             return { ...state, logging: false };
         case LOGIN_USER_FAILURE:
             return { ...state, logging: false, error: action.payload };
 
         case GET_PROFILE_REQUEST:
-            return { ...state, gettingProfile: true };
+            return { ...state, gettingProfile: true, profileError: null };
         case GET_PROFILE_SUCCESS:
             return { ...state, gettingProfile: false, authUser: action.payload };
         case GET_PROFILE_FAILURE:
-            return { ...state, gettingProfile: false, error: action.payload };
+            return { ...state, gettingProfile: false, profileError: action.payload };
         default:
             return state;
     }

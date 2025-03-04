@@ -55,16 +55,10 @@ export const setupAxiosInterceptors = (store) => {
     api.interceptors.response.use(
         (response) => response, // Return response if successful
         (error) => {
-            if (error.response) {
-                const { status } = error.response;
-
-                if (status === 401 || status === 403) {
-                    console.warn("⚠️ Token expired or invalid. Logging out...");
-
-                    localStorage.removeItem("token"); // Remove invalid token
-
-                    store.dispatch(logoutUser()); // 🔥 Dispatch Redux action
-                }
+            if (error.response && error.response.data.message === 'Invalid token') {
+                console.warn("⚠️ Token expired or invalid. Logging out...");
+                localStorage.removeItem('token');
+                store.dispatch(logoutUser());
             }
 
             return Promise.reject(error);

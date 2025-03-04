@@ -1,17 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import logo from '../../assets/img/vaalz-logo.png';
-import smallLogo from '../../assets/img/logo-small.png';
 import avatar1 from '../..//assets/img/profiles/avator1.jpg';
+import smallLogo from '../../assets/img/logo-small.png';
+import logo from '../../assets/img/vaalz-logo.png';
 // import closesImg from '../../assets/img/icons/closes.svg';
 // import searchImg from '../../assets/img/icons/search.svg';
 // import notificationImg from '../../assets/img/icons/notification-bing.svg';
-import logoutImg from '../../assets/img/icons/log-out.svg';
-import { useDispatch, useSelector } from 'react-redux';
-import { setProductVED, setSaleVED, setSelectedSidebarMenu, showMobSideBar } from '../../config/store/actions/settingsActions';
-import { useEffect, useState } from 'react';
-import { getProfile } from '../../config/store/actions/userActions';
 import { isEmpty } from 'lodash';
-
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import logoutImg from '../../assets/img/icons/log-out.svg';
+import { logoutUser, setProductVED, setSaleVED, setSelectedSidebarMenu, showMobSideBar } from '../../config/store/actions/settingsActions';
+import { getProfile } from '../../config/store/actions/userActions';
 
 const AppHeader = () => {
     const dispatch = useDispatch();
@@ -54,7 +53,9 @@ const AppHeader = () => {
             <ul className='nav user-menu'>
                 <li className='nav-item dropdown has-arrow main-drop'>
                     <span className={`dropdown-toggle nav-link userset ${showLogout ? 'show' : ''}`} data-bs-toggle='dropdown' aria-expanded={showLogout}>
-                        <span className='user-img'>
+                        <span className='user-img' onClick={() => {
+                            setShowLogout(!showLogout);
+                        }}>
                             <img src={avatar1} alt='' />
                             <span className='status online'></span>
                         </span>
@@ -79,7 +80,9 @@ const AppHeader = () => {
                             <span className='dropdown-item'><i className='me-2'
                                 data-feather='settings'></i>Settings</span> */}
                             <hr className='m-0' />
-                            <span className='dropdown-item logout pb-0'>
+                            <span className='dropdown-item logout pb-0' onClick={() => {
+                                dispatch(logoutUser());
+                            }}>
                                 <img src={logoutImg} className='me-2' alt='img' />
                                 Logout
                             </span>
@@ -89,14 +92,18 @@ const AppHeader = () => {
             </ul>
             <div className='dropdown mobile-user-menu'>
                 <span className={`nav-link dropdown-toggle ${showLogout ? 'show' : ''}`} data-bs-toggle='dropdown' aria-expanded={showLogout}>
-                    <i className='fa fa-ellipsis-v'></i>
+                    <i className='fa fa-ellipsis-v' onClick={() => {
+                        setShowLogout(!showLogout);
+                    }}></i>
                 </span>
                 <div className='dropdown-menu dropdown-menu-right show' style={showLogout ? {
                     position: 'absolute', inset: '0px 0px auto auto', margin: '0px', transform: 'translate3d(-20px, 62px, 0px)'
                 } : {}} data-popper-placement="bottom-end">
                     {/* <span className='dropdown-item'>My Profile</span> */}
                     {/* <span className='dropdown-item'>Settings</span> */}
-                    <span className='dropdown-item'>Logout</span>
+                    <span className='dropdown-item' onClick={() => {
+                        dispatch(logoutUser());
+                    }}>Logout</span>
                 </div>
             </div>
         </div>
