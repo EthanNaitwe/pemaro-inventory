@@ -52,12 +52,12 @@ const ProductsList = () => {
                                         <th>Art Number</th>
                                         <th>Color</th>
                                         <th>Sizes</th>
-                                        <th>Price (UGX)</th>
+                                        {/* <th>Price (UGX)</th> */}
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {allProducts.map((item, i) => {
+                                    {allProducts.map((item) => {
                                         return (
                                             <tr key={item.id}>
                                                 <td>
@@ -76,7 +76,7 @@ const ProductsList = () => {
                                                 <td>{toUpper(item.artNumber)}</td>
                                                 <td>{capitalize(item.color)}</td>
                                                 <td>{item.size}</td>
-                                                <td>{item.price}</td>
+                                                {/* <td>{item.price}</td> */}
                                                 <td>
                                                     <span className='me-3' onClick={() => dispatch(setProductVED('view-product'))}>
                                                         <img src={eye} alt='img' />

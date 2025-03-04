@@ -20,7 +20,7 @@ const PageWrapper = () => {
             {productVED === 'add-product' && <AddProduct />}
 
             {selectedSidebarMenu === 'sales-list' && saleVED === '' && <SalesList />}
-            {saleVED === 'add-sales' && <AddSales />}
+            {selectedSidebarMenu === 'sales-list' && saleVED === 'add-sales' && <AddSales />}
 
             {selectedSidebarMenu === 'customer-list' && saleVED === '' && <PeopleList />}
             {selectedSidebarMenu === '404-error' && saleVED === '' && <Error404 />}

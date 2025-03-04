@@ -19,3 +19,8 @@ export const getProductsApi = async () => {
     const response = await api.get("/products");
     return response.data;
 };
+
+export const createProductApi = async (prodData) => {
+    const response = await api.post("/products", prodData);
+    return response.data;
+};
