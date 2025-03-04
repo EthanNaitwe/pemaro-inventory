@@ -1,17 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from "prop-types";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setIsAuthenticated } from "../store/actions/settingsActions";
-
 
 const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
-
-  const { isAuthenticated } = useSelector((state) => state.settings);
-
   useEffect(() => {
-    console.log('isAuthenticated: ....', isAuthenticated);
     const token = localStorage.getItem("token");
 
     if (!token) {
