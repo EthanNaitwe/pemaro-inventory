@@ -24,3 +24,7 @@ export const createProductApi = async (prodData) => {
     const response = await api.post("/products", prodData);
     return response.data;
 };
+export const addCategoryApi = async ({ id, data }) => {
+    const response = await api.post(`/products/${id}/variants`, data);
+    return response.data;
+};

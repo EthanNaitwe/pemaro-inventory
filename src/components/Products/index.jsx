@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { capitalize, isEmpty, toUpper } from 'lodash';
-import { useEffect } from 'react';
 import { Empty } from 'antd';
+import { capitalize, isEmpty, sumBy, toUpper } from 'lodash';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import edit from '../../assets/img/icons/edit.svg';
 import eye from '../../assets/img/icons/eye.svg';
 import plus from '../../assets/img/icons/plus.svg';
-import { getProductsRequest } from '../../config/store/actions/productActions';
+import { getProductsRequest, setSingleProduct } from '../../config/store/actions/productActions';
 import { setProductVED } from '../../config/store/actions/settingsActions';
-import { getSizeLabel } from '../../config/helpers/formInputHelpers';
 
 const ProductsList = () => {
     const dispatch = useDispatch();
@@ -51,11 +50,10 @@ const ProductsList = () => {
                                                 </label>
                                             </th>
                                             <th>Product Name</th>
-                                            <th>Quantity</th>
                                             <th>Art Number</th>
-                                            <th>Color</th>
-                                            <th>Sizes</th>
-                                            {/* <th>Price (UGX)</th> */}
+                                            <th>Quantity</th>
+                                            <th>Tax [%]</th>
+                                            <th>Discount [%]</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -75,13 +73,15 @@ const ProductsList = () => {
                                                         </span>
                                                         {item.name}
                                                     </td>
-                                                    <td>{item.quantity}</td>
                                                     <td>{toUpper(item.artNumber)}</td>
-                                                    <td>{capitalize(item.color)}</td>
-                                                    <td>{`${getSizeLabel(item.size)} (${item.size})`}</td>
-                                                    {/* <td>{item.price}</td> */}
+                                                    <td>{sumBy(item.variants, 'quantity')}</td>
+                                                    <td>{item.tax}</td>
+                                                    <td>{capitalize(item.discount)}</td>
                                                     <td>
-                                                        <span className='me-3' onClick={() => dispatch(setProductVED('view-product'))}>
+                                                        <span className='me-3' onClick={() => {
+                                                            dispatch(setProductVED('view-product'));
+                                                            dispatch(setSingleProduct(item));
+                                                        }}>
                                                             <img src={eye} alt='img' />
                                                         </span>
                                                         <span className='me-3' onClick={() => dispatch(setProductVED('add-product'))}>
