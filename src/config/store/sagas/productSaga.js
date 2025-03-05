@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { createProductApi, getProductsApi } from "../../api";
-import { CREATE_PRODUCT_FAILURE, CREATE_PRODUCT_REQUEST, CREATE_PRODUCT_SUCCESS, GET_PRODUCTS_FAILURE, GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS } from "../actions/productActions";
+import { addCategoryApi, createProductApi, getProductsApi } from "../../api";
+import { ADD_PRODUCT_CATEGORY_FAILURE, ADD_PRODUCT_CATEGORY_REQUEST, ADD_PRODUCT_CATEGORY_SUCCESS, CREATE_PRODUCT_FAILURE, CREATE_PRODUCT_REQUEST, CREATE_PRODUCT_SUCCESS, GET_PRODUCTS_FAILURE, GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS } from "../actions/productActions";
 
 // Worker Saga: Create Product
 function* createProductRequest(action) {
@@ -25,8 +25,20 @@ function* getProductsRequest() {
   }
 }
 
+// Worker Saga: Get Products
+function* addCategoryRequest(action) {
+  try {
+    const payload = yield call(addCategoryApi, action.payload);
+    yield put({ type: ADD_PRODUCT_CATEGORY_SUCCESS, payload });
+  } catch (error) {
+    const payload = error.response?.data?.message || "Failed to Fetch User";
+    yield put({ type: ADD_PRODUCT_CATEGORY_FAILURE, payload });
+  }
+}
+
 // Watcher Saga: Watches for actions
 export function* productSaga() {
   yield takeLatest(CREATE_PRODUCT_REQUEST, createProductRequest);
   yield takeLatest(GET_PRODUCTS_REQUEST, getProductsRequest);
+  yield takeLatest(ADD_PRODUCT_CATEGORY_REQUEST, addCategoryRequest);
 }
