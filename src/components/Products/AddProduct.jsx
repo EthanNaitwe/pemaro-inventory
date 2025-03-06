@@ -3,22 +3,19 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from "yup";
 import plus from '../../assets/img/icons/plus.svg';
-import { clothSizes, discount, tax } from '../../config/helpers/formInputHelpers';
-import { setProductVED } from '../../config/store/actions/settingsActions';
+import { discount, tax } from '../../config/helpers/formInputHelpers';
 import { createProductRequest } from "../../config/store/actions/productActions";
+import { setProductVED } from '../../config/store/actions/settingsActions';
 
 const AddProduct = () => {
     const dispatch = useDispatch();
     const { creating } = useSelector((state) => state.products);
     const schema = yup
         .object({
-            name: yup.string().required(),
-            size: yup.string().required(),
-            quantity: yup.string().required(),
-            artNumber: yup.string().required(),
-            color: yup.string().required(),
             tax: yup.string().required(),
+            name: yup.string().required(),
             discount: yup.string().required(),
+            artNumber: yup.string().required(),
             description: yup.string().required(),
         })
         .required();
@@ -61,49 +58,10 @@ const AddProduct = () => {
                             </div>
                             <div className='col-lg-3 col-sm-6 col-12'>
                                 <div className='form-group'>
-                                    <label>Size</label>
-                                    <select className='form-select' {...register("size")}
-                                        aria-invalid={errors.size ? "true" : "false"}>
-                                        <option value=''>Choose Size</option>
-                                        {clothSizes.map((i) => (
-                                            <option
-                                                key={i.value}
-                                                value={i.value}>
-                                                {i.label}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    <p>{errors.size?.message && "This field is required"}</p>
-                                </div>
-                            </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
-                                <div className='form-group'>
-                                    <label>Quantity</label>
-                                    <input type="number" min={1} {...register("quantity")}
-                                        aria-invalid={errors.quantity ? "true" : "false"} />
-                                    <p>{errors.quantity?.message && "This field is required"}</p>
-                                </div>
-                            </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
-                                <div className='form-group'>
                                     <label>Art Number</label>
                                     <input type='text' {...register("artNumber")}
                                         aria-invalid={errors.artNumber ? "true" : "false"} />
                                     <p>{errors.artNumber?.message && "This field is required"}</p>
-                                </div>
-                            </div>
-                            {/* <div className='col-lg-3 col-sm-6 col-12'>
-                                <div className='form-group'>
-                                    <label>Price</label>
-                                    <input type='number' {...register("price")} />
-                                </div>
-                            </div> */}
-                            <div className='col-lg-3 col-sm-6 col-12'>
-                                <div className='form-group'>
-                                    <label>Color</label>
-                                    <input type='text' {...register("color")}
-                                        aria-invalid={errors.color ? "true" : "false"} />
-                                    <p>{errors.color?.message && "This field is required"}</p>
                                 </div>
                             </div>
                             <div className='col-lg-3 col-sm-6 col-12'>

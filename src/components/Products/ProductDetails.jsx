@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useDispatch, useSelector } from 'react-redux';
 import { setProductVED } from '../../config/store/actions/settingsActions';
 
@@ -11,12 +12,12 @@ import { useForm } from 'react-hook-form';
 import * as yup from "yup";
 import { clothSizes, getSizeLabel } from '../../config/helpers/formInputHelpers';
 import CardHeader from '../common/CardHeader';
-import { addProductCategoryRequest } from '../../config/store/actions/productActions';
+import { addProductCategoryRequest, setSingleProduct } from '../../config/store/actions/productActions';
 
 const ProductDetails = () => {
     const dispatch = useDispatch();
 
-    const { singleProduct, addingCategory } = useSelector((state) => state.products);
+    const { singleProduct, addingCategory, allProducts } = useSelector((state) => state.products);
 
     const schema = yup
         .object({
@@ -34,18 +35,27 @@ const ProductDetails = () => {
         });
 
     const onSubmit = (data) =>
-        dispatch(addProductCategoryRequest({ id: singleProduct.id, data }))
+        dispatch(addProductCategoryRequest({ id: singleProduct?.id, data }))
 
+    useEffect(() => {
+        const filter = allProducts.find((prod) => prod.id === singleProduct?.id)
+        if (!isEmpty(singleProduct))
+            dispatch(setSingleProduct(filter))
+    }, [allProducts])
 
     const barcodeRef = useRef(null);
     useEffect(() => {
         if (barcodeRef.current) {
-            JsBarcode(barcodeRef.current, singleProduct.artNumber, { format: "CODE128" });
+            JsBarcode(barcodeRef.current, singleProduct?.artNumber, { format: "CODE128" });
         }
     }, [singleProduct]);
 
+    useEffect(() => {
+        console.log('singleProduct', singleProduct);
+    }, [])
+    
     return (
-        <div className='page-wrapper'>
+        <div className='page-wrapper' key={singleProduct}>
             <div className='content'>
                 <div className='page-header'>
                     <div className='page-title'>
@@ -71,27 +81,27 @@ const ProductDetails = () => {
                                     <ul className='product-bar'>
                                         <li>
                                             <h4>Art Number</h4>
-                                            <h6>{singleProduct.artNumber}</h6>
+                                            <h6>{singleProduct?.artNumber}</h6>
                                         </li>
                                         <li>
                                             <h4>Product Name</h4>
-                                            <h6>{singleProduct.name}</h6>
+                                            <h6>{singleProduct?.name}</h6>
                                         </li>
                                         <li>
                                             <h4>Quantity</h4>
-                                            <h6>{sumBy(singleProduct.variants, 'quantity')}</h6>
+                                            <h6>{sumBy(singleProduct?.variants, 'quantity')}</h6>
                                         </li>
                                         <li>
                                             <h4>Tax</h4>
-                                            <h6>{`${singleProduct.tax} %`}</h6>
+                                            <h6>{`${singleProduct?.tax} %`}</h6>
                                         </li>
                                         <li>
                                             <h4>Discount Type</h4>
-                                            <h6>{`${singleProduct.discount} %`}</h6>
+                                            <h6>{`${singleProduct?.discount} %`}</h6>
                                         </li>
                                         <li>
                                             <h4>Description</h4>
-                                            <h6>{singleProduct.description}</h6>
+                                            <h6>{singleProduct?.description}</h6>
                                         </li>
                                     </ul>
                                 </div>
@@ -150,7 +160,7 @@ const ProductDetails = () => {
                                     </div>
                                 </div>
                             </div>
-                            {isEmpty(singleProduct.variants) ? <Empty className='pb-4' /> :
+                            {isEmpty(singleProduct?.variants) ? <Empty className='pb-4' /> :
                                 <div className='card-body'>
                                     <div className='slider-product-details'>
                                         <div className='owl-carousel owl-theme product-slide'>
@@ -164,7 +174,7 @@ const ProductDetails = () => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {singleProduct.variants.map((item) => {
+                                                        {singleProduct?.variants.map((item) => {
                                                             return (
                                                                 <tr key={item.id}>
                                                                     <td>{capitalize(item.color)}</td>
