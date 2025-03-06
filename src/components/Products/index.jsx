@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Empty } from 'antd';
+import { Button, Empty } from 'antd';
 import { capitalize, isEmpty, sumBy, toUpper } from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import edit from '../../assets/img/icons/edit.svg';
-import eye from '../../assets/img/icons/eye.svg';
+// import edit from '../../assets/img/icons/edit.svg';
+// import eye from '../../assets/img/icons/eye.svg';
 import plus from '../../assets/img/icons/plus.svg';
 import { getProductsRequest, setSingleProduct } from '../../config/store/actions/productActions';
 import { setProductVED } from '../../config/store/actions/settingsActions';
@@ -78,7 +78,17 @@ const ProductsList = () => {
                                                     <td>{item.tax}</td>
                                                     <td>{capitalize(item.discount)}</td>
                                                     <td>
-                                                        <span className='me-3' onClick={() => {
+                                                        <Button variant="dashed" className='px-4' size="small" onClick={() => {
+                                                            dispatch(setProductVED('view-product'));
+                                                            dispatch(setSingleProduct(item));
+                                                        }}>view</Button>
+                                                        {/* <Space>
+                                                            <Radio.Group size="small">
+                                                                <Radio.Button value="start">View</Radio.Button>
+                                                                <Radio.Button value="end">end</Radio.Button>
+                                                            </Radio.Group>
+                                                        </Space> */}
+                                                        {/* <span className='me-3' onClick={() => {
                                                             dispatch(setProductVED('view-product'));
                                                             dispatch(setSingleProduct(item));
                                                         }}>
@@ -86,7 +96,7 @@ const ProductsList = () => {
                                                         </span>
                                                         <span className='me-3' onClick={() => dispatch(setProductVED('add-product'))}>
                                                             <img src={edit} alt='img' />
-                                                        </span>
+                                                        </span> */}
                                                     </td>
                                                 </tr>
                                             )
