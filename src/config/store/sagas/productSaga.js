@@ -19,7 +19,7 @@ function* createProductRequest(action) {
 // Worker Saga: Get Products
 function* getProductsRequest() {
   try {
-    const payload = yield call(getProductsApi);
+    const { products: payload } = yield call(getProductsApi);
     yield put({ type: GET_PRODUCTS_SUCCESS, payload });
   } catch (error) {
     const payload = error.response?.data?.message || "Failed to Fetch User";
@@ -30,7 +30,7 @@ function* getProductsRequest() {
 // Worker Saga: Get Products
 function* addCategoryRequest(action) {
   try {
-    const payload = yield call(addCategoryApi, action.payload);
+    const payload = yield call(addCategoryApi, action.productId, action.payload);
     yield put({ type: ADD_PRODUCT_CATEGORY_SUCCESS, payload });
     yield put({ type: GET_PRODUCTS_REQUEST });
   } catch (error) {

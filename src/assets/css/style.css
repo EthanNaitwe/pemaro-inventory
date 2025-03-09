@@ -4379,6 +4379,11 @@ div#global-loader {
   height: 100vh;
 }
 
+.page-loader {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 div#global-loader .whirly-loader:not(:required) {
   animation: whirly-loader 1.25s linear infinite;
   background: transparent;

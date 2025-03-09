@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import mail from '../../assets/img/icons/mail.svg';
@@ -9,13 +8,8 @@ import { createUserRequest } from '../../config/store/actions/userActions';
 
 const Register = () => {
     const dispatch = useDispatch();
-    const { authRoute } = useSelector((state) => state.settings);
     const { creating } = useSelector((state) => state.users);
-
-    useEffect(() => {
-        console.log('authRoute', authRoute);
-    }, [authRoute])
-
+    
     const { register, watch } = useForm();
     const registerInputs = watch(["full_name", "email", "phone_number", "password"]);
     const [full_name, email, phone_number, password] = registerInputs;
