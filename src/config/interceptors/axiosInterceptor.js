@@ -27,30 +27,6 @@ export const setupAxiosInterceptors = (store) => {
         }
     );
 
-    // // ✅ Response Interceptor
-    // api.interceptors.response.use(
-    //     (response) => {
-    //         console.log("✅ Response Received:", response);
-    //         return response;
-    //     },
-    //     (error) => {
-    //         console.error("❌ Response Error:", error);
-
-    //         if (error.response) {
-    //             if (error.response.status === 401) {
-    //                 console.warn("⚠️ Unauthorized! Redirecting to login...");
-    //                 // window.location.href = "/login"; // Redirect if unauthorized
-    //             }
-    //             if (error.response.status === 500) {
-    //                 console.error("🔥 Server Error! Please try again later.");
-    //             }
-    //         }
-
-    //         return Promise.reject(error);
-    //     }
-    // );
-
-
     // ✅ Response Interceptor: Handle Invalid Token
     api.interceptors.response.use(
         (response) => response, // Return response if successful

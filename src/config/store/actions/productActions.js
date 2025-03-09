@@ -13,6 +13,6 @@ export const ADD_PRODUCT_CATEGORY_FAILURE = "ADD_PRODUCT_CATEGORY_FAILURE";
 export const SET_SINGLE_PRODUCT = 'SET_SINGLE_PRODUCT';
 
 export const createProductRequest = (payload) => ({ type: CREATE_PRODUCT_REQUEST, payload });
-export const addProductCategoryRequest = (payload) => ({ type: ADD_PRODUCT_CATEGORY_REQUEST, payload });
+export const addProductCategoryRequest = (productId, payload) => ({ type: ADD_PRODUCT_CATEGORY_REQUEST, productId, payload });
 export const getProductsRequest = () => ({ type: GET_PRODUCTS_REQUEST });
 export const setSingleProduct = (payload) => ({ type: SET_SINGLE_PRODUCT, payload });

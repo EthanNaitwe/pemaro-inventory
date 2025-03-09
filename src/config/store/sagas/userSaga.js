@@ -29,8 +29,8 @@ function* loginUserRequest(action) {
 // Worker Saga: Get Profile
 function* getProfile() {
   try {
-    const profileData = yield call(getProfileApi);
-    yield put({ type: GET_PROFILE_SUCCESS, payload: profileData });
+    const { authUser } = yield call(getProfileApi);
+    yield put({ type: GET_PROFILE_SUCCESS, payload: authUser });
   } catch (error) {
     const payload = error.response?.data?.message || "Failed to fetch User Profile";
     yield put({ type: GET_PROFILE_FAILURE, payload });

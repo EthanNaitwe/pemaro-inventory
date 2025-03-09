@@ -11,13 +11,14 @@ import { Empty } from 'antd';
 import { useForm } from 'react-hook-form';
 import * as yup from "yup";
 import { clothSizes, getSizeLabel } from '../../config/helpers/formInputHelpers';
-import CardHeader from '../common/CardHeader';
 import { addProductCategoryRequest, setSingleProduct } from '../../config/store/actions/productActions';
+import CardHeader from '../common/CardHeader';
+import WithDataLoader from '../common/loaders/WithDataLoader';
 
 const ProductDetails = () => {
     const dispatch = useDispatch();
 
-    const { singleProduct, addingCategory, allProducts } = useSelector((state) => state.products);
+    const { singleProduct, addingCategory, allProducts, loading } = useSelector((state) => state.products);
 
     const schema = yup
         .object({
@@ -35,7 +36,7 @@ const ProductDetails = () => {
         });
 
     const onSubmit = (data) =>
-        dispatch(addProductCategoryRequest({ id: singleProduct?.id, data }))
+        dispatch(addProductCategoryRequest(singleProduct?.id, data))
 
     useEffect(() => {
         const filter = allProducts.find((prod) => prod.id === singleProduct?.id)
@@ -50,10 +51,6 @@ const ProductDetails = () => {
         }
     }, [singleProduct]);
 
-    useEffect(() => {
-        console.log('singleProduct', singleProduct);
-    }, [])
-    
     return (
         <div className='page-wrapper' key={singleProduct}>
             <div className='content'>
@@ -160,6 +157,7 @@ const ProductDetails = () => {
                                     </div>
                                 </div>
                             </div>
+                            {loading && <WithDataLoader />}
                             {isEmpty(singleProduct?.variants) ? <Empty className='pb-4' /> :
                                 <div className='card-body'>
                                     <div className='slider-product-details'>

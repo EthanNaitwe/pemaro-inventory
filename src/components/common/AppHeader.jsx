@@ -28,7 +28,7 @@ const AppHeader = () => {
         if (isEmpty(authUser)) {
             dispatch(getProfile())
         }
-    }, [])
+    }, []);
 
     return (
         <div className='header'>

@@ -3,15 +3,15 @@ import { Button, Empty } from 'antd';
 import { capitalize, isEmpty, sumBy, toUpper } from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import edit from '../../assets/img/icons/edit.svg';
-// import eye from '../../assets/img/icons/eye.svg';
 import plus from '../../assets/img/icons/plus.svg';
 import { getProductsRequest, setSingleProduct } from '../../config/store/actions/productActions';
 import { setProductVED } from '../../config/store/actions/settingsActions';
+import WithDataLoader from '../common/loaders/WithDataLoader';
+import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
 
 const ProductsList = () => {
     const dispatch = useDispatch();
-    const { allProducts } = useSelector((state) => state.products);
+    const { allProducts, loading } = useSelector((state) => state.products);
 
     useEffect(() => {
         dispatch(getProductsRequest());
@@ -37,8 +37,13 @@ const ProductsList = () => {
                 </div>
 
                 <div className='card'>
+                    {!isEmpty(allProducts) && loading && <WithDataLoader />}
                     <div className='card-body'>
-                        {isEmpty(allProducts) ? <Empty /> :
+                        {isEmpty(allProducts) && !loading && <Empty />}
+                        {isEmpty(allProducts) &&
+                            loading &&
+                            <WithNoDataLoader />}
+                        {!isEmpty(allProducts) &&
                             <div className='table-responsive'>
                                 <table className='table  datanew'>
                                     <thead>
