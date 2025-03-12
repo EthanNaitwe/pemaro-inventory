@@ -15,6 +15,7 @@ const SalesList = () => {
     const { allSales, loading, salesPageNo } = useSelector((state) => state.sales);
 
     const [showForm, setShowForm] = useState(false);
+    const [pageItems, setPageItems] = useState(6);
 
     const onPagination = (page) => {
         dispatch(setSalesPageNo(page))
@@ -35,9 +36,12 @@ const SalesList = () => {
                                 <h6>Manage your sales</h6>
                             </div>
                             <div className='page-btn'>
-                                <div className='btn btn-added' onClick={() => setShowForm(!showForm)}>
-                                    <img src={plus} alt='img' className='me-1' />
-                                    Add Sales
+                                <div className='btn btn-added' onClick={() => {
+                                    setShowForm(!showForm);
+                                    setPageItems(showForm ? 8 : 6)
+                                }}>
+                                    {showForm ? <i className="fa-solid fa-eye-slash me-2"></i> : <img src={plus} alt='img' className='me-1' />}
+                                    {showForm ? 'Hide Form' : 'Add Sales'}
                                 </div>
                             </div>
                         </div>
@@ -68,7 +72,7 @@ const SalesList = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {dataPaginationFn(orderBy(allSales, ['date'], ['desc']), 7, salesPageNo).map((sale, i) => {
+                                        {dataPaginationFn(orderBy(allSales, ['date'], ['desc']), pageItems, salesPageNo).map((sale, i) => {
                                             return (
                                                 <tr key={i}>
                                                     <td>
@@ -92,7 +96,9 @@ const SalesList = () => {
                                         })}
                                     </tbody>
                                 </table>
-                                <Pagination onChange={onPagination} responsive hideOnSinglePage align="center" defaultCurrent={salesPageNo} total={allSales.length} />
+                                <div className='my-2'>
+                                    <Pagination onChange={onPagination} responsive hideOnSinglePage align="center" defaultCurrent={salesPageNo} total={allSales.length} />
+                                </div>
                             </div>}
                         </div>
                     </div>
@@ -280,3 +286,6 @@ const SalesList = () => {
 }
 
 export default SalesList;
+
+// How does it look!? Any comments or areas to improve!?
+//  - I am currently improving it to also work for a Car Resell Business (Car Bond). I have someone there who wants it too.
