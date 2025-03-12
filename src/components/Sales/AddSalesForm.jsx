@@ -57,7 +57,7 @@ const AddSalesForm = () => {
     return (
         <div className='card-body'>
             <div className='row'>
-                <div className='col-lg-2 col-sm-6 col-12'>
+                <div className='col-lg-2 col-sm-6 col-6'>
                     <div className='form-group'>
                         <label>Product Code</label>
                         <input type='text' {...register("artNumber", { required: true })}
@@ -65,13 +65,13 @@ const AddSalesForm = () => {
                         <p>{errors.artNumber?.message}</p>
                     </div>
                 </div>
-                <div className='col-lg-2 col-sm-6 col-12'>
+                <div className='col-lg-2 col-sm-6 col-6'>
                     <div key={singleProduct} className='form-group'>
                         <label>Prod Name</label>
                         <input disabled type='text' value={singleProduct.name || ''} />
                     </div>
                 </div>
-                <div className='col-lg-2 col-sm-6 col-12'>
+                <div className='col-lg-2 col-sm-6 col-6'>
                     <div className='form-group'>
                         <label>Color</label>
                         <select disabled={!(watchCode.length === 8 && !isEmpty(singleProduct))} className='form-select' {...register("color")}
@@ -88,7 +88,7 @@ const AddSalesForm = () => {
                         <p>{errors.color?.message && "This field is required"}</p>
                     </div>
                 </div>
-                <div className='col-lg-2 col-sm-6 col-12'>
+                <div className='col-lg-2 col-sm-6 col-6'>
                     <div className='form-group'>
                         <label>Size</label>
                         <select disabled={!(watchCode.length === 8 && !isEmpty(singleProduct))} className='form-select' {...register("size")} aria-invalid={errors.discount ? "true" : "false"}>
@@ -104,7 +104,7 @@ const AddSalesForm = () => {
                         <p>{errors.size?.message && "This field is required"}</p>
                     </div>
                 </div>
-                <div className='col-lg-2 col-sm-6 col-12'>
+                <div className='col-lg-2 col-sm-6 col-6'>
                     <div className='form-group'>
                         <label>Amount</label>
                         <input disabled={!(watchCode.length === 8 && !isEmpty(singleProduct))} type='text' {...register("amount")}
@@ -112,7 +112,7 @@ const AddSalesForm = () => {
                         <p>{errors.amount?.message && "This field is required"}</p>
                     </div>
                 </div>
-                <div className='col-lg-2 col-sm-6 col-12'>
+                <div className='col-lg-2 col-sm-6 col-6'>
                     <div className='form-group'>
                         <label style={{ visibility: "hidden" }}>Product Code</label>
                         <button

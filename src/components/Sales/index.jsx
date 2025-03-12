@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import plus from '../../assets/img/icons/plus.svg';
 import { dataPaginationFn, getSizeLabel } from '../../config/helpers/dataHelpers';
 import { getSalesRequest, setSalesPageNo } from '../../config/store/actions/saleActions';
-import { setSaleVED } from '../../config/store/actions/settingsActions';
 import WithDataLoader from '../common/loaders/WithDataLoader';
 import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
 import AddSalesForm from './AddSalesForm';
@@ -36,10 +35,7 @@ const SalesList = () => {
                                 <h6>Manage your sales</h6>
                             </div>
                             <div className='page-btn'>
-                                <div className='btn btn-added' onClick={() => {
-                                    setShowForm(!showForm)
-                                    dispatch(setSaleVED('add-sales'))
-                                }}>
+                                <div className='btn btn-added' onClick={() => setShowForm(!showForm)}>
                                     <img src={plus} alt='img' className='me-1' />
                                     Add Sales
                                 </div>
@@ -47,7 +43,7 @@ const SalesList = () => {
                         </div>
 
                         <div className='card'>
-                            <AddSalesForm />
+                            {showForm && <AddSalesForm />}
                             {!isEmpty(allSales) && loading && <WithDataLoader classname='mb-3' />}
                             {isEmpty(allSales) && loading ? <WithNoDataLoader /> : <div className='table-responsive'>
                                 <table className='table  datanew'>
