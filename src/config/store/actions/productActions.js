@@ -16,3 +16,4 @@ export const createProductRequest = (payload) => ({ type: CREATE_PRODUCT_REQUEST
 export const addProductCategoryRequest = (productId, payload) => ({ type: ADD_PRODUCT_CATEGORY_REQUEST, productId, payload });
 export const getProductsRequest = () => ({ type: GET_PRODUCTS_REQUEST });
 export const setSingleProduct = (payload) => ({ type: SET_SINGLE_PRODUCT, payload });
+export const clearCreateError = () => ({ type: CREATE_PRODUCT_FAILURE, payload: null });

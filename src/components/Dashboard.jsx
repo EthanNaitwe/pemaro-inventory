@@ -1,15 +1,14 @@
-
+import { orderBy } from 'lodash';
+import { useSelector } from 'react-redux';
 import dash1Img from '../assets/img/icons/dash1.svg';
 import dash2Img from '../assets/img/icons/dash2.svg';
 import dash3Img from '../assets/img/icons/dash3.svg';
 import dash4Img from '../assets/img/icons/dash4.svg';
-import prod22 from '../assets/img/product/product22.jpg';
-import prod23 from '../assets/img/product/product23.jpg';
-import prod24 from '../assets/img/product/product24.jpg';
-import prod6 from '../assets/img/product/product6.jpg';
 import LineDashed from './Charts/LineDashed';
 
 const Dashboard = () => {
+    const { allProducts } = useSelector((state) => state.products);
+
     return (
         <div className='page-wrapper'>
             <div className='content'>
@@ -143,51 +142,23 @@ const Dashboard = () => {
                                         <thead>
                                             <tr>
                                                 <th>Sno</th>
-                                                <th>Products</th>
-                                                <th>Price</th>
+                                                <th>Name</th>
+                                                <th>Code</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td className='productimgname'>
-                                                    <span className='product-img'>
-                                                        <img src={prod22} alt='product' />
-                                                    </span>
-                                                    <span>Apple Earpods</span>
-                                                </td>
-                                                <td>$891.2</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td className='productimgname'>
-                                                    <span className='product-img'>
-                                                        <img src={prod23} alt='product' />
-                                                    </span>
-                                                    <span>iPhone 11</span>
-                                                </td>
-                                                <td>$668.51</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td className='productimgname'>
-                                                    <span className='product-img'>
-                                                        <img src={prod24} alt='product' />
-                                                    </span>
-                                                    <span>samsung</span>
-                                                </td>
-                                                <td>$522.29</td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td className='productimgname'>
-                                                    <span className='product-img'>
-                                                        <img src={prod6} alt='product' />
-                                                    </span>
-                                                    <span>Macbook Pro</span>
-                                                </td>
-                                                <td>$291.01</td>
-                                            </tr>
+                                            {orderBy(allProducts, ['date'], ['desc']).map(prod => ({ name: prod.name, artNumber: prod.artNumber })).slice(0, 4).map((prod, i) => {
+                                                return (<tr key={i}>
+                                                    <td>{i + 1}</td>
+                                                    <td className='productimgname'>
+                                                        <span className='product-img'>
+                                                            <i className="product-img-def fas fa-solid fa-person-dress fa-xl"></i>
+                                                        </span>
+                                                        <span>{prod.name}</span>
+                                                    </td>
+                                                    <td>{prod.artNumber}</td>
+                                                </tr>)
+                                            })}
                                         </tbody>
                                     </table>
                                 </div>

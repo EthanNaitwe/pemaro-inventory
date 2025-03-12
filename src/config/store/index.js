@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { productsReducer } from './reducers/productsReducer';
+import { salesReducer } from './reducers/salesReducers';
 import { settingsReducer } from './reducers/settingsReducer';
 import { usersReducer } from './reducers/usersReducer';
 import rootSaga from './sagas/rootSaga';
@@ -19,6 +20,7 @@ export const store = configureStore({
         users: usersReducer,
         settings: settingsReducer,
         products: productsReducer,
+        sales: salesReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),

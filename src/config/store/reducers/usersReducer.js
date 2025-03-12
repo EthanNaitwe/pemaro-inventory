@@ -28,7 +28,7 @@ export const usersReducer = (state = initialState, action) => {
             return { ...state, creating: false, error: action.payload };
 
         case LOGIN_USER_REQUEST:
-            return { ...state, logging: true };
+            return { ...state, logging: true, authUser: {} };
         case LOGIN_USER_SUCCESS:
             localStorage.setItem("token", action.payload.token);
             return { ...state, logging: false };

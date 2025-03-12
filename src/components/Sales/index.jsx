@@ -1,9 +1,29 @@
-import { useDispatch } from 'react-redux';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Pagination } from 'antd';
+import { isEmpty, orderBy } from 'lodash';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import plus from '../../assets/img/icons/plus.svg';
-import { setSaleVED } from '../../config/store/actions/settingsActions';
+import { dataPaginationFn, getSizeLabel } from '../../config/helpers/dataHelpers';
+import { getSalesRequest, setSalesPageNo } from '../../config/store/actions/saleActions';
+import WithDataLoader from '../common/loaders/WithDataLoader';
+import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
+import AddSalesForm from './AddSalesForm';
 
 const SalesList = () => {
     const dispatch = useDispatch();
+    const { allSales, loading, salesPageNo } = useSelector((state) => state.sales);
+
+    const [showForm, setShowForm] = useState(false);
+
+    const onPagination = (page) => {
+        dispatch(setSalesPageNo(page))
+    }
+
+    useEffect(() => {
+        dispatch(getSalesRequest());
+    }, []);
+
     return (
         <div>
             <div>
@@ -15,780 +35,65 @@ const SalesList = () => {
                                 <h6>Manage your sales</h6>
                             </div>
                             <div className='page-btn'>
-                                <div className='btn btn-added' onClick={() => dispatch(setSaleVED('add-sales'))}>
+                                <div className='btn btn-added' onClick={() => setShowForm(!showForm)}>
                                     <img src={plus} alt='img' className='me-1' />
                                     Add Sales
                                 </div>
                             </div>
                         </div>
 
-
                         <div className='card'>
-                            <div className='card-body'>
-                                <div className='card' id='filter_inputs'>
-                                    <div className='card-body pb-0'>
-                                        <div className='row'>
-                                            <div className='col-lg-3 col-sm-6 col-12'>
-                                                <div className='form-group'>
-                                                    <input type='text' placeholder='Enter Name' />
-                                                </div>
-                                            </div>
-                                            <div className='col-lg-3 col-sm-6 col-12'>
-                                                <div className='form-group'>
-                                                    <input type='text' placeholder='Enter Reference No' />
-                                                </div>
-                                            </div>
-                                            <div className='col-lg-3 col-sm-6 col-12'>
-                                                <div className='form-group'>
-                                                    <select className='form-select'>
-                                                        <option>Completed</option>
-                                                        <option>Paid</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div className='col-lg-3 col-sm-6 col-12'>
-                                                <div className='form-group'>
-                                                    <a className='btn btn-filters ms-auto'>
-                                                        <img src='assets/img/icons/search-whites.svg' alt='img' />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='table-responsive'>
-                                    <table className='table  datanew'>
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' id='select-all' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </th>
-                                                <th>Date</th>
-                                                <th>Customer Name</th>
-                                                <th>Reference</th>
-                                                <th>Status</th>
-                                                <th>Payment</th>
-                                                <th>Total</th>
-                                                <th>Paid</th>
-                                                <th>Due</th>
-                                                <th>Biller</th>
-                                                {/* <th className='text-center'>Action</th> */}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td>walk-in-customer</td>
-                                                <td>19 Nov 2022</td>
-                                                <td>SL0101</td>
-                                                <td><span className='badges bg-lightgreen'>Completed</span></td>
-                                                <td><span className='badges bg-lightgreen'>Paid</span></td>
-                                                <td>0.00</td>
-                                                <td>0.00</td>
-                                                <td className='text-red'>100.00</td>
-                                                <td>Admin</td>
-                                                <td className='text-center'>
-                                                    <span className='action-set' data-bs-toggle='dropdown'
-                                                        aria-expanded='true'>
-                                                        <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </span>
-                                                    <ul className='dropdown-menu'>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
-                                                                Sale Detail
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
-                                                                Edit Sale
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#showpayment'>
-                                                                <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
-                                                                Show Payments
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#createpayment'>
-                                                                <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
-                                                                Create Payment
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
-                                                                Download pdf
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span
-                                                                className='dropdown-item confirm-text'>
-                                                                <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
-                                                                Delete Sale
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td>walk-in-customer</td>
-                                                <td>19 Nov 2022</td>
-                                                <td>SL0102</td>
-                                                <td><span className='badges bg-lightgreen'>Completed</span></td>
-                                                <td><span className='badges bg-lightgreen'>Paid</span></td>
-                                                <td>0.00</td>
-                                                <td>0.00</td>
-                                                <td className='text-red'>100.00</td>
-                                                <td>Admin</td>
-                                                <td className='text-center'>
-                                                    <span className='action-set' data-bs-toggle='dropdown'
-                                                        aria-expanded='true'>
-                                                        <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </span>
-                                                    <ul className='dropdown-menu'>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
-                                                                Sale Detail
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
-                                                                Edit Sale
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#showpayment'>
-                                                                <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
-                                                                Show Payments
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#createpayment'>
-                                                                <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
-                                                                Create Payment
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/download.svg' className='me-2'
-                                                                    alt='img' />
-                                                                Download pdf
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span
-                                                                className='dropdown-item confirm-text'>
-                                                                <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
-                                                                Delete Sale
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td>walk-in-customer</td>
-                                                <td>19 Nov 2022</td>
-                                                <td>SL0103</td>
-                                                <td><span className='badges bg-lightgreen'>Completed</span></td>
-                                                <td><span className='badges bg-lightgreen'>Paid</span></td>
-                                                <td>0.00</td>
-                                                <td className='text-green'>100.00</td>
-                                                <td>0.00</td>
-                                                <td>Admin</td>
-                                                <td className='text-center'>
-                                                    <span className='action-set' data-bs-toggle='dropdown'
-                                                        aria-expanded='true'>
-                                                        <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </span>
-                                                    <ul className='dropdown-menu'>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
-                                                                Sale Detail
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
-                                                                Edit Sale
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span
-                                                                data-bs-toggle='modal' data-bs-target='#showpayment'>
-                                                                <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
-                                                                Show Payments
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#createpayment'>
-                                                                <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
-                                                                Create Payment
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
-                                                                Download pdf
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span
-                                                                className='dropdown-item confirm-text'>
-                                                                <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
-                                                                Delete Sale
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td>Fred C. Rasmussen</td>
-                                                <td>19 Nov 2022</td>
-                                                <td>SL0104</td>
-                                                <td><span className='badges bg-lightred'>Pending</span></td>
-                                                <td><span className='badges bg-lightred'>Due</span></td>
-                                                <td>0.00</td>
-                                                <td className='text-green'>100.00</td>
-                                                <td>0.00</td>
-                                                <td>Admin</td>
-                                                <td className='text-center'>
-                                                    <span className='action-set' data-bs-toggle='dropdown'
-                                                        aria-expanded='true'>
-                                                        <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </span>
-                                                    <ul className='dropdown-menu'>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
-                                                                Sale Detail
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
-                                                                Edit Sale
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#showpayment'>
-                                                                <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
-                                                                Show Payments
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#createpayment'>
-                                                                <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
-                                                                Create Payment
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
-                                                                Download pdf
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span
-                                                                className='dropdown-item confirm-text'>
-                                                                <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
-                                                                Delete Sale
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td>Thomas M. Martin</td>
-                                                <td>19 Nov 2022</td>
-                                                <td>SL0105</td>
-                                                <td><span className='badges bg-lightred'>Pending</span></td>
-                                                <td><span className='badges bg-lightred'>Due</span></td>
-                                                <td>0.00</td>
-                                                <td>0.00</td>
-                                                <td className='text-green'>100.00</td>
-                                                <td>Admin</td>
-                                                <td className='text-center'>
-                                                    <span className='action-set' data-bs-toggle='dropdown'
-                                                        aria-expanded='true'>
-                                                        <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </span>
-                                                    <ul className='dropdown-menu'>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
-                                                                Sale Detail
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
-                                                                Edit Sale
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#showpayment'>
-                                                                <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
-                                                                Show Payments
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#createpayment'>
-                                                                <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
-                                                                Create Payment
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
-                                                                Download pdf
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span
-                                                                className='dropdown-item confirm-text'>
-                                                                <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
-                                                                Delete Sale
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td>Thomas M. Martin</td>
-                                                <td>19 Nov 2022</td>
-                                                <td>SL0106</td>
-                                                <td><span className='badges bg-lightgreen'>Completed</span></td>
-                                                <td><span className='badges bg-lightgreen'>Paid</span></td>
-                                                <td>0.00</td>
-                                                <td>0.00</td>
-                                                <td className='text-red'>100.00</td>
-                                                <td>Admin</td>
-                                                <td className='text-center'>
-                                                    <span className='action-set' data-bs-toggle='dropdown'
-                                                        aria-expanded='true'>
-                                                        <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </span>
-                                                    <ul className='dropdown-menu'>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
-                                                                Sale Detail
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
-                                                                Edit Sale
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#showpayment'>
-                                                                <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
-                                                                Show Payments
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#createpayment'>
-                                                                <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
-                                                                Create Payment
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
-                                                                Download pdf
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span
-                                                                className='dropdown-item confirm-text'>
-                                                                <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
-                                                                Delete Sale
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td>walk-in-customer</td>
-                                                <td>19 Nov 2022</td>
-                                                <td>SL0107</td>
-                                                <td><span className='badges bg-lightgreen'>Completed</span></td>
-                                                <td><span className='badges bg-lightgreen'>Paid</span></td>
-                                                <td>0.00</td>
-                                                <td>0.00</td>
-                                                <td className='text-red'>100.00</td>
-                                                <td>Admin</td>
-                                                <td className='text-center'>
-                                                    <span className='action-set' data-bs-toggle='dropdown'
-                                                        aria-expanded='true'>
-                                                        <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </span>
-                                                    <ul className='dropdown-menu'>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
-                                                                Sale Detail
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
-                                                                Edit Sale
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#showpayment'>
-                                                                <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
-                                                                Show Payments
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#createpayment'>
-                                                                <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
-                                                                Create Payment
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
-                                                                Download pdf
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span
-                                                                className='dropdown-item confirm-text'>
-                                                                <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
-                                                                Delete Sale
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td>walk-in-customer</td>
-                                                <td>19 Nov 2022</td>
-                                                <td>SL0108</td>
-                                                <td><span className='badges bg-lightred'>Pending</span></td>
-                                                <td><span className='badges bg-lightred'>Due</span></td>
-                                                <td>0.00</td>
-                                                <td className='text-green'>100.00</td>
-                                                <td>0.00</td>
-                                                <td>Admin</td>
-                                                <td className='text-center'>
-                                                    <span className='action-set' data-bs-toggle='dropdown'
-                                                        aria-expanded='true'>
-                                                        <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </span>
-                                                    <ul className='dropdown-menu'>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
-                                                                Sale Detail
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
-                                                                Edit Sale
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#showpayment'>
-                                                                <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
-                                                                Show Payments
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#createpayment'>
-                                                                <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
-                                                                Create Payment
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
-                                                                Download pdf
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span
-                                                                className='dropdown-item confirm-text'>
-                                                                <img src='assets/img/icons/delete1.svg' className='me-2'
-                                                                    alt='img' />
-                                                                Delete Sale
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td>walk-in-customer</td>
-                                                <td>19 Nov 2022</td>
-                                                <td>SL0109</td>
-                                                <td><span className='badges bg-lightred'>Pending</span></td>
-                                                <td><span className='badges bg-lightred'>Due</span></td>
-                                                <td>0.00</td>
-                                                <td className='text-green'>100.00</td>
-                                                <td>0.00</td>
-                                                <td>Admin</td>
-                                                <td className='text-center'>
-                                                    <span className='action-set' data-bs-toggle='dropdown'
-                                                        aria-expanded='true'>
-                                                        <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </span>
-                                                    <ul className='dropdown-menu'>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
-                                                                Sale Detail
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
-                                                                Edit Sale
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#showpayment'>
-                                                                <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
-                                                                Show Payments
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#createpayment'>
-                                                                <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
-                                                                Create Payment
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
-                                                                Download pdf
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span
-                                                                className='dropdown-item confirm-text'>
-                                                                <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
-                                                                Delete Sale
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td>walk-in-customer</td>
-                                                <td>19 Nov 2022</td>
-                                                <td>SL0110</td>
-                                                <td><span className='badges bg-lightred'>Pending</span></td>
-                                                <td><span className='badges bg-lightred'>Due</span></td>
-                                                <td>0.00</td>
-                                                <td className='text-green'>100.00</td>
-                                                <td>0.00</td>
-                                                <td>Admin</td>
-                                                <td className='text-center'>
-                                                    <span className='action-set' data-bs-toggle='dropdown'
-                                                        aria-expanded='true'>
-                                                        <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </span>
-                                                    <ul className='dropdown-menu'>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
-                                                                Sale Detail
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
-                                                                Edit Sale
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#showpayment'>
-                                                                <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
-                                                                Show Payments
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#createpayment'>
-                                                                <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
-                                                                Create Payment
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
-                                                                Download pdf
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span
-                                                                className='dropdown-item confirm-text'>
-                                                                <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
-                                                                Delete Sale
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td>walk-in-customer</td>
-                                                <td>19 Nov 2022</td>
-                                                <td>SL0111</td>
-                                                <td><span className='badges bg-lightred'>Pending</span></td>
-                                                <td><span className='badges bg-lightred'>Due</span></td>
-                                                <td>0.00</td>
-                                                <td>0.00</td>
-                                                <td>0.00</td>
-                                                <td>Admin</td>
-                                                <td className='text-center'>
-                                                    <span className='action-set' data-bs-toggle='dropdown'
-                                                        aria-expanded='true'>
-                                                        <i className='fa fa-ellipsis-v' aria-hidden='true'></i>
-                                                    </span>
-                                                    <ul className='dropdown-menu'>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/eye1.svg' className='me-2' alt='img' />
-                                                                Sale Detail
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/edit.svg' className='me-2' alt='img' />
-                                                                Edit Sale
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#showpayment'>
-                                                                <img src='assets/img/icons/dollar-square.svg' className='me-2' alt='img' />
-                                                                Show Payments
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'
-                                                                data-bs-toggle='modal' data-bs-target='#createpayment'>
-                                                                <img src='assets/img/icons/plus-circle.svg' className='me-2' alt='img' />
-                                                                Create Payment
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className='dropdown-item'>
-                                                                <img src='assets/img/icons/download.svg' className='me-2' alt='img' />
-                                                                Download pdf
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span
-                                                                className='dropdown-item confirm-text'>
-                                                                <img src='assets/img/icons/delete1.svg' className='me-2' alt='img' />
-                                                                Delete Sale
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                            {showForm && <AddSalesForm />}
+                            {!isEmpty(allSales) && loading && <WithDataLoader classname='mb-3' />}
+                            {isEmpty(allSales) && loading ? <WithNoDataLoader /> : <div className='table-responsive'>
+                                <table className='table  datanew'>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <label className='checkboxs'>
+                                                    <input type='checkbox' id='select-all' />
+                                                    <span className='checkmarks'></span>
+                                                </label>
+                                            </th>
+                                            <th>Reference</th>
+                                            <th>Product Code</th>
+                                            <th>Color</th>
+                                            <th>Size</th>
+                                            {/* <th>Status</th> */}
+                                            <th>Payment Status</th>
+                                            <th>Total (UGX)</th>
+                                            {/* <th>Paid</th>
+                                            <th>Due</th> */}
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {dataPaginationFn(orderBy(allSales, ['date'], ['desc']), 7, salesPageNo).map((sale, i) => {
+                                            return (
+                                                <tr key={i}>
+                                                    <td>
+                                                        <label className='checkboxs'>
+                                                            <input type='checkbox' />
+                                                            <span className='checkmarks'></span>
+                                                        </label>
+                                                    </td>
+                                                    <td>{sale.reference}</td>
+                                                    <td>{sale.artNumber}</td>
+                                                    <td>{sale.color}</td>
+                                                    <td>{`${getSizeLabel(sale.size)} (${sale.size})`}</td>
+                                                    {/* <td><span className={`badges ${sale.status === 'Completed' ? 'bg-lightgreen' : 'bg-lightred'}`}>{sale.status}</span></td> */}
+                                                    <td><span className={`badges ${sale.payment === 'Paid' ? 'bg-lightgreen' : 'bg-lightred'}`}>{sale.payment}</span></td>
+                                                    <td>{parseInt(sale.total, 10).toLocaleString()}</td>
+                                                    {/* <td>{sale.paid}</td>
+                                                    <td className='text-red'>{sale.due}</td> */}
+                                                    <td>{sale.date}</td>
+                                                </tr>
+                                            )
+                                        })}
+                                    </tbody>
+                                </table>
+                                <Pagination onChange={onPagination} responsive hideOnSinglePage align="center" defaultCurrent={salesPageNo} total={allSales.length} />
+                            </div>}
                         </div>
                     </div>
                 </div>

@@ -19,6 +19,7 @@ function* loginUserRequest(action) {
   try {
     const tokenData = yield call(loginUserApi, action.payload);
     yield put({ type: LOGIN_USER_SUCCESS, payload: tokenData });
+    yield put({ type: GET_PROFILE_REQUEST });
     yield put({ type: SET_IS_AUTHENTICATED, payload: true });
   } catch (error) {
     const payload = error.response?.data?.message || "Failed to Login User";

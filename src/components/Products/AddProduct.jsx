@@ -1,15 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from "yup";
 import plus from '../../assets/img/icons/plus.svg';
-import { discount, tax } from '../../config/helpers/formInputHelpers';
-import { createProductRequest } from "../../config/store/actions/productActions";
+import { discount, tax } from '../../config/helpers/dataHelpers';
+import { clearCreateError, createProductRequest } from "../../config/store/actions/productActions";
 import { setProductVED } from '../../config/store/actions/settingsActions';
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import { useEffect } from "react";
 
 const AddProduct = () => {
     const dispatch = useDispatch();
-    const { creating } = useSelector((state) => state.products);
+    const { creating, createError } = useSelector((state) => state.products);
     const schema = yup
         .object({
             tax: yup.string().required(),
@@ -27,11 +30,32 @@ const AddProduct = () => {
             resolver: yupResolver(schema),
         });
 
+    const onToast = (text) => toast.warn(text);
+    useEffect(() => {
+        if (createError && !creating) onToast(createError);
+        return () => {
+            dispatch(clearCreateError());
+        }
+    }, [createError, creating]);
+
     const onSubmit = (data) =>
         dispatch(createProductRequest(data));
 
     return (
         <div className='page-wrapper'>
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition={Bounce}
+            />
             <div className='content'>
                 <div className='page-header'>
                     <div className='page-title'>
@@ -48,7 +72,7 @@ const AddProduct = () => {
                 <div className='card'>
                     <div className='card-body'>
                         <div className='row'>
-                            <div className='col-lg-3 col-sm-6 col-12'>
+                            <div className='col-lg-3 col-sm-6 col-6'>
                                 <div className='form-group'>
                                     <label>Product Name</label>
                                     <input type='text' {...register("name", { required: true })}
@@ -56,15 +80,15 @@ const AddProduct = () => {
                                     <p>{errors.name?.message && "This field is required"}</p>
                                 </div>
                             </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
+                            <div className='col-lg-3 col-sm-6 col-6'>
                                 <div className='form-group'>
-                                    <label>Art Number</label>
+                                    <label>Product Code</label>
                                     <input type='text' {...register("artNumber")}
                                         aria-invalid={errors.artNumber ? "true" : "false"} />
                                     <p>{errors.artNumber?.message && "This field is required"}</p>
                                 </div>
                             </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
+                            <div className='col-lg-3 col-sm-6 col-6'>
                                 <div className='form-group'>
                                     <label>Tax</label>
                                     <select className='form-select' {...register("tax")}
@@ -81,7 +105,7 @@ const AddProduct = () => {
                                     <p>{errors.tax?.message && "This field is required"}</p>
                                 </div>
                             </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
+                            <div className='col-lg-3 col-sm-6 col-6'>
                                 <div className='form-group'>
                                     <label>Discount Type</label>
                                     <select className='form-select' {...register("discount")} aria-invalid={errors.discount ? "true" : "false"}>
@@ -97,7 +121,7 @@ const AddProduct = () => {
                                     <p>{errors.discount?.message && "This field is required"}</p>
                                 </div>
                             </div>
-                            {/* <div className='col-lg-3 col-sm-6 col-12'>
+                            {/* <div className='col-lg-3 col-sm-6 col-6'>
                                 <div className='form-group'>
                                     <label> Product Image</label>
                                     <div className='image-upload'>
