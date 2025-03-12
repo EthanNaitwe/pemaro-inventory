@@ -72,7 +72,7 @@ const AddProduct = () => {
                 <div className='card'>
                     <div className='card-body'>
                         <div className='row'>
-                            <div className='col-lg-3 col-sm-6 col-12'>
+                            <div className='col-lg-3 col-sm-6 col-6'>
                                 <div className='form-group'>
                                     <label>Product Name</label>
                                     <input type='text' {...register("name", { required: true })}
@@ -80,7 +80,7 @@ const AddProduct = () => {
                                     <p>{errors.name?.message && "This field is required"}</p>
                                 </div>
                             </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
+                            <div className='col-lg-3 col-sm-6 col-6'>
                                 <div className='form-group'>
                                     <label>Product Code</label>
                                     <input type='text' {...register("artNumber")}
@@ -88,7 +88,7 @@ const AddProduct = () => {
                                     <p>{errors.artNumber?.message && "This field is required"}</p>
                                 </div>
                             </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
+                            <div className='col-lg-3 col-sm-6 col-6'>
                                 <div className='form-group'>
                                     <label>Tax</label>
                                     <select className='form-select' {...register("tax")}
@@ -105,7 +105,7 @@ const AddProduct = () => {
                                     <p>{errors.tax?.message && "This field is required"}</p>
                                 </div>
                             </div>
-                            <div className='col-lg-3 col-sm-6 col-12'>
+                            <div className='col-lg-3 col-sm-6 col-6'>
                                 <div className='form-group'>
                                     <label>Discount Type</label>
                                     <select className='form-select' {...register("discount")} aria-invalid={errors.discount ? "true" : "false"}>
@@ -121,7 +121,7 @@ const AddProduct = () => {
                                     <p>{errors.discount?.message && "This field is required"}</p>
                                 </div>
                             </div>
-                            {/* <div className='col-lg-3 col-sm-6 col-12'>
+                            {/* <div className='col-lg-3 col-sm-6 col-6'>
                                 <div className='form-group'>
                                     <label> Product Image</label>
                                     <div className='image-upload'>
