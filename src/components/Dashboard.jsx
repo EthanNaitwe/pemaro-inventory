@@ -1,50 +1,14 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
+import { orderBy } from 'lodash';
 import { useSelector } from 'react-redux';
 import dash1Img from '../assets/img/icons/dash1.svg';
 import dash2Img from '../assets/img/icons/dash2.svg';
 import dash3Img from '../assets/img/icons/dash3.svg';
 import dash4Img from '../assets/img/icons/dash4.svg';
-import prod22 from '../assets/img/product/product22.jpg';
-import prod23 from '../assets/img/product/product23.jpg';
-import prod24 from '../assets/img/product/product24.jpg';
-import prod6 from '../assets/img/product/product6.jpg';
 import LineDashed from './Charts/LineDashed';
-import { useEffect } from 'react';
-import { orderBy } from 'lodash';
 
 const Dashboard = () => {
     const { allProducts } = useSelector((state) => state.products);
 
-
-    useEffect(() => {
-        console.log('first', orderBy(allProducts, ['date'], ['desc']).map(prod => ({ name: prod.name, artNumber: prod.artNumber })).slice(0, 4))
-        // console.log('first', orderBy(allProducts, ['date'], ['desc']))
-        // x.slice(0, 4);
-    }, [])
-
-    const recentProds = [
-        {
-            name: 'Apple Earpods',
-            price: '$891.2',
-            img: prod22,
-        },
-        {
-            name: 'iPhone 11',
-            price: '$891.2',
-            img: prod23,
-        },
-        {
-            name: 'Samsung',
-            price: '$891.2',
-            img: prod24,
-        },
-        {
-            name: 'Macbook Pro',
-            price: '$891.2',
-            img: prod6,
-        },
-    ]
     return (
         <div className='page-wrapper'>
             <div className='content'>

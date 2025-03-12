@@ -10,7 +10,6 @@ const initialState = {
     createError: null,
 
     salesPageNo: 1,
-    paginatedData: [],
 };
 
 export const salesReducer = (state = initialState, action) => {
