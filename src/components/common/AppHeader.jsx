@@ -71,7 +71,7 @@ const AppHeader = () => {
                                 </span>
                                 <div className='profilesets'>
                                     <h6>{`${authUser.surname} ${authUser.other_names}`}</h6>
-                                    <h5>Admin</h5>
+                                    <h5>{authUser.role}</h5>
                                 </div>
                             </div>
                             <hr className='m-0' />
@@ -98,7 +98,7 @@ const AppHeader = () => {
                 </span>
                 <div className='dropdown-menu dropdown-menu-right show' style={showLogout ? {
                     position: 'absolute', inset: '0px 0px auto auto', margin: '0px', transform: 'translate3d(-20px, 62px, 0px)'
-                } : {}} data-popper-placement="bottom-end">
+                } : { visibility: "hidden" }} data-popper-placement="bottom-end">
                     {/* <span className='dropdown-item'>My Profile</span> */}
                     {/* <span className='dropdown-item'>Settings</span> */}
                     <span className='dropdown-item' onClick={() => {

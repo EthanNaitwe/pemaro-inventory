@@ -10,7 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Empty } from 'antd';
 import { useForm } from 'react-hook-form';
 import * as yup from "yup";
-import { clothSizes, getSizeLabel } from '../../config/helpers/formInputHelpers';
+import { clothSizes, getSizeLabel } from '../../config/helpers/dataHelpers';
 import { addProductCategoryRequest, setSingleProduct } from '../../config/store/actions/productActions';
 import CardHeader from '../common/CardHeader';
 import WithDataLoader from '../common/loaders/WithDataLoader';
@@ -86,7 +86,8 @@ const ProductDetails = () => {
                                         </li>
                                         <li>
                                             <h4>Quantity</h4>
-                                            <h6>{sumBy(singleProduct?.variants, 'quantity')}</h6>
+                                            {/* (sumBy(item.variants, 'quantity') - item.sales.length) */}
+                                            <h6>{sumBy(singleProduct?.variants, 'quantity') - singleProduct.sales.length}</h6>
                                         </li>
                                         <li>
                                             <h4>Tax</h4>
@@ -173,6 +174,8 @@ const ProductDetails = () => {
                                                     </thead>
                                                     <tbody>
                                                         {singleProduct?.variants.map((item) => {
+                                                            const filtered = singleProduct.sales.filter(prod => prod.color === item.color && prod.size === item.size);
+                                                            console.log(`filtered: ${item.color}:${item.size}:`, filtered)
                                                             return (
                                                                 <tr key={item.id}>
                                                                     <td>{capitalize(item.color)}</td>

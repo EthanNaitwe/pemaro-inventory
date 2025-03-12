@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Empty } from 'antd';
-import { capitalize, isEmpty, sumBy, toUpper } from 'lodash';
+import { isEmpty, sumBy, toUpper } from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import plus from '../../assets/img/icons/plus.svg';
@@ -79,9 +79,9 @@ const ProductsList = () => {
                                                         {item.name}
                                                     </td>
                                                     <td>{toUpper(item.artNumber)}</td>
-                                                    <td>{sumBy(item.variants, 'quantity')}</td>
+                                                    <td>{(sumBy(item.variants, 'quantity') - item.sales.length)}</td>
                                                     <td>{item.tax}</td>
-                                                    <td>{capitalize(item.discount)}</td>
+                                                    <td>{item.discount}</td>
                                                     <td>
                                                         <Button variant="dashed" className='px-4' size="small" onClick={() => {
                                                             dispatch(setProductVED('view-product'));

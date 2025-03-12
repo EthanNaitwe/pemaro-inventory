@@ -28,3 +28,13 @@ export const addCategoryApi = async (productId, data) => {
     const response = await api.post(`/products/${productId}/variants`, data);
     return response.data;
 };
+
+export const getSalesApi = async () => {
+    const response = await api.get("/sales");
+    return response.data;
+};
+
+export const addNewSaleApi = async (productId, data) => {
+    const response = await api.post(`/sales/${productId}/product`, data);
+    return response.data;
+};

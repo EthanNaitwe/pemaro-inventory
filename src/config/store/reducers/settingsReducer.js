@@ -25,7 +25,7 @@ export const settingsReducer = (state = initialState, action) => {
             return { ...state, saleVED: action.payload };
         case LOGOUT_USER:
             localStorage.removeItem('token');
-            return { ...state, isAuthenticated: false, authRoute: 'login' };
+            return { ...initialState };
         default:
             return state;
     }
