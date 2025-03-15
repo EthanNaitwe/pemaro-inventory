@@ -65,7 +65,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='col-lg-3 col-sm-6 col-12 d-flex'>
+                    <div className='col-lg-3 col-sm-6 col-6 d-flex'>
                         <div className='dash-count'>
                             <div className='dash-counts'>
                                 <h4>100</h4>
@@ -76,7 +76,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='col-lg-3 col-sm-6 col-12 d-flex'>
+                    <div className='col-lg-3 col-sm-6 col-6 d-flex'>
                         <div className='dash-count das1'>
                             <div className='dash-counts'>
                                 <h4>100</h4>
@@ -87,7 +87,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='col-lg-3 col-sm-6 col-12 d-flex'>
+                    <div className='col-lg-3 col-sm-6 col-6 d-flex'>
                         <div className='dash-count das2'>
                             <div className='dash-counts'>
                                 <h4>100</h4>
@@ -98,7 +98,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='col-lg-3 col-sm-6 col-12 d-flex'>
+                    <div className='col-lg-3 col-sm-6 col-6 d-flex'>
                         <div className='dash-count das3'>
                             <div className='dash-counts'>
                                 <h4>105</h4>

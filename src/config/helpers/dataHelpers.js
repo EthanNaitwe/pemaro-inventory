@@ -1,3 +1,5 @@
+import { groupBy, sumBy } from "lodash";
+
 export const tax = [2, 3, 4, 5];
 export const discount = [5, 10, 15, 20];
 export const clothSizes = [
@@ -34,4 +36,21 @@ export const dataPaginationFn = (arr, pageItems, pageNo) => {
 
     // Return the slice of items for the current page
     return arr.slice(startIndex, endIndex);
+}
+
+export const groupProductVariants = (variants) => {
+    const grouped = groupBy(variants, (item) => `${item.size}-${item.color}`) // Group by size and color
+
+    const result = [];
+
+    for (const key in grouped) {
+        const element = grouped[key];
+        result.push({
+            size: element[0].size,
+            color: element[0].color,
+            quantity: sumBy(element, 'quantity')
+        });
+    }
+
+    return result;
 }

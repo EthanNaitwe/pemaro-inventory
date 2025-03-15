@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setProductVED } from '../../config/store/actions/settingsActions';
 
 import JsBarcode from 'jsbarcode';
-import { capitalize, isEmpty, sumBy } from 'lodash';
+import { capitalize, groupBy, isEmpty, sumBy } from 'lodash';
 import { useEffect, useRef } from 'react';
 // import prod69 from '../../assets/img/product/product69.jpg';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Empty } from 'antd';
 import { useForm } from 'react-hook-form';
 import * as yup from "yup";
-import { clothSizes, getSizeLabel } from '../../config/helpers/dataHelpers';
+import { clothSizes, getSizeLabel, groupProductVariants } from '../../config/helpers/dataHelpers';
 import { addProductCategoryRequest, setSingleProduct } from '../../config/store/actions/productActions';
 import CardHeader from '../common/CardHeader';
 import WithDataLoader from '../common/loaders/WithDataLoader';
@@ -68,7 +68,7 @@ const ProductDetails = () => {
                 </div>
                 <div className='row'>
                     <div className='col-lg-7 col-sm-12'>
-                        <div className='card'>
+                        <div className='card general-details'>
                             <CardHeader title="General Details" />
                             <div className='card-body'>
                                 <div className='bar-code-view'>
@@ -110,7 +110,7 @@ const ProductDetails = () => {
                         <div className='card'>
                             <CardHeader title="Category Details" />
                             <div className='row mt-3 ms-2 category-form'>
-                                <div className='col-lg-3 col-sm-6 col-12'>
+                                <div className='col-lg-3 col-sm-6 col-6'>
                                     <div className='form-group'>
                                         <label>Color</label>
                                         <input placeholder='Color' type='text' {...register("color", { required: true })}
@@ -118,7 +118,7 @@ const ProductDetails = () => {
                                         <p>{errors.color?.message && "Required"}</p>
                                     </div>
                                 </div>
-                                <div className='col-lg-3 col-sm-6 col-12'>
+                                <div className='col-lg-3 col-sm-6 col-6'>
                                     <div className='form-group'>
                                         <label>Size</label>
                                         <select className='form-select' {...register("size")}
@@ -135,7 +135,7 @@ const ProductDetails = () => {
                                         <p>{errors.size?.message && "Required"}</p>
                                     </div>
                                 </div>
-                                <div className='col-lg-3 col-sm-6 col-12'>
+                                <div className='col-lg-3 col-sm-6 col-6'>
                                     <div className='form-group'>
                                         <label>Quantity</label>
                                         <input placeholder='Quantity' type="number" min={1} {...register("quantity", { required: true })}
@@ -143,12 +143,12 @@ const ProductDetails = () => {
                                         <p>{errors.quantity?.message && "Required"}</p>
                                     </div>
                                 </div>
-                                <div className='col-lg-3 col-sm-6 col-12'>
+                                <div className='col-lg-3 col-sm-6 col-6'>
                                     <div className='form-group'>
                                         <label style={{ visibility: "hidden" }}>Submit</label>
                                         <button
                                             disabled={addingCategory}
-                                            className='btn card-btn'
+                                            className='btn card-btn btn-block'
                                             onClick={handleSubmit(onSubmit)}>
                                             Submit{' '}
                                             {addingCategory && <div className="spinner-border spinner-border-sm" role="status">
@@ -173,7 +173,7 @@ const ProductDetails = () => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {singleProduct?.variants.map((item) => {
+                                                        {groupProductVariants(singleProduct?.variants).map((item) => {
                                                             const filtered = singleProduct.sales.filter(prod => prod.color === item.color && prod.size === item.size);
                                                             console.log(`filtered: ${item.color}:${item.size}:`, filtered)
                                                             return (
