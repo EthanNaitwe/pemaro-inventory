@@ -7002,6 +7002,9 @@ span.select2-container.select2-container--default.select2-container--open {
   .category-form .form-group {
     margin-right: 15px;
   }
+  .general-details {
+    display: none;
+  }
 }
 
 .productdetails>ul>li {

@@ -15,7 +15,7 @@ const SalesList = () => {
     const { allSales, loading, salesPageNo } = useSelector((state) => state.sales);
 
     const [showForm, setShowForm] = useState(false);
-    const [pageItems, setPageItems] = useState(6);
+    const [pageItems, setPageItems] = useState(9);
 
     const onPagination = (page) => {
         dispatch(setSalesPageNo(page))
@@ -38,7 +38,7 @@ const SalesList = () => {
                             <div className='page-btn'>
                                 <div className='btn btn-added' onClick={() => {
                                     setShowForm(!showForm);
-                                    setPageItems(showForm ? 8 : 6)
+                                    setPageItems(showForm ? 9 : 6)
                                 }}>
                                     {showForm ? <i className="fa-solid fa-eye-slash me-2"></i> : <img src={plus} alt='img' className='me-1' />}
                                     {showForm ? 'Hide Form' : 'Add Sales'}
