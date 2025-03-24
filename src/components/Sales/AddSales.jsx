@@ -13,7 +13,6 @@ import { setSaleVED } from '../../config/store/actions/settingsActions';
 const AddSales = () => {
     const dispatch = useDispatch();
     return (
-
         <div className='page-wrapper'>
             <div className='content'>
                 <div className='page-header'>

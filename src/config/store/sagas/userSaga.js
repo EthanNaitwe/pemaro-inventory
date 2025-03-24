@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { createUserApi, getProfileApi, loginUserApi } from "../../api";
-import { CREATE_USER_FAILURE, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, GET_PROFILE_FAILURE, GET_PROFILE_REQUEST, GET_PROFILE_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS } from "../actions/userActions";
+import { createUserApi, getProfileApi, loginUserApi, getAllUsersApi } from "../../api";
+import { CREATE_USER_FAILURE, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, GET_ALL_USERS_FAILURE, GET_ALL_USERS_REQUEST, GET_ALL_USERS_SUCCESS, GET_PROFILE_FAILURE, GET_PROFILE_REQUEST, GET_PROFILE_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS } from "../actions/userActions";
 import { SET_IS_AUTHENTICATED } from "../actions/settingsActions";
 
 // Worker Saga: Create User
@@ -38,9 +38,21 @@ function* getProfile() {
   }
 }
 
+// Worker Saga: Get Profile
+function* getAllUsers() {
+  try {
+    const { data } = yield call(getAllUsersApi);
+    yield put({ type: GET_ALL_USERS_SUCCESS, payload: data });
+  } catch (error) {
+    const payload = error.response?.data?.message || "Failed to fetch User Profile";
+    yield put({ type: GET_ALL_USERS_FAILURE, payload });
+  }
+}
+
 // Watcher Saga: Watches for actions
 export function* userSaga() {
   yield takeLatest(CREATE_USER_REQUEST, createUserSaga);
   yield takeLatest(LOGIN_USER_REQUEST, loginUserRequest);
   yield takeLatest(GET_PROFILE_REQUEST, getProfile);
+  yield takeLatest(GET_ALL_USERS_REQUEST, getAllUsers);
 }

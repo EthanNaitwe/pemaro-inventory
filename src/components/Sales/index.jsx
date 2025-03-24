@@ -49,57 +49,58 @@ const SalesList = () => {
                         <div className='card'>
                             {showForm && <AddSalesForm />}
                             {!isEmpty(allSales) && loading && <WithDataLoader classname='mb-3' />}
-                            {isEmpty(allSales) && loading ? <WithNoDataLoader /> : <div className='table-responsive'>
-                                <table className='table  datanew'>
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                <label className='checkboxs'>
-                                                    <input type='checkbox' id='select-all' />
-                                                    <span className='checkmarks'></span>
-                                                </label>
-                                            </th>
-                                            <th>Reference</th>
-                                            <th>Product Code</th>
-                                            <th>Color</th>
-                                            <th>Size</th>
-                                            {/* <th>Status</th> */}
-                                            <th>Payment Status</th>
-                                            <th>Total (UGX)</th>
-                                            {/* <th>Paid</th>
+                            <div className="card-body">
+                                {isEmpty(allSales) && loading ? <WithNoDataLoader /> : <div className='table-responsive'>
+                                    <table className='table  datanew'>
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <label className='checkboxs'>
+                                                        <input type='checkbox' id='select-all' />
+                                                        <span className='checkmarks'></span>
+                                                    </label>
+                                                </th>
+                                                <th>Reference</th>
+                                                <th>Product Code</th>
+                                                <th>Color</th>
+                                                <th>Size</th>
+                                                {/* <th>Status</th> */}
+                                                <th>Payment Status</th>
+                                                <th>Amount (UGX)</th>
+                                                {/* <th>Paid</th>
                                             <th>Due</th> */}
-                                            <th>Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {dataPaginationFn(orderBy(allSales, ['date'], ['desc']), pageItems, salesPageNo).map((sale, i) => {
-                                            return (
-                                                <tr key={i}>
-                                                    <td>
-                                                        <label className='checkboxs'>
-                                                            <input type='checkbox' />
-                                                            <span className='checkmarks'></span>
-                                                        </label>
-                                                    </td>
-                                                    <td>{sale.reference}</td>
-                                                    <td>{sale.artNumber}</td>
-                                                    <td>{sale.color}</td>
-                                                    <td>{`${getSizeLabel(sale.size)} (${sale.size})`}</td>
-                                                    {/* <td><span className={`badges ${sale.status === 'Completed' ? 'bg-lightgreen' : 'bg-lightred'}`}>{sale.status}</span></td> */}
-                                                    <td><span className={`badges ${sale.payment === 'Paid' ? 'bg-lightgreen' : 'bg-lightred'}`}>{sale.payment}</span></td>
-                                                    <td>{parseInt(sale.total, 10).toLocaleString()}</td>
-                                                    {/* <td>{sale.paid}</td>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {dataPaginationFn(orderBy(allSales, ['date'], ['desc']), pageItems, salesPageNo).map((sale, i) => {
+                                                return (
+                                                    <tr key={i}>
+                                                        <td>
+                                                            <label className='checkboxs'>
+                                                                <input type='checkbox' />
+                                                                <span className='checkmarks'></span>
+                                                            </label>
+                                                        </td>
+                                                        <td>{sale.reference}</td>
+                                                        <td>{sale.artNumber}</td>
+                                                        <td>{sale.color}</td>
+                                                        <td>{`${getSizeLabel(sale.size)} (${sale.size})`}</td>
+                                                        {/* <td><span className={`badges ${sale.status === 'Completed' ? 'bg-lightgreen' : 'bg-lightred'}`}>{sale.status}</span></td> */}
+                                                        <td><span className={`badges ${sale.payment === 'Paid' ? 'bg-lightgreen' : 'bg-lightred'}`}>{sale.payment}</span></td>
+                                                        <td>{parseInt(sale.total, 10).toLocaleString()}</td>
+                                                        {/* <td>{sale.paid}</td>
                                                     <td className='text-red'>{sale.due}</td> */}
-                                                    <td>{sale.date}</td>
-                                                </tr>
-                                            )
-                                        })}
-                                    </tbody>
-                                </table>
-                                <div className='my-2'>
-                                    <Pagination onChange={onPagination} responsive hideOnSinglePage align="center" defaultCurrent={salesPageNo} total={allSales.length} />
-                                </div>
-                            </div>}
+                                                        <td>{sale.date}</td>
+                                                    </tr>
+                                                )
+                                            })}
+                                        </tbody>
+                                    </table>
+                                    <div className='my-2'>
+                                        <Pagination onChange={onPagination} responsive hideOnSinglePage align="center" defaultCurrent={salesPageNo} total={allSales.length} />
+                                    </div>
+                                </div>}</div>
                         </div>
                     </div>
                 </div>

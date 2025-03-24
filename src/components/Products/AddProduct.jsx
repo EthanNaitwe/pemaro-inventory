@@ -141,7 +141,7 @@ const AddProduct = () => {
                                     <p>{errors.description?.message && "This field is required"}</p>
                                 </div>
                             </div>
-                            <div className='col-lg-12'>
+                            <div className='col-lg-12' key={creating}>
                                 <button
                                     disabled={creating}
                                     className='btn btn-submit me-2' onClick={handleSubmit(onSubmit)}>
@@ -149,7 +149,17 @@ const AddProduct = () => {
                                     {creating && <div className="spinner-border spinner-border-sm" role="status">
                                         <span className="sr-only">Loading...</span>
                                     </div>}</button>
-                                <button className='btn btn-cancel'>Cancel</button>
+
+                                {/* {!creating && <button className='btn btn-cancel'>{`Cancel ${createError}`}</button>} */}
+                                {/* <button
+                                    disabled={creating}
+                                    className='btn card-btn btn-block'
+                                    onClick={handleSubmit(onSubmit)}>
+                                    Submitz{' '}
+                                    {creating && <div className="spinner-border spinner-border-sm" role="status">
+                                        <span className="sr-only">Loading...</span>
+                                    </div>}
+                                </button> */}
                             </div>
                         </div>
                     </div>

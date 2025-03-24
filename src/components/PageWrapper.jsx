@@ -8,6 +8,7 @@ import SalesList from './Sales';
 import AddSales from './Sales/AddSales';
 import PeopleList from './People';
 import Error404 from './common/404';
+import Expense from './Expense';
 
 const PageWrapper = () => {
     const { selectedSidebarMenu, productVED, saleVED } = useSelector((state) => state.settings);
@@ -16,9 +17,11 @@ const PageWrapper = () => {
             {selectedSidebarMenu === 'index' && <Dashboard />}
 
             {selectedSidebarMenu === 'product-list' && productVED === '' && <ProductsList />}
+            {selectedSidebarMenu === 'people-list' && productVED === '' && <PeopleList />}
             {productVED === 'view-product' && <ProductDetails />}
             {productVED === 'add-product' && <AddProduct />}
 
+            {selectedSidebarMenu === 'expense-list' && saleVED === '' && <Expense />}
             {selectedSidebarMenu === 'sales-list' && saleVED === '' && <SalesList />}
             {selectedSidebarMenu === 'sales-list' && saleVED === 'add-sales' && <AddSales />}
 
