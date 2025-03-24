@@ -17,8 +17,6 @@ export const getSizeLabel = (key) => {
 
 // Filter size / color options from products
 export const filterSizeOptionsFn = (prod, opt) => {
-    console.log('opt', opt)
-    console.log('prod', prod)
     return prod.filter(item => opt.includes(item.value));
 }
 
@@ -54,3 +52,5 @@ export const groupProductVariants = (variants) => {
 
     return result;
 }
+
+export const expenseCategories = ["Employee Benefits", "Entertainment", "Office Expenses & Postage", "Other Expenses"];

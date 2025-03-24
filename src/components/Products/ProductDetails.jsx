@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setProductVED } from '../../config/store/actions/settingsActions';
 
 import JsBarcode from 'jsbarcode';
-import { capitalize, groupBy, isEmpty, sumBy } from 'lodash';
+import { capitalize, isEmpty, sumBy } from 'lodash';
 import { useEffect, useRef } from 'react';
 // import prod69 from '../../assets/img/product/product69.jpg';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -175,12 +175,11 @@ const ProductDetails = () => {
                                                     <tbody>
                                                         {groupProductVariants(singleProduct?.variants).map((item) => {
                                                             const filtered = singleProduct.sales.filter(prod => prod.color === item.color && prod.size === item.size);
-                                                            console.log(`filtered: ${item.color}:${item.size}:`, filtered)
                                                             return (
                                                                 <tr key={item.id}>
                                                                     <td>{capitalize(item.color)}</td>
                                                                     <td>{`${getSizeLabel(item.size)} (${item.size})`}</td>
-                                                                    <td>{capitalize(item.quantity)}</td>
+                                                                    <td>{`${item.quantity - filtered.length}`}</td>
                                                                 </tr>
                                                             )
                                                         })}

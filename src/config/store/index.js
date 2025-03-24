@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
+import { expensesReducer } from './reducers/expensesReducers';
 import { productsReducer } from './reducers/productsReducer';
 import { salesReducer } from './reducers/salesReducers';
 import { settingsReducer } from './reducers/settingsReducer';
@@ -21,6 +22,7 @@ export const store = configureStore({
         settings: settingsReducer,
         products: productsReducer,
         sales: salesReducer,
+        expenses: expensesReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),

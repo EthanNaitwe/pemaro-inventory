@@ -22,8 +22,8 @@ const AddSalesForm = () => {
             amount: yup.string().required(),
             artNumber: yup
                 .string()
-                .required('This field is required')
-                .length(8, 'Must be 8 characters'),
+                .required('This field is required'),
+            // .length(8, 'Must be 8 characters'),
         })
         .required();
 
@@ -40,11 +40,11 @@ const AddSalesForm = () => {
     const onSubmit = (data) => dispatch(addNewSaleRequest(singleProduct.id, data));
 
     useEffect(() => {
-        if (watchCode.length === 8) {
-            setSingleProduct(allProducts.find(prod => prod.artNumber === watchCode) || {});
-        } else {
-            setSingleProduct({});
-        }
+        // if (watchCode.length === 8) {
+        setSingleProduct(allProducts.find(prod => prod.artNumber === watchCode) || {});
+        // } else {
+        //     setSingleProduct({});
+        // }
     }, [watchCode]);
 
     useEffect(() => {
@@ -74,7 +74,7 @@ const AddSalesForm = () => {
                 <div className='col-lg-2 col-sm-6 col-6'>
                     <div className='form-group'>
                         <label>Color</label>
-                        <select disabled={!(watchCode.length === 8 && !isEmpty(singleProduct))} className='form-select' {...register("color")}
+                        <select disabled={!(!isEmpty(singleProduct))} className='form-select' {...register("color")}
                             aria-invalid={errors.color ? "true" : "false"} >
                             <option value=''>Choose Color</option>
                             {colorOptions.map((i) => (
@@ -91,7 +91,7 @@ const AddSalesForm = () => {
                 <div className='col-lg-2 col-sm-6 col-6'>
                     <div className='form-group'>
                         <label>Size</label>
-                        <select disabled={!(watchCode.length === 8 && !isEmpty(singleProduct))} className='form-select' {...register("size")} aria-invalid={errors.discount ? "true" : "false"}>
+                        <select disabled={!(!isEmpty(singleProduct))} className='form-select' {...register("size")} aria-invalid={errors.discount ? "true" : "false"}>
                             <option value=''>Choose Size</option>
                             {setsizeOptions.map((i) => (
                                 <option
@@ -107,7 +107,7 @@ const AddSalesForm = () => {
                 <div className='col-lg-2 col-sm-6 col-6'>
                     <div className='form-group'>
                         <label>Amount</label>
-                        <input disabled={!(watchCode.length === 8 && !isEmpty(singleProduct))} type='text' {...register("amount")}
+                        <input disabled={!(!isEmpty(singleProduct))} type='text' {...register("amount")}
                             aria-invalid={errors.amount ? "true" : "false"} />
                         <p>{errors.amount?.message && "This field is required"}</p>
                     </div>
@@ -116,7 +116,7 @@ const AddSalesForm = () => {
                     <div className='form-group'>
                         <label style={{ visibility: "hidden" }}>Product Code</label>
                         <button
-                            disabled={!(watchCode.length === 8 && !isEmpty(singleProduct)) || creating}
+                            disabled={!(!isEmpty(singleProduct)) || creating}
                             className='btn card-btn'
                             onClick={handleSubmit(onSubmit)}>
                             Submit{' '}

@@ -1,4 +1,4 @@
-import { CREATE_USER_FAILURE, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, FETCH_USER_FAILURE, FETCH_USER_REQUEST, FETCH_USER_SUCCESS, GET_PROFILE_FAILURE, GET_PROFILE_REQUEST, GET_PROFILE_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS } from '../actions/userActions';
+import { CREATE_USER_FAILURE, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, FETCH_USER_FAILURE, FETCH_USER_REQUEST, FETCH_USER_SUCCESS, GET_ALL_USERS_FAILURE, GET_ALL_USERS_REQUEST, GET_ALL_USERS_SUCCESS, GET_PROFILE_FAILURE, GET_PROFILE_REQUEST, GET_PROFILE_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS } from '../actions/userActions';
 
 const initialState = {
     user: null,
@@ -9,6 +9,10 @@ const initialState = {
 
     authUser: {},
     profileError: null,
+
+    gettingUsers: false,
+    usersError: null,
+    allUsers: [],
 };
 
 export const usersReducer = (state = initialState, action) => {
@@ -41,6 +45,13 @@ export const usersReducer = (state = initialState, action) => {
             return { ...state, gettingProfile: false, authUser: action.payload };
         case GET_PROFILE_FAILURE:
             return { ...state, gettingProfile: false, profileError: action.payload };
+
+        case GET_ALL_USERS_REQUEST:
+            return { ...state, gettingUsers: true, usersError: null };
+        case GET_ALL_USERS_SUCCESS:
+            return { ...state, gettingUsers: false, allUsers: action.payload };
+        case GET_ALL_USERS_FAILURE:
+            return { ...state, gettingUsers: false, usersError: action.payload };
         default:
             return state;
     }

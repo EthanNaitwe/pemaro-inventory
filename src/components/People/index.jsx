@@ -1,63 +1,86 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Empty } from 'antd';
+import { isEmpty } from 'lodash';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import customer1 from '../../assets/img/customer/customer1.jpg';
+import customer5 from '../../assets/img/customer/customer5.jpg';
+import datepicker from '../../assets/img/icons/datepicker.svg';
 import deleteImg from '../../assets/img/icons/delete.svg';
 import edit from '../../assets/img/icons/edit.svg';
-import search from '../../assets/img/icons/search-whites.svg';
 import printer from '../../assets/img/icons/printer.svg';
-import datepicker from '../../assets/img/icons/datepicker.svg';
-import customer1 from '../../assets/img/customer/customer1.jpg';
-import customer2 from '../../assets/img/customer/customer2.jpg';
-import customer3 from '../../assets/img/customer/customer3.jpg';
-import customer4 from '../../assets/img/customer/customer4.jpg';
-import customer5 from '../../assets/img/customer/customer5.jpg';
-import customer6 from '../../assets/img/customer/customer6.jpg';
+import search from '../../assets/img/icons/search-whites.svg';
+import { getAllUsers } from '../../config/store/actions/userActions';
+import WithDataLoader from '../common/loaders/WithDataLoader';
+import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
 
 const PeopleList = () => {
+    const dispatch = useDispatch();
+    const { allUsers, gettingUsers } = useSelector((state) => state.users);
+
+    // const [showForm] = useState(false);
+
+    useEffect(() => {
+        dispatch(getAllUsers());
+    }, []);
+
     return (
         <div>
-            <div>
-                <div className='page-wrapper'>
-                    <div className='content'>
-                        <div className='page-header'>
-                            <div className='page-title'>
-                                <h4>Customer List</h4>
-                                <h6>Manage your Customers</h6>
-                            </div>
+            <div className='page-wrapper'>
+                <div className='content'>
+                    <div className="page-header">
+                        <div className="page-title">
+                            <h4>User List</h4>
+                            <h6>Manage your Users</h6>
                         </div>
-                        <div className='card'>
-                            <div className='card-body'>
-
-                                <div className='card' id='filter_inputs'>
-                                    <div className='card-body pb-0'>
-                                        <div className='row'>
-                                            <div className='col-lg-2 col-sm-6 col-12'>
-                                                <div className='form-group'>
-                                                    <input type='text' placeholder='Enter Customer Code' />
-                                                </div>
+                        {/* <div className="page-btn">
+                                <div className="btn btn-added">
+                                    {showForm ? <i className="fa-solid fa-eye-slash me-2"></i> : <img src={plus} alt='img' className='me-1' />}
+                                    Add User
+                                </div>
+                            </div> */}
+                    </div>
+                    <div className='card'>
+                        {!isEmpty(allUsers) && gettingUsers && <WithDataLoader />}
+                        <div className='card-body'>
+                            {isEmpty(allUsers) && !gettingUsers && <Empty />}
+                            <div className='card' id='filter_inputs'>
+                                <div className='card-body pb-0'>
+                                    <div className='row'>
+                                        <div className='col-lg-2 col-sm-6 col-12'>
+                                            <div className='form-group'>
+                                                <input type='text' placeholder='Enter User Code' />
                                             </div>
-                                            <div className='col-lg-2 col-sm-6 col-12'>
-                                                <div className='form-group'>
-                                                    <input type='text' placeholder='Enter Customer Name' />
-                                                </div>
+                                        </div>
+                                        <div className='col-lg-2 col-sm-6 col-12'>
+                                            <div className='form-group'>
+                                                <input type='text' placeholder='Enter User Name' />
                                             </div>
-                                            <div className='col-lg-2 col-sm-6 col-12'>
-                                                <div className='form-group'>
-                                                    <input type='text' placeholder='Enter Phone Number' />
-                                                </div>
+                                        </div>
+                                        <div className='col-lg-2 col-sm-6 col-12'>
+                                            <div className='form-group'>
+                                                <input type='text' placeholder='Enter Phone Number' />
                                             </div>
-                                            <div className='col-lg-2 col-sm-6 col-12'>
-                                                <div className='form-group'>
-                                                    <input type='text' placeholder='Enter Email' />
-                                                </div>
+                                        </div>
+                                        <div className='col-lg-2 col-sm-6 col-12'>
+                                            <div className='form-group'>
+                                                <input type='text' placeholder='Enter Email' />
                                             </div>
-                                            <div className='col-lg-1 col-sm-6 col-12  ms-auto'>
-                                                <div className='form-group'>
-                                                    <a className='btn btn-filters ms-auto'>
-                                                        <img src={search} alt='img' />
-                                                    </a>
-                                                </div>
+                                        </div>
+                                        <div className='col-lg-1 col-sm-6 col-12  ms-auto'>
+                                            <div className='form-group'>
+                                                <a className='btn btn-filters ms-auto'>
+                                                    <img src={search} alt='img' />
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            {isEmpty(allUsers) &&
+                                gettingUsers &&
+                                <WithNoDataLoader />}
+                            {!isEmpty(allUsers) &&
                                 <div className='table-responsive'>
                                     <table className='table  datanew'>
                                         <thead>
@@ -68,272 +91,39 @@ const PeopleList = () => {
                                                         <span className='checkmarks'></span>
                                                     </label>
                                                 </th>
-                                                <th>Customer Name</th>
-                                                <th>code</th>
-                                                <th>Customer</th>
+                                                <th>User Name</th>
+                                                <th>Gender</th>
                                                 <th>Phone</th>
-                                                {/* <th>email</th> */}
-                                                <th>Country</th>
-                                                {/* <th>Action</th> */}
+                                                <th>Address</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td className='productimgname'>
-                                                    <span className='product-img'>
-                                                        <img src={customer1} alt='product' />
-                                                    </span>
-                                                    <span>Thomas</span>
-                                                </td>
-                                                <td>201</td>
-                                                <td>Thomas</td>
-                                                <td>+12163547758 </td>
-                                                <td>USA</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td className='productimgname'>
-                                                    <span className='product-img'>
-                                                        <img src={customer2} alt='product' />
-                                                    </span>
-                                                    <span>Benjamin</span>
-                                                </td>
-                                                <td>202</td>
-                                                <td>Benjamin</td>
-                                                <td>123-456-888</td>
-                                                <td>USA</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td className='productimgname'>
-                                                    <span className='product-img'>
-                                                        <img src={customer3} alt='product' />
-                                                    </span>
-                                                    <span>James</span>
-                                                </td>
-                                                <td>521</td>
-                                                <td>James</td>
-                                                <td>123-456-888</td>
-                                                <td>USA</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td className='productimgname'>
-                                                    <span className='product-img'>
-                                                        <img src={customer3} alt='product' />
-                                                    </span>
-                                                    <span>Bruklin</span>
-                                                </td>
-                                                <td>555</td>
-                                                <td>Bruklin</td>
-                                                <td>123-456-888</td>
-                                                <td>Thailand</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td className='productimgname'>
-                                                    <span className='product-img'>
-                                                        <img src={customer4} alt='product' />
-                                                    </span>
-                                                    <span>Beverly</span>
-                                                </td>
-                                                <td>325</td>
-                                                <td>Beverly</td>
-                                                <td>+12163547758 </td>
-                                                <td>Phuket island</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td className='productimgname'>
-                                                    <span className='product-img'>
-                                                        <img src={customer5} alt='product' />
-                                                    </span>
-                                                    <span>B. Huber</span>
-                                                </td>
-                                                <td>589</td>
-                                                <td>B. Huber </td>
-                                                <td>123-456-888</td>
-                                                <td>Germany</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td className='productimgname'>
-                                                    <span className='product-img'>
-                                                        <img src={customer6} alt='product' />
-                                                    </span>
-                                                    <span>James Stawberry</span>
-                                                </td>
-                                                <td>254</td>
-                                                <td>James Stawberry</td>
-                                                <td>+12163547758 </td>
-                                                <td>Angola</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td className='productimgname'>
-                                                    <span className='product-imgs'>
-                                                        WC
-                                                    </span>
-                                                    <span>James Stawberry</span>
-                                                </td>
-                                                <td>681</td>
-                                                <td>Fred john</td>
-                                                <td>123-456-888</td>
-                                                <td>Albania</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td className='productimgname'>
-                                                    <span className='product-img'>
-                                                        <img src={customer5} alt='product' />
-                                                    </span>
-                                                    <span>B. Huber</span>
-                                                </td>
-                                                <td>589</td>
-                                                <td>B. Huber </td>
-                                                <td>123-456-888</td>
-                                                <td>Germany</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td className='productimgname'>
-                                                    <span className='product-img'>
-                                                        <img src={customer6} alt='product' />
-                                                    </span>
-                                                    <span>James Stawberry</span>
-                                                </td>
-                                                <td>254</td>
-                                                <td>James Stawberry</td>
-                                                <td>+12163547758 </td>
-                                                <td>Angola</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td className='productimgname'>
-                                                    <span className='product-imgs'>
-                                                        WC
-                                                    </span>
-                                                    <span>James Stawberry</span>
-                                                </td>
-                                                <td>681</td>
-                                                <td>Fred john</td>
-                                                <td>123-456-888</td>
-                                                <td>Albania</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td className='productimgname'>
-                                                    <span className='product-img'>
-                                                        <img src={customer5} alt='product' />
-                                                    </span>
-                                                    <span>B. Huber</span>
-                                                </td>
-                                                <td>589</td>
-                                                <td>B. Huber </td>
-                                                <td>123-456-888</td>
-                                                <td>Germany</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td className='productimgname'>
-                                                    <span className='product-img'>
-                                                        <img src={customer6} alt='product' />
-                                                    </span>
-                                                    <span>James Stawberry</span>
-                                                </td>
-                                                <td>254</td>
-                                                <td>James Stawberry</td>
-                                                <td>+12163547758 </td>
-                                                <td>Angola</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </td>
-                                                <td className='productimgname'>
-                                                    <span className='product-imgs'>
-                                                        WC
-                                                    </span>
-                                                    <span>James Stawberry</span>
-                                                </td>
-                                                <td>681</td>
-                                                <td>Fred john</td>
-                                                <td>123-456-888</td>
-                                                <td>Albania</td>
-                                            </tr>
+                                            {allUsers.map((item, i) => (
+                                                <tr key={i}>
+                                                    <td>
+                                                        <label className='checkboxs'>
+                                                            <input type='checkbox' />
+                                                            <span className='checkmarks'></span>
+                                                        </label>
+                                                    </td>
+                                                    <td className='productimgname'>
+                                                        <span className='product-img'>
+                                                            <img src={item.gender === 'Male' ? customer5 : customer1} alt='people' />
+                                                        </span>
+                                                        <span>{`${item.surname} ${item.other_names}`}</span>
+                                                    </td>
+                                                    <td>{item.gender}</td>
+                                                    <td>{item.phone_number} </td>
+                                                    <td>{item.address}</td>
+                                                    <td>{item.email}</td>
+                                                    <td>{item.role}</td>
+                                                </tr>
+                                            ))}
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
+                                </div>}
                         </div>
                     </div>
                 </div>
