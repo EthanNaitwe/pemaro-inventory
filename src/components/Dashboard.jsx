@@ -1,13 +1,55 @@
-import { orderBy } from 'lodash';
-import { useSelector } from 'react-redux';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { isEmpty, orderBy } from 'lodash';
+import { DateTime } from "luxon";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import dash1Img from '../assets/img/icons/dash1.svg';
 import dash2Img from '../assets/img/icons/dash2.svg';
 import dash3Img from '../assets/img/icons/dash3.svg';
 import dash4Img from '../assets/img/icons/dash4.svg';
+import { calculateDateRangeAmounts } from '../config/helpers/dashboard.helpers';
+import { getSalesRequest } from '../config/store/actions/saleActions';
 import LineDashed from './Charts/LineDashed';
+import { getAllExpenses } from '../config/store/actions/expenseActions';
 
 const Dashboard = () => {
+    const dispatch = useDispatch();
     const { allProducts } = useSelector((state) => state.products);
+    const { allExpenses } = useSelector((state) => state.expenses);
+    const { allSales } = useSelector((state) => state.sales);
+
+    useEffect(() => {
+        if (isEmpty(allSales)) dispatch(getSalesRequest());
+        if (isEmpty(allExpenses)) dispatch(getAllExpenses());
+    }, [allExpenses, allSales]);
+
+    let now = DateTime.local();
+    const [startOfWeek] = useState(now.startOf('week').toFormat('dd/MM/yyyy'))
+    const [endOfWeek] = useState(now.endOf('week').toFormat('dd/MM/yyyy'));
+    const [startOfMonth] = useState(now.startOf('month').toFormat('dd/MM/yyyy'));
+    const [endOfMonth] = useState(now.endOf('month').toFormat('dd/MM/yyyy'));
+
+    useEffect(() => {
+
+        // This week's start date (Monday)
+        let startOfWeek = now.startOf('week').toFormat('dd/MM/yyyy');
+
+        // This week's end date (Sunday)
+        let endOfWeek = now.endOf('week').toFormat('dd/MM/yyyy');
+
+        // This month's start date (1st of the month)
+        let startOfMonth = now.startOf('month').toFormat('dd/MM/yyyy');
+
+        // This month's end date (last day of the month)
+        let endOfMonth = now.endOf('month').toFormat('dd/MM/yyyy');
+
+        console.log("This week's start date: ", startOfWeek);
+        console.log("This week's end date: ", endOfWeek);
+        console.log("This month's start date: ", startOfMonth);
+        console.log("This month's end date: ", endOfMonth);
+
+    }, [])
+
 
     return (
         <div className='page-wrapper'>
@@ -21,8 +63,8 @@ const Dashboard = () => {
                                 </span>
                             </div>
                             <div className='dash-widgetcontent'>
-                                <h5>UGX <span className='counters' data-count='307000'>307,000</span></h5>
-                                <h6>Total Purchase Due</h6>
+                                <h5>UGX <span className='counters' data-count={`${calculateDateRangeAmounts(allSales, startOfWeek, endOfWeek)}`}>{calculateDateRangeAmounts(allSales, startOfWeek, endOfWeek)}</span></h5>
+                                <h6>Weekly Sales</h6>
                             </div>
                         </div>
                     </div>
@@ -34,8 +76,8 @@ const Dashboard = () => {
                                 </span>
                             </div>
                             <div className='dash-widgetcontent'>
-                                <h5>UGX <span className='counters' data-count='4000'>4,000</span></h5>
-                                <h6>Total Sales Due</h6>
+                                <h5>UGX <span className='counters' data-count={`${calculateDateRangeAmounts(allSales, startOfMonth, endOfMonth)}`}>{calculateDateRangeAmounts(allSales, startOfMonth, endOfMonth)}</span></h5>
+                                <h6>Monthly Sales</h6>
                             </div>
                         </div>
                     </div>
@@ -47,8 +89,8 @@ const Dashboard = () => {
                                 </span>
                             </div>
                             <div className='dash-widgetcontent'>
-                                <h5>UGX <span className='counters' data-count='385000'>385,000</span></h5>
-                                <h6>Total Sale Amount</h6>
+                                <h5>UGX <span className='counters' data-count={`${calculateDateRangeAmounts(allExpenses, startOfWeek, endOfWeek)}`}>{calculateDateRangeAmounts(allExpenses, startOfWeek, endOfWeek)}</span></h5>
+                                <h6>Weekly Expenses</h6>
                             </div>
                         </div>
                     </div>
@@ -60,8 +102,8 @@ const Dashboard = () => {
                                 </span>
                             </div>
                             <div className='dash-widgetcontent'>
-                                <h5>UGX <span className='counters' data-count='40000.00'>40000</span></h5>
-                                <h6>Total Sale Amount</h6>
+                                <h5>UGX <span className='counters' data-count={`${calculateDateRangeAmounts(allExpenses, startOfMonth, endOfMonth)}`}>{calculateDateRangeAmounts(allExpenses, startOfMonth, endOfMonth)}</span></h5>
+                                <h6>Monthly Expenses</h6>
                             </div>
                         </div>
                     </div>
@@ -101,7 +143,7 @@ const Dashboard = () => {
                     <div className='col-lg-3 col-sm-6 col-6 d-flex'>
                         <div className='dash-count das3'>
                             <div className='dash-counts'>
-                                <h4>105</h4>
+                                <h4>100</h4>
                                 <h5>Sales Invoice</h5>
                             </div>
                             <div className='dash-imgs'>

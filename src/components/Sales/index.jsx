@@ -88,7 +88,7 @@ const SalesList = () => {
                                                         <td>{`${getSizeLabel(sale.size)} (${sale.size})`}</td>
                                                         {/* <td><span className={`badges ${sale.status === 'Completed' ? 'bg-lightgreen' : 'bg-lightred'}`}>{sale.status}</span></td> */}
                                                         <td><span className={`badges ${sale.payment === 'Paid' ? 'bg-lightgreen' : 'bg-lightred'}`}>{sale.payment}</span></td>
-                                                        <td>{parseInt(sale.total, 10).toLocaleString()}</td>
+                                                        <td>{parseInt(sale.amount, 10).toLocaleString()}</td>
                                                         {/* <td>{sale.paid}</td>
                                                     <td className='text-red'>{sale.due}</td> */}
                                                         <td>{sale.date}</td>

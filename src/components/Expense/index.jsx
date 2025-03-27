@@ -3,6 +3,7 @@ import { Empty } from "antd";
 import { isEmpty } from "lodash";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import plus from '../../assets/img/icons/plus.svg';
 import { getAllExpenses, setShowCreateForm } from "../../config/store/actions/expenseActions";
 import WithDataLoader from "../common/loaders/WithDataLoader";
 import WithNoDataLoader from "../common/loaders/WithNoDataLoader";
@@ -16,6 +17,7 @@ const Expense = () => {
 
     useEffect(() => {
         dispatch(getAllExpenses());
+        return () => dispatch(setShowCreateForm(false));
     }, []);
 
     return (
@@ -28,7 +30,8 @@ const Expense = () => {
                     </div>
                     <div className="page-btn">
                         <div className="btn btn-added" onClick={() => setShowForm()}>
-                            Add New Expense
+                            {showCreateForm ? <i className="fa-solid fa-eye-slash me-2"></i> : <img src={plus} alt='img' className='me-1' />}
+                            {showCreateForm ? 'Hide Form' : 'Add New Expense'}
                         </div>
                     </div>
                 </div>
