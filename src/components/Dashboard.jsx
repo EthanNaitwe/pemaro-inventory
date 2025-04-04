@@ -41,7 +41,7 @@ const Dashboard = () => {
                                     <img src={dash1Img} alt='img' />
                                 </span>
                             </div>
-                            <div className='dash-widgetcontent' key={allSales + startOfWeek + endOfWeek}>
+                            <div className='dash-widgetcontent'>
                                 <h5>UGX <span className='counters' data-count={`${calculateDateRangeAmounts(allSales, startOfWeek, endOfWeek)}`}>{calculateDateRangeAmounts(allSales, startOfWeek, endOfWeek)}</span></h5>
                                 <h6>Weekly Sales</h6>
                             </div>
@@ -54,7 +54,7 @@ const Dashboard = () => {
                                     <img src={dash2Img} alt='img' />
                                 </span>
                             </div>
-                            <div className='dash-widgetcontent' key={allSales + startOfMonth + endOfMonth}>
+                            <div className='dash-widgetcontent'>
                                 <h5>UGX <span className='counters' data-count={`${calculateDateRangeAmounts(allSales, startOfMonth, endOfMonth)}`}>{calculateDateRangeAmounts(allSales, startOfMonth, endOfMonth)}</span></h5>
                                 <h6>Monthly Sales</h6>
                             </div>
@@ -67,7 +67,7 @@ const Dashboard = () => {
                                     <img src={dash3Img} alt='img' />
                                 </span>
                             </div>
-                            <div className='dash-widgetcontent' key={allExpenses + startOfWeek + endOfWeek}>
+                            <div className='dash-widgetcontent'>
                                 <h5>UGX <span className='counters' data-count={`${calculateDateRangeAmounts(allExpenses, startOfWeek, endOfWeek)}`}>{calculateDateRangeAmounts(allExpenses, startOfWeek, endOfWeek)}</span></h5>
                                 <h6>Weekly Expenses</h6>
                             </div>
