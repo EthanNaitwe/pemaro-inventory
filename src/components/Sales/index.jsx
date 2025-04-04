@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Pagination } from 'antd';
+import { Empty, Pagination } from 'antd';
 import { isEmpty, orderBy } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -48,9 +48,12 @@ const SalesList = () => {
 
                         <div className='card'>
                             {showForm && <AddSalesForm />}
-                            {!isEmpty(allSales) && loading && <WithDataLoader classname='mb-3' />}
+                            {!isEmpty(allSales) && loading && <WithDataLoader />}
                             <div className="card-body">
-                                {isEmpty(allSales) && loading ? <WithNoDataLoader /> : <div className='table-responsive'>
+                                {isEmpty(allSales) && !loading && <Empty />}
+                                {isEmpty(allSales) && !loading && <Empty description="No data available" />}
+                                {isEmpty(allSales) && loading && <WithNoDataLoader />}
+                                {!isEmpty(allSales) && <div className='table-responsive'>
                                     <table className='table  datanew'>
                                         <thead>
                                             <tr>
@@ -61,14 +64,10 @@ const SalesList = () => {
                                                     </label>
                                                 </th>
                                                 <th>Reference</th>
-                                                <th>Product Code</th>
                                                 <th>Color</th>
                                                 <th>Size</th>
-                                                {/* <th>Status</th> */}
                                                 <th>Payment Status</th>
                                                 <th>Amount (UGX)</th>
-                                                {/* <th>Paid</th>
-                                            <th>Due</th> */}
                                                 <th>Date</th>
                                             </tr>
                                         </thead>
@@ -83,14 +82,10 @@ const SalesList = () => {
                                                             </label>
                                                         </td>
                                                         <td>{sale.reference}</td>
-                                                        <td>{sale.artNumber}</td>
                                                         <td>{sale.color}</td>
                                                         <td>{`${getSizeLabel(sale.size)} (${sale.size})`}</td>
-                                                        {/* <td><span className={`badges ${sale.status === 'Completed' ? 'bg-lightgreen' : 'bg-lightred'}`}>{sale.status}</span></td> */}
                                                         <td><span className={`badges ${sale.payment === 'Paid' ? 'bg-lightgreen' : 'bg-lightred'}`}>{sale.payment}</span></td>
-                                                        <td>{parseInt(sale.total, 10).toLocaleString()}</td>
-                                                        {/* <td>{sale.paid}</td>
-                                                    <td className='text-red'>{sale.due}</td> */}
+                                                        <td>{parseInt(sale.amount, 10).toLocaleString()}</td>
                                                         <td>{sale.date}</td>
                                                     </tr>
                                                 )
@@ -100,7 +95,8 @@ const SalesList = () => {
                                     <div className='my-2'>
                                         <Pagination onChange={onPagination} responsive hideOnSinglePage align="center" defaultCurrent={salesPageNo} total={allSales.length} />
                                     </div>
-                                </div>}</div>
+                                </div>}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -287,6 +283,3 @@ const SalesList = () => {
 }
 
 export default SalesList;
-
-// How does it look!? Any comments or areas to improve!?
-//  - I am currently improving it to also work for a Car Resell Business (Car Bond). I have someone there who wants it too.

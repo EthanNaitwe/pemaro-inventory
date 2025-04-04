@@ -14,7 +14,7 @@ const ForgotPassword = () => {
                             </div>
                             <div className="login-userheading text-center">
                                 <h3>Forgot password?</h3>
-                                <h4>Don’t warry! it happens. Please enter the address <br />
+                                <h4>Don’t warry! it happens. Please enter the address<br />
                                     associated with your account.</h4>
                             </div>
                             <div className="form-login">

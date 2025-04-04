@@ -199,7 +199,7 @@ const AddSales = () => {
                                                 <h5>$ 0.00 (0.00%)</h5>
                                             </li>
                                             <li>
-                                                <h4>Discount </h4>
+                                                <h4>Discount</h4>
                                                 <h5>$ 0.00</h5>
                                             </li>
                                         </ul>
@@ -232,4 +232,4 @@ const AddSales = () => {
     )
 }
 
-export default AddSales
+export default AddSales;

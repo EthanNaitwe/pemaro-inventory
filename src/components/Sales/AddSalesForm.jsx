@@ -23,7 +23,6 @@ const AddSalesForm = () => {
             artNumber: yup
                 .string()
                 .required('This field is required'),
-            // .length(8, 'Must be 8 characters'),
         })
         .required();
 
@@ -40,11 +39,7 @@ const AddSalesForm = () => {
     const onSubmit = (data) => dispatch(addNewSaleRequest(singleProduct.id, data));
 
     useEffect(() => {
-        // if (watchCode.length === 8) {
         setSingleProduct(allProducts.find(prod => prod.artNumber === watchCode) || {});
-        // } else {
-        //     setSingleProduct({});
-        // }
     }, [watchCode]);
 
     useEffect(() => {
@@ -91,7 +86,7 @@ const AddSalesForm = () => {
                 <div className='col-lg-2 col-sm-6 col-6'>
                     <div className='form-group'>
                         <label>Size</label>
-                        <select disabled={!(!isEmpty(singleProduct))} className='form-select' {...register("size")} aria-invalid={errors.discount ? "true" : "false"}>
+                        <select disabled={!(!isEmpty(singleProduct))} className='form-select' {...register("size")} aria-invalid={errors.size ? "true" : "false"}>
                             <option value=''>Choose Size</option>
                             {setsizeOptions.map((i) => (
                                 <option
@@ -118,7 +113,7 @@ const AddSalesForm = () => {
                         <button
                             disabled={!(!isEmpty(singleProduct)) || creating}
                             className='btn card-btn'
-                            onClick={handleSubmit(onSubmit)}>
+                            onClick={() => handleSubmit(onSubmit)()}>
                             Submit{' '}
                             {creating && <div className="spinner-border spinner-border-sm" role="status">
                                 <span className="sr-only">Loading...</span>

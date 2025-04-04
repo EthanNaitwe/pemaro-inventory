@@ -3,6 +3,7 @@ import { Empty } from "antd";
 import { isEmpty } from "lodash";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import plus from '../../assets/img/icons/plus.svg';
 import { getAllExpenses, setShowCreateForm } from "../../config/store/actions/expenseActions";
 import WithDataLoader from "../common/loaders/WithDataLoader";
 import WithNoDataLoader from "../common/loaders/WithNoDataLoader";
@@ -16,6 +17,7 @@ const Expense = () => {
 
     useEffect(() => {
         dispatch(getAllExpenses());
+        return () => dispatch(setShowCreateForm(false));
     }, []);
 
     return (
@@ -23,12 +25,13 @@ const Expense = () => {
             <div className="content">
                 <div className="page-header">
                     <div className="page-title">
-                        <h4>Expenses List </h4>
+                        <h4>Expenses List</h4>
                         <h6>Manage your purchases</h6>
                     </div>
                     <div className="page-btn">
                         <div className="btn btn-added" onClick={() => setShowForm()}>
-                            Add New Expense
+                            {showCreateForm ? <i className="fa-solid fa-eye-slash me-2"></i> : <img src={plus} alt='img' className='me-1' />}
+                            {showCreateForm ? 'Hide Form' : 'Add New Expense'}
                         </div>
                     </div>
                 </div>
@@ -98,10 +101,10 @@ const Expense = () => {
                                             </th>
                                             <th>Category Name</th>
                                             <th>Reference</th>
-                                            <th>Date</th>
                                             <th>Status</th>
                                             <th>Amount (UGX)</th>
                                             <th>Description</th>
+                                            <th>Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -115,11 +118,10 @@ const Expense = () => {
                                                 </td>
                                                 <td>{exp.category}</td>
                                                 <td>{exp.ref}</td>
-                                                <td>{exp.date}</td>
-                                                {/* bg-lightred */}
                                                 <td><span className={`badges ${exp.status === "Active" ? "bg-lightgreen" : "bg-lightred"}`}>{exp.status}</span></td>
                                                 <td>{parseInt(exp.amount, 10).toLocaleString()}</td>
                                                 <td>{exp.description}</td>
+                                                <td>{exp.date}</td>
                                             </tr>))}
                                     </tbody>
                                 </table>
