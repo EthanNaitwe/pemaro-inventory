@@ -25,7 +25,7 @@ const Expense = () => {
             <div className="content">
                 <div className="page-header">
                     <div className="page-title">
-                        <h4>Expenses List </h4>
+                        <h4>Expenses List</h4>
                         <h6>Manage your purchases</h6>
                     </div>
                     <div className="page-btn">
@@ -101,10 +101,10 @@ const Expense = () => {
                                             </th>
                                             <th>Category Name</th>
                                             <th>Reference</th>
-                                            <th>Date</th>
                                             <th>Status</th>
                                             <th>Amount (UGX)</th>
                                             <th>Description</th>
+                                            <th>Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -118,11 +118,10 @@ const Expense = () => {
                                                 </td>
                                                 <td>{exp.category}</td>
                                                 <td>{exp.ref}</td>
-                                                <td>{exp.date}</td>
-                                                {/* bg-lightred */}
                                                 <td><span className={`badges ${exp.status === "Active" ? "bg-lightgreen" : "bg-lightred"}`}>{exp.status}</span></td>
                                                 <td>{parseInt(exp.amount, 10).toLocaleString()}</td>
                                                 <td>{exp.description}</td>
+                                                <td>{exp.date}</td>
                                             </tr>))}
                                     </tbody>
                                 </table>

@@ -29,28 +29,6 @@ const Dashboard = () => {
     const [startOfMonth] = useState(now.startOf('month').toFormat('dd/MM/yyyy'));
     const [endOfMonth] = useState(now.endOf('month').toFormat('dd/MM/yyyy'));
 
-    useEffect(() => {
-
-        // This week's start date (Monday)
-        let startOfWeek = now.startOf('week').toFormat('dd/MM/yyyy');
-
-        // This week's end date (Sunday)
-        let endOfWeek = now.endOf('week').toFormat('dd/MM/yyyy');
-
-        // This month's start date (1st of the month)
-        let startOfMonth = now.startOf('month').toFormat('dd/MM/yyyy');
-
-        // This month's end date (last day of the month)
-        let endOfMonth = now.endOf('month').toFormat('dd/MM/yyyy');
-
-        console.log("This week's start date: ", startOfWeek);
-        console.log("This week's end date: ", endOfWeek);
-        console.log("This month's start date: ", startOfMonth);
-        console.log("This month's end date: ", endOfMonth);
-
-    }, [])
-
-
     return (
         <div className='page-wrapper'>
             <div className='content'>
@@ -161,9 +139,7 @@ const Dashboard = () => {
                                 </div>
                             </div>
                             <div className='card-body'>
-                                {/* chart here */}
                                 <LineDashed />
-                                {/* <div id='sales_charts'></div> */}
                             </div>
                         </div>
                     </div>

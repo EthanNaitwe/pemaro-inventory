@@ -57,8 +57,8 @@ const ProductsList = () => {
                                             <th>Product Name</th>
                                             <th>Art Number</th>
                                             <th>Quantity</th>
-                                            <th>Tax [%]</th>
-                                            <th>Discount [%]</th>
+                                            <th>Purchasing Price</th>
+                                            <th>Minimum Price</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -80,28 +80,13 @@ const ProductsList = () => {
                                                     </td>
                                                     <td>{toUpper(item.artNumber)}</td>
                                                     <td>{(sumBy(item.variants, 'quantity') - item.sales.length)}</td>
-                                                    <td>{item.tax}</td>
-                                                    <td>{item.discount}</td>
+                                                    <td>{parseInt(item.purchasing_price, 10).toLocaleString()}</td>
+                                                    <td>{parseInt(item.minimum_price, 10).toLocaleString()}</td>
                                                     <td>
                                                         <Button variant="dashed" className='px-4' size="small" onClick={() => {
                                                             dispatch(setProductVED('view-product'));
                                                             dispatch(setSingleProduct(item));
                                                         }}>view</Button>
-                                                        {/* <Space>
-                                                            <Radio.Group size="small">
-                                                                <Radio.Button value="start">View</Radio.Button>
-                                                                <Radio.Button value="end">end</Radio.Button>
-                                                            </Radio.Group>
-                                                        </Space> */}
-                                                        {/* <span className='me-3' onClick={() => {
-                                                            dispatch(setProductVED('view-product'));
-                                                            dispatch(setSingleProduct(item));
-                                                        }}>
-                                                            <img src={eye} alt='img' />
-                                                        </span>
-                                                        <span className='me-3' onClick={() => dispatch(setProductVED('add-product'))}>
-                                                            <img src={edit} alt='img' />
-                                                        </span> */}
                                                     </td>
                                                 </tr>
                                             )

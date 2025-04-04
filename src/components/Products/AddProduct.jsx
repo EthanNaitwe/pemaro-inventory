@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from "yup";
 import plus from '../../assets/img/icons/plus.svg';
-import { discount, tax } from '../../config/helpers/dataHelpers';
 import { clearCreateError, createProductRequest } from "../../config/store/actions/productActions";
 import { setProductVED } from '../../config/store/actions/settingsActions';
 import { Bounce, toast, ToastContainer } from "react-toastify";
@@ -15,10 +14,9 @@ const AddProduct = () => {
     const { creating, createError } = useSelector((state) => state.products);
     const schema = yup
         .object({
-            tax: yup.string().required(),
+            minimum_price: yup.string().required(),
             name: yup.string().required(),
-            discount: yup.string().required(),
-            artNumber: yup.string().required(),
+            purchasing_price: yup.string().required(),
             description: yup.string().required(),
         })
         .required();
@@ -72,7 +70,7 @@ const AddProduct = () => {
                 <div className='card'>
                     <div className='card-body'>
                         <div className='row'>
-                            <div className='col-lg-3 col-sm-6 col-6'>
+                            <div className='col-lg-4 col-sm-6 col-6'>
                                 <div className='form-group'>
                                     <label>Product Name</label>
                                     <input type='text' {...register("name", { required: true })}
@@ -80,59 +78,22 @@ const AddProduct = () => {
                                     <p>{errors.name?.message && "This field is required"}</p>
                                 </div>
                             </div>
-                            <div className='col-lg-3 col-sm-6 col-6'>
+                            <div className='col-lg-4 col-sm-6 col-6'>
                                 <div className='form-group'>
-                                    <label>Product Code</label>
-                                    <input type='text' {...register("artNumber")}
-                                        aria-invalid={errors.artNumber ? "true" : "false"} />
-                                    <p>{errors.artNumber?.message && "This field is required"}</p>
+                                    <label>Purchasing Price</label>
+                                    <input placeholder='Price' type="number" min={1} {...register("purchasing_price", { required: true })}
+                                        aria-invalid={errors.purchasing_price ? "true" : "false"} />
+                                    <p>{errors.purchasing_price?.message && "This field is required"}</p>
                                 </div>
                             </div>
-                            <div className='col-lg-3 col-sm-6 col-6'>
+                            <div className='col-lg-4 col-sm-6 col-6'>
                                 <div className='form-group'>
-                                    <label>Tax</label>
-                                    <select className='form-select' {...register("tax")}
-                                        aria-invalid={errors.tax ? "true" : "false"} >
-                                        <option value=''>Choose Tax</option>
-                                        {tax.map((tx, i) => (
-                                            <option
-                                                key={i}
-                                                value={tx}>
-                                                {`${tx}%`}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    <p>{errors.tax?.message && "This field is required"}</p>
+                                    <label>Minimum Selling Price</label>
+                                    <input placeholder='Price' type="number" min={1} {...register("minimum_price", { required: true })}
+                                        aria-invalid={errors.minimum_price ? "true" : "false"} />
+                                    <p>{errors.minimum_price?.message && "This field is required"}</p>
                                 </div>
                             </div>
-                            <div className='col-lg-3 col-sm-6 col-6'>
-                                <div className='form-group'>
-                                    <label>Discount Type</label>
-                                    <select className='form-select' {...register("discount")} aria-invalid={errors.discount ? "true" : "false"}>
-                                        <option value=''>Percentage</option>
-                                        {discount.map((dsc, i) => (
-                                            <option
-                                                key={i}
-                                                value={dsc}>
-                                                {`${dsc}%`}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    <p>{errors.discount?.message && "This field is required"}</p>
-                                </div>
-                            </div>
-                            {/* <div className='col-lg-3 col-sm-6 col-6'>
-                                <div className='form-group'>
-                                    <label> Product Image</label>
-                                    <div className='image-upload'>
-                                        <input type='file' {...register("imageUrl")} />
-                                        <div className='image-uploads'>
-                                            <img src={upload} alt='img' />
-                                            <h4>Drag & Drop</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
                             <div className='col-lg-12 col-sm-6 col-12'>
                                 <div className='form-group'>
                                     <label>Description</label>
@@ -141,25 +102,15 @@ const AddProduct = () => {
                                     <p>{errors.description?.message && "This field is required"}</p>
                                 </div>
                             </div>
-                            <div className='col-lg-12' key={creating}>
+                            <div className='col-lg-12'>
                                 <button
                                     disabled={creating}
                                     className='btn btn-submit me-2' onClick={handleSubmit(onSubmit)}>
                                     Submit{' '}
                                     {creating && <div className="spinner-border spinner-border-sm" role="status">
                                         <span className="sr-only">Loading...</span>
-                                    </div>}</button>
-
-                                {/* {!creating && <button className='btn btn-cancel'>{`Cancel ${createError}`}</button>} */}
-                                {/* <button
-                                    disabled={creating}
-                                    className='btn card-btn btn-block'
-                                    onClick={handleSubmit(onSubmit)}>
-                                    Submitz{' '}
-                                    {creating && <div className="spinner-border spinner-border-sm" role="status">
-                                        <span className="sr-only">Loading...</span>
                                     </div>}
-                                </button> */}
+                                </button>
                             </div>
                         </div>
                     </div>

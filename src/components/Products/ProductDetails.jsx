@@ -1,11 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useDispatch, useSelector } from 'react-redux';
 import { setProductVED } from '../../config/store/actions/settingsActions';
-
 import JsBarcode from 'jsbarcode';
 import { capitalize, isEmpty, sumBy } from 'lodash';
 import { useEffect, useRef } from 'react';
-// import prod69 from '../../assets/img/product/product69.jpg';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Empty } from 'antd';
 import { useForm } from 'react-hook-form';
@@ -86,16 +84,15 @@ const ProductDetails = () => {
                                         </li>
                                         <li>
                                             <h4>Quantity</h4>
-                                            {/* (sumBy(item.variants, 'quantity') - item.sales.length) */}
                                             <h6>{sumBy(singleProduct?.variants, 'quantity') - singleProduct.sales.length}</h6>
                                         </li>
                                         <li>
-                                            <h4>Tax</h4>
-                                            <h6>{`${singleProduct?.tax} %`}</h6>
+                                            <h4>Purchasing Price</h4>
+                                            <h6>{`${singleProduct?.purchasing_price}`}</h6>
                                         </li>
                                         <li>
-                                            <h4>Discount Type</h4>
-                                            <h6>{`${singleProduct?.discount} %`}</h6>
+                                            <h4>Minimum Price</h4>
+                                            <h6>{`${singleProduct?.minimum_price}`}</h6>
                                         </li>
                                         <li>
                                             <h4>Description</h4>
