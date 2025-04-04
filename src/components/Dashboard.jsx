@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { Empty } from 'antd';
 import { isEmpty, orderBy } from 'lodash';
 import { DateTime } from "luxon";
 import { useEffect, useState } from 'react';
@@ -8,9 +9,9 @@ import dash2Img from '../assets/img/icons/dash2.svg';
 import dash3Img from '../assets/img/icons/dash3.svg';
 import dash4Img from '../assets/img/icons/dash4.svg';
 import { calculateDateRangeAmounts } from '../config/helpers/dashboard.helpers';
+import { getAllExpenses } from '../config/store/actions/expenseActions';
 import { getSalesRequest } from '../config/store/actions/saleActions';
 import LineDashed from './Charts/LineDashed';
-import { getAllExpenses } from '../config/store/actions/expenseActions';
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -21,10 +22,10 @@ const Dashboard = () => {
     useEffect(() => {
         if (isEmpty(allSales)) dispatch(getSalesRequest());
         if (isEmpty(allExpenses)) dispatch(getAllExpenses());
-    }, [allExpenses, allSales]);
+    }, []);
 
     let now = DateTime.local();
-    const [startOfWeek] = useState(now.startOf('week').toFormat('dd/MM/yyyy'))
+    const [startOfWeek] = useState(now.startOf('week').toFormat('dd/MM/yyyy'));
     const [endOfWeek] = useState(now.endOf('week').toFormat('dd/MM/yyyy'));
     const [startOfMonth] = useState(now.startOf('month').toFormat('dd/MM/yyyy'));
     const [endOfMonth] = useState(now.endOf('month').toFormat('dd/MM/yyyy'));
@@ -40,7 +41,7 @@ const Dashboard = () => {
                                     <img src={dash1Img} alt='img' />
                                 </span>
                             </div>
-                            <div className='dash-widgetcontent'>
+                            <div className='dash-widgetcontent' key={allSales + startOfWeek + endOfWeek}>
                                 <h5>UGX <span className='counters' data-count={`${calculateDateRangeAmounts(allSales, startOfWeek, endOfWeek)}`}>{calculateDateRangeAmounts(allSales, startOfWeek, endOfWeek)}</span></h5>
                                 <h6>Weekly Sales</h6>
                             </div>
@@ -53,7 +54,7 @@ const Dashboard = () => {
                                     <img src={dash2Img} alt='img' />
                                 </span>
                             </div>
-                            <div className='dash-widgetcontent'>
+                            <div className='dash-widgetcontent' key={allSales + startOfMonth + endOfMonth}>
                                 <h5>UGX <span className='counters' data-count={`${calculateDateRangeAmounts(allSales, startOfMonth, endOfMonth)}`}>{calculateDateRangeAmounts(allSales, startOfMonth, endOfMonth)}</span></h5>
                                 <h6>Monthly Sales</h6>
                             </div>
@@ -66,7 +67,7 @@ const Dashboard = () => {
                                     <img src={dash3Img} alt='img' />
                                 </span>
                             </div>
-                            <div className='dash-widgetcontent'>
+                            <div className='dash-widgetcontent' key={allExpenses + startOfWeek + endOfWeek}>
                                 <h5>UGX <span className='counters' data-count={`${calculateDateRangeAmounts(allExpenses, startOfWeek, endOfWeek)}`}>{calculateDateRangeAmounts(allExpenses, startOfWeek, endOfWeek)}</span></h5>
                                 <h6>Weekly Expenses</h6>
                             </div>
@@ -156,7 +157,8 @@ const Dashboard = () => {
                             </div>
                             <div className='card-body'>
                                 <div className='table-responsive dataview'>
-                                    <table className='table datatable '>
+                                    {isEmpty(allProducts) && <Empty />}
+                                    {!isEmpty(allProducts) && <table className='table datatable '>
                                         <thead>
                                             <tr>
                                                 <th>Sno</th>
@@ -178,7 +180,7 @@ const Dashboard = () => {
                                                 </tr>)
                                             })}
                                         </tbody>
-                                    </table>
+                                    </table>}
                                 </div>
                             </div>
                         </div>

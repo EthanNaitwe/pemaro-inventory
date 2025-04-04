@@ -92,10 +92,10 @@ const PeopleList = () => {
                                                     </label>
                                                 </th>
                                                 <th>User Name</th>
+                                                <th>Email</th>
                                                 <th>Gender</th>
                                                 <th>Phone</th>
                                                 <th>Address</th>
-                                                <th>Email</th>
                                                 <th>Role</th>
                                             </tr>
                                         </thead>
@@ -114,10 +114,10 @@ const PeopleList = () => {
                                                         </span>
                                                         <span>{`${item.surname} ${item.other_names}`}</span>
                                                     </td>
+                                                    <td>{item.email}</td>
                                                     <td>{item.gender}</td>
                                                     <td>{item.phone_number} </td>
                                                     <td>{item.address}</td>
-                                                    <td>{item.email}</td>
                                                     <td>{item.role}</td>
                                                 </tr>
                                             ))}

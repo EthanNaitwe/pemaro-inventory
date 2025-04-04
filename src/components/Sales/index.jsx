@@ -51,7 +51,6 @@ const SalesList = () => {
                             {!isEmpty(allSales) && loading && <WithDataLoader />}
                             <div className="card-body">
                                 {isEmpty(allSales) && !loading && <Empty />}
-                                {isEmpty(allSales) && !loading && <Empty description="No data available" />}
                                 {isEmpty(allSales) && loading && <WithNoDataLoader />}
                                 {!isEmpty(allSales) && <div className='table-responsive'>
                                     <table className='table  datanew'>

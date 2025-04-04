@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useDispatch, useSelector } from 'react-redux';
-import { setProductVED } from '../../config/store/actions/settingsActions';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Empty } from 'antd';
 import JsBarcode from 'jsbarcode';
 import { capitalize, isEmpty, sumBy } from 'lodash';
 import { useEffect, useRef } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Empty } from 'antd';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import * as yup from "yup";
 import { clothSizes, getSizeLabel, groupProductVariants } from '../../config/helpers/dataHelpers';
 import { addProductCategoryRequest, setSingleProduct } from '../../config/store/actions/productActions';
+import { setProductVED } from '../../config/store/actions/settingsActions';
 import CardHeader from '../common/CardHeader';
 import WithDataLoader from '../common/loaders/WithDataLoader';
 
@@ -170,10 +170,10 @@ const ProductDetails = () => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {groupProductVariants(singleProduct?.variants).map((item) => {
+                                                        {groupProductVariants(singleProduct?.variants).map((item, i) => {
                                                             const filtered = singleProduct.sales.filter(prod => prod.color === item.color && prod.size === item.size);
                                                             return (
-                                                                <tr key={item.id}>
+                                                                <tr key={i}>
                                                                     <td>{capitalize(item.color)}</td>
                                                                     <td>{`${getSizeLabel(item.size)} (${item.size})`}</td>
                                                                     <td>{`${item.quantity - filtered.length}`}</td>
@@ -183,11 +183,6 @@ const ProductDetails = () => {
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            {/* <div className='slider-product'>
-                                            <img src={prod69} alt='img' />
-                                            <h4>macbookpro.jpg</h4>
-                                            <h6>581kb</h6>
-                                        </div> */}
                                         </div>
                                     </div>
                                 </div>}

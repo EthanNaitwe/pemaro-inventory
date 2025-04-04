@@ -105,11 +105,14 @@ const AddProduct = () => {
                             <div className='col-lg-12'>
                                 <button
                                     disabled={creating}
-                                    className='btn btn-submit me-2' onClick={handleSubmit(onSubmit)}>
+                                    className='btn btn-submit me-2'
+                                    onClick={handleSubmit(onSubmit)}>
                                     Submit{' '}
-                                    {creating && <div className="spinner-border spinner-border-sm" role="status">
-                                        <span className="sr-only">Loading...</span>
-                                    </div>}
+                                    {creating && (
+                                        <div className="spinner-border spinner-border-sm" role="status">
+                                            <span className="sr-only">Loading...</span>
+                                        </div>
+                                    )}
                                 </button>
                             </div>
                         </div>
