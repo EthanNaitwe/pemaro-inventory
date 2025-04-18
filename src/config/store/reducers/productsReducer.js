@@ -1,4 +1,4 @@
-import { ADD_PRODUCT_CATEGORY_FAILURE, ADD_PRODUCT_CATEGORY_REQUEST, ADD_PRODUCT_CATEGORY_SUCCESS, CREATE_PRODUCT_FAILURE, CREATE_PRODUCT_REQUEST, CREATE_PRODUCT_SUCCESS, GET_PRODUCTS_FAILURE, GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS, SET_SINGLE_PRODUCT } from '../actions/productActions';
+import { ADD_PRODUCT_CATEGORY_FAILURE, ADD_PRODUCT_CATEGORY_REQUEST, ADD_PRODUCT_CATEGORY_SUCCESS, CREATE_PRODUCT_FAILURE, CREATE_PRODUCT_REQUEST, CREATE_PRODUCT_SUCCESS, GET_PRODUCTS_FAILURE, GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS, SET_PRODUCTS_PAGE_NO, SET_SINGLE_PRODUCT } from '../actions/productActions';
 
 const initialState = {
     allProducts: [],
@@ -12,6 +12,8 @@ const initialState = {
     addingCategory: false,
     addCategorySuccess: {},
     addCategoryError: {},
+
+    productsPageNo: 1,
 
     singleProduct: {},
 };
@@ -38,6 +40,9 @@ export const productsReducer = (state = initialState, action) => {
             return { ...state, addingCategory: false, addCategorySuccess: action.payload };
         case ADD_PRODUCT_CATEGORY_FAILURE:
             return { ...state, addingCategory: false, addCategoryError: action.payload };
+
+        case SET_PRODUCTS_PAGE_NO:
+            return { ...state, productsPageNo: action.payload };
 
         case SET_SINGLE_PRODUCT:
             return { ...state, singleProduct: action.payload };

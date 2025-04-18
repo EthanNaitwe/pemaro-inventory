@@ -2,15 +2,18 @@ import { isEmpty, some } from 'lodash';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import mail from '../../assets/img/icons/mail.svg';
-import logo from '../../assets/img/vaalz-logo.png';
+import eye from '../../assets/img/icons/eye.svg';
+import logo from '../../assets/img/nile-suites-logo.png';
 import { setAuthRoute } from '../../config/store/actions/settingsActions';
 import { loginUserRequest } from '../../config/store/actions/userActions';
+import { useState } from 'react';
 
 const Login = () => {
     const dispatch = useDispatch();
     const { logging } = useSelector((state) => state.users);
     const { register, watch } = useForm();
     const registerInputs = watch(["email", "password"]);
+    const [showPassword, setShowPassword] = useState(false)
     const [email, password] = registerInputs;
     const userData = {
         password,
@@ -41,9 +44,9 @@ const Login = () => {
                                 </div>
                                 <div className="form-login">
                                     <label>Password</label>
-                                    <div className="pass-group">
-                                        <input type="password" className="pass-input" placeholder="Enter your password" {...register("password")} />
-                                        {/* <span className="fas toggle-password fa-eye-slash"></span> */}
+                                    <div className="pass-group form-addons">
+                                        <input type={showPassword ? "text" : "password"} className="pass-input" placeholder="Enter your password" {...register("password")} />
+                                        <i onClick={() => setShowPassword(!showPassword)} className={`img fa-regular ${showPassword ? 'fa-eye' : 'fa-eye-slash'}`}></i>
                                     </div>
                                 </div>
                                 {false && <div className="form-login" style={{ visibility: "hidden" }}>

@@ -9,6 +9,8 @@ import './index.css'
 
 setupAxiosInterceptors(store);
 
+document.title = import.meta.env.VITE_APP_SITE_TITLE || 'Atom PoS';
+
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <AuthProvider>

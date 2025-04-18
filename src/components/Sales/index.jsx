@@ -4,7 +4,7 @@ import { isEmpty, orderBy } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import plus from '../../assets/img/icons/plus.svg';
-import { dataPaginationFn, getSizeLabel } from '../../config/helpers/dataHelpers';
+import { dataPaginationFn } from '../../config/helpers/dataHelpers';
 import { getSalesRequest, setSalesPageNo } from '../../config/store/actions/saleActions';
 import WithDataLoader from '../common/loaders/WithDataLoader';
 import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
@@ -17,9 +17,7 @@ const SalesList = () => {
     const [showForm, setShowForm] = useState(false);
     const [pageItems, setPageItems] = useState(9);
 
-    const onPagination = (page) => {
-        dispatch(setSalesPageNo(page))
-    }
+    const onPagination = (page) => dispatch(setSalesPageNo(page))
 
     useEffect(() => {
         dispatch(getSalesRequest());
@@ -62,11 +60,12 @@ const SalesList = () => {
                                                         <span className='checkmarks'></span>
                                                     </label>
                                                 </th>
-                                                <th>Reference</th>
-                                                <th>Color</th>
-                                                <th>Size</th>
+                                                {/* <th>Reference</th> */}
+                                                <th>Product</th>
                                                 <th>Payment Status</th>
-                                                <th>Amount (UGX)</th>
+                                                <th>Quantity</th>
+                                                <th>Price per Item</th>
+                                                <th>Total Amount (UGX)</th>
                                                 <th>Date</th>
                                             </tr>
                                         </thead>
@@ -80,11 +79,11 @@ const SalesList = () => {
                                                                 <span className='checkmarks'></span>
                                                             </label>
                                                         </td>
-                                                        <td>{sale.reference}</td>
-                                                        <td>{sale.color}</td>
-                                                        <td>{`${getSizeLabel(sale.size)} (${sale.size})`}</td>
+                                                        <td>{`${sale.artNumber.artNumber}: ${sale.artNumber.name}`}</td>
                                                         <td><span className={`badges ${sale.payment === 'Paid' ? 'bg-lightgreen' : 'bg-lightred'}`}>{sale.payment}</span></td>
+                                                        <td>{sale.quantity}</td>
                                                         <td>{parseInt(sale.amount, 10).toLocaleString()}</td>
+                                                        <td>{parseInt(sale.amount * sale.quantity, 10).toLocaleString()}</td>
                                                         <td>{sale.date}</td>
                                                     </tr>
                                                 )

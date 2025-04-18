@@ -7,7 +7,7 @@ const Error404 = () => {
                 Ooops!!
             </h3>
             <p className='h4 font-weight-normal'>
-                Please contact the Vaalz Collections help desk
+                Please contact the Nile Suites help desk
             </p>
             <span className='btn btn-primary'>
                 WhatsApp

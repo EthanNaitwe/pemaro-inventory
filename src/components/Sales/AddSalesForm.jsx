@@ -1,24 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { yupResolver } from "@hookform/resolvers/yup";
-import { capitalize, isEmpty, uniq } from "lodash";
+import { isEmpty } from "lodash";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
-import { clothSizes, filterSizeOptionsFn, formatColorOptionsFn } from "../../config/helpers/dataHelpers";
 import { addNewSaleRequest } from "../../config/store/actions/saleActions";
 
 const AddSalesForm = () => {
     const dispatch = useDispatch();
     const { allProducts } = useSelector((state) => state.products);
     const { creating } = useSelector((state) => state.sales);
-    const [colorOptions, setColorOptions] = useState([]);
-    const [setsizeOptions, setSetsizeOptions] = useState([]);
     const [singleProduct, setSingleProduct] = useState({})
     const schema = yup
         .object({
-            color: yup.string().required(),
-            size: yup.string().required(),
             amount: yup.string().required(),
             artNumber: yup
                 .string()
@@ -31,23 +26,19 @@ const AddSalesForm = () => {
         register,
         handleSubmit,
         formState: { errors } } = useForm({
+            defaultValues: {
+                quantity: 1,
+            },
             resolver: yupResolver(schema),
             mode: 'onChange',
         });
-    let watchCode = watch('artNumber', '');
+    let [watchCode, watchQuantity] = watch(['artNumber', 'quantity']);
 
-    const onSubmit = (data) => dispatch(addNewSaleRequest(singleProduct.id, data));
+    const onSubmit = (data) => dispatch(addNewSaleRequest(singleProduct.id, { ...data, amount: singleProduct.purchasing_price }));
 
     useEffect(() => {
         setSingleProduct(allProducts.find(prod => prod.artNumber === watchCode) || {});
     }, [watchCode]);
-
-    useEffect(() => {
-        if (!isEmpty(singleProduct)) {
-            setSetsizeOptions(filterSizeOptionsFn(clothSizes, singleProduct.variants.map(it => it.size)));
-            setColorOptions(formatColorOptionsFn(uniq(singleProduct.variants.map(varie => capitalize(varie.color)))));
-        }
-    }, [singleProduct])
 
     return (
         <div className='card-body'>
@@ -63,48 +54,29 @@ const AddSalesForm = () => {
                 <div className='col-lg-2 col-sm-6 col-6'>
                     <div key={singleProduct} className='form-group'>
                         <label>Prod Name</label>
-                        <input disabled type='text' value={singleProduct.name || ''} />
+                        <input disabled type='text' value={singleProduct?.name || ''} />
                     </div>
                 </div>
                 <div className='col-lg-2 col-sm-6 col-6'>
                     <div className='form-group'>
-                        <label>Color</label>
-                        <select disabled={!(!isEmpty(singleProduct))} className='form-select' {...register("color")}
-                            aria-invalid={errors.color ? "true" : "false"} >
-                            <option value=''>Choose Color</option>
-                            {colorOptions.map((i) => (
-                                <option
-                                    key={i.value}
-                                    value={i.value}>
-                                    {i.label}
-                                </option>
-                            ))}
-                        </select>
-                        <p>{errors.color?.message && "This field is required"}</p>
+                        <label>Quantity</label>
+                        <input disabled={!(!isEmpty(singleProduct))} type='number' {...register("quantity", { required: true })}
+                            aria-invalid={errors.quantity ? "true" : "false"} />
+                        <p>{errors.quantity?.message}</p>
                     </div>
                 </div>
                 <div className='col-lg-2 col-sm-6 col-6'>
                     <div className='form-group'>
-                        <label>Size</label>
-                        <select disabled={!(!isEmpty(singleProduct))} className='form-select' {...register("size")} aria-invalid={errors.size ? "true" : "false"}>
-                            <option value=''>Choose Size</option>
-                            {setsizeOptions.map((i) => (
-                                <option
-                                    key={i.value}
-                                    value={i.value}>
-                                    {i.label}
-                                </option>
-                            ))}
-                        </select>
-                        <p>{errors.size?.message && "This field is required"}</p>
+                        <label>Price per Item (UGX)</label>
+                        <input disabled type='text' {...register("amount")}
+                            value={singleProduct?.purchasing_price ? parseInt(singleProduct?.purchasing_price, 10).toLocaleString() : 0} />
                     </div>
                 </div>
                 <div className='col-lg-2 col-sm-6 col-6'>
                     <div className='form-group'>
-                        <label>Amount</label>
-                        <input disabled={!(!isEmpty(singleProduct))} type='text' {...register("amount")}
-                            aria-invalid={errors.amount ? "true" : "false"} />
-                        <p>{errors.amount?.message && "This field is required"}</p>
+                        <label>Total Amount (UGX)</label>
+                        <input disabled type='text'  {...register("sub_total")}
+                            value={singleProduct?.purchasing_price ? parseInt(singleProduct?.purchasing_price * watchQuantity, 10).toLocaleString() : 0} />
                     </div>
                 </div>
                 <div className='col-lg-2 col-sm-6 col-6'>

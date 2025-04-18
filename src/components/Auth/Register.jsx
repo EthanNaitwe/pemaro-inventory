@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import mail from '../../assets/img/icons/mail.svg';
 import user1 from '../../assets/img/icons/users1.svg';
-import logo from '../../assets/img/vaalz-logo.png';
+import logo from '../../assets/img/nile-suites-logo.png';
 import { setAuthRoute } from '../../config/store/actions/settingsActions';
 import { createUserRequest } from '../../config/store/actions/userActions';
 

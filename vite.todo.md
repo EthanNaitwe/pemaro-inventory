@@ -2,3 +2,11 @@
  - If `some_text` isn't available, set `some_error_variable` to true.
  - The `some_text` can either be the word `admin` or a valid uuid. If not set `some_error_variable` to true.
  - 
+
+ - To have a Centralized App:
+    - All customization needs needs to come from the backend.
+    - Have a cetralized hosting infrastructure. Single backend, single frontend, single mobile App hosting.
+    - Multiple items in a single sale order.
+    - Capture an item multiplier [Quantity].
+    - Implement Change Password & Forgot password.
+    - 

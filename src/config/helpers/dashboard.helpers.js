@@ -20,7 +20,7 @@ export const calculateDateRangeAmounts = (data, startDate, endDate) => {
     });
 
     // Convert amount to number, handle invalid amounts, and sum them
-    const totalAmount = sumBy(filteredData, item => parseFloat(item.amount) || 0);
+    const totalAmount = sumBy(filteredData, item => parseFloat(item.amount * (item.quantity || 1)) || 0);
 
     return totalAmount.toLocaleString();
 };

@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import avatar1 from '../..//assets/img/profiles/avator1.jpg';
 import smallLogo from '../../assets/img/logo-small.png';
-import logo from '../../assets/img/vaalz-logo.png';
-// import closesImg from '../../assets/img/icons/closes.svg';
-// import searchImg from '../../assets/img/icons/search.svg';
-// import notificationImg from '../../assets/img/icons/notification-bing.svg';
+import logo from '../../assets/img/nile-suites-logo.png';
+import defaultImg from '../../assets/img/customer/default.png';
+import customer1 from '../../assets/img/customer/customer1.jpg';
+import customer5 from '../../assets/img/customer/customer5.jpg';
 import { isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,6 +28,11 @@ const AppHeader = () => {
             dispatch(getProfile())
         }
     }, []);
+
+    useEffect(() => {
+        console.log('authUser', authUser);
+    }, [authUser])
+
 
     return (
         <div className='header'>
@@ -56,7 +60,8 @@ const AppHeader = () => {
                         <span className='user-img' onClick={() => {
                             setShowLogout(!showLogout);
                         }}>
-                            <img src={avatar1} alt='' />
+                            {isEmpty(authUser) && <img src={defaultImg} alt='' />}
+                            {!isEmpty(authUser) && <img src={authUser.gender === 'Male' ? customer5 : customer1} alt='' />}
                             <span className='status online'></span>
                         </span>
                     </span>
@@ -66,7 +71,8 @@ const AppHeader = () => {
                         <div className='profilename'>
                             <div className='profileset'>
                                 <span className='user-img'>
-                                    <img src={avatar1} alt='' />
+                                    {isEmpty(authUser) && <img src={defaultImg} alt='' />}
+                                    {!isEmpty(authUser) && <img src={authUser.gender === 'Male' ? customer5 : customer1} alt='' />}
                                     <span className='status online'></span>
                                 </span>
                                 <div className='profilesets'>

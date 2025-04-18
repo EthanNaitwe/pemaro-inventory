@@ -1,4 +1,4 @@
-import logo from '../../assets/img/vaalz-logo.png';
+import logo from '../../assets/img/nile-suites-logo.png';
 import mail from '../../assets/img/icons/mail.svg';
 
 const ForgotPassword = () => {

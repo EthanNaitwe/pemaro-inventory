@@ -80,7 +80,7 @@ const AddProduct = () => {
                             </div>
                             <div className='col-lg-4 col-sm-6 col-6'>
                                 <div className='form-group'>
-                                    <label>Purchasing Price</label>
+                                    <label>Selling Price</label>
                                     <input placeholder='Price' type="number" min={1} {...register("purchasing_price", { required: true })}
                                         aria-invalid={errors.purchasing_price ? "true" : "false"} />
                                     <p>{errors.purchasing_price?.message && "This field is required"}</p>
