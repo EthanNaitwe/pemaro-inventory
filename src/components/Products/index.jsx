@@ -66,8 +66,7 @@ const ProductsList = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                        {dataPaginationFn(allProducts, pageItems, productsPageNo).map((item, i) => {
+                                        {dataPaginationFn(allProducts, pageItems, productsPageNo).map((item) => {
                                             return (
                                                 <tr key={item.id}>
                                                     <td>
@@ -83,7 +82,7 @@ const ProductsList = () => {
                                                         </span> */}
                                                         {item.name}
                                                     </td>
-                                                    <td>{`${parseInt(item.purchasing_price, 10).toLocaleString()} /=`}</td>
+                                                    <td>{`${parseInt(item.minimum_price, 10).toLocaleString()} /=`}</td>
                                                     <td>
                                                         <Button disabled variant="dashed" className='px-4' size="small" onClick={() => {
                                                             dispatch(setProductVED('view-product'));
@@ -93,32 +92,6 @@ const ProductsList = () => {
                                                 </tr>
                                             )
                                         })}
-                                        {/* {allProducts.map((item) => {
-                                            return (
-                                                <tr key={item.id}>
-                                                    <td>
-                                                        <label className='checkboxs'>
-                                                            <input type='checkbox' />
-                                                            <span className='checkmarks'></span>
-                                                        </label>
-                                                    </td>
-                                                    <td>{toUpper(item.artNumber)}</td>
-                                                    <td className='productimgname'>
-                                                        <span className='product-img'>
-                                                            {item.img ? <img src={item.img} alt='product' /> : <i className="product-img-def fas fa-solid fa-person-dress fa-xl"></i>}
-                                                        </span>
-                                                        {item.name}
-                                                    </td>
-                                                    <td>{`${parseInt(item.purchasing_price, 10).toLocaleString()} /=`}</td>
-                                                    <td>
-                                                        <Button variant="dashed" className='px-4' size="small" onClick={() => {
-                                                            dispatch(setProductVED('view-product'));
-                                                            dispatch(setSingleProduct(item));
-                                                        }}>view</Button>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })} */}
                                     </tbody>
                                 </table>
                                 <div className='my-2'>

@@ -10,6 +10,24 @@ export const clothSizes = [
     { value: "2XL", label: "Extra Extra Large" },
 ];
 
+export const paymentOptions = [
+    { value: "cash", label: "CASH" },
+    { value: "mtn-mobile-money", label: "AIRTEL MONEY" },
+    { value: "airtel-mobile-money", label: "MTN MOBILE MONEY" },
+    { value: "credit-card", label: "CREDIT CARD" },
+    { value: "gloval", label: "GLOVAL" },
+];
+
+export const salesCategories = [
+    { value: "all-items", label: "ALL ITEMS" },
+    { value: "foods", label: "FOODS" },
+    { value: "beverages", label: "BEVERAGES" },
+    { value: "break-fast", label: "BREAK FAST" },
+    { value: "special-dishes", label: "SPECIAL DISHES" },
+    { value: "bites", label: "BITES" },
+    { value: "others", label: "OTHERS" },
+];
+
 // Function to get a menu item by key
 export const getSizeLabel = (key) => {
     return clothSizes.find((item) => item.value === key).label;
@@ -18,11 +36,11 @@ export const getSizeLabel = (key) => {
 // Filter size / color options from products
 export const filterSizeOptionsFn = (prod, opt) => {
     return prod.filter(item => opt.includes(item.value));
-}
+};
 
 export const formatColorOptionsFn = (colors) => {
     return colors.map(color => ({ value: color, label: color }))
-}
+};
 
 export const dataPaginationFn = (arr, pageItems, pageNo) => {
     // Calculate the start and end index for the current page
@@ -34,7 +52,14 @@ export const dataPaginationFn = (arr, pageItems, pageNo) => {
 
     // Return the slice of items for the current page
     return arr.slice(startIndex, endIndex);
-}
+};
+
+export const sumSalesSubTotal = (sales, clicks) => {
+    const _sum = Object.keys(clicks).map((item) => {
+        return sales.find(prod => prod.id === item).minimum_price * clicks[item] || 0;
+    }).reduce((acc, curr) => acc + curr, 0);
+    return _sum;
+};
 
 export const groupProductVariants = (variants) => {
     const grouped = groupBy(variants, (item) => `${item.size}-${item.color}`) // Group by size and color
@@ -51,6 +76,6 @@ export const groupProductVariants = (variants) => {
     }
 
     return result;
-}
+};
 
 export const expenseCategories = ["Employee Benefits", "Entertainment", "Office Expenses & Postage", "Other Expenses"];

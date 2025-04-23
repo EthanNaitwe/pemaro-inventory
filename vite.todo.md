@@ -10,3 +10,25 @@
     - Capture an item multiplier [Quantity].
     - Implement Change Password & Forgot password.
     - 
+
+ - Work on online visibility:
+  - Sigma males content.
+  - Religion content.
+  - Motivational content.
+  - Relationship content.
+  - Software content.
+  - Bedtime Stories content.
+  - Movies and Series content.
+  - Music content.
+  - Comedy and humor content.
+  - Digital Marketing content.
+  - Making Money Online content.
+  - 
+
+
+<!-- 
+Title: Flavia Home Bulindo
+Ariana, Arieta, Annet, Angel, Abriana [Siblings]
+Nakibuule Joan [Flavia]
+Nasongo Sarah [Mum]
+-->

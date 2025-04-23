@@ -1,4 +1,4 @@
-import { ADD_PRODUCT_CATEGORY_FAILURE, ADD_PRODUCT_CATEGORY_REQUEST, ADD_PRODUCT_CATEGORY_SUCCESS, CREATE_PRODUCT_FAILURE, CREATE_PRODUCT_REQUEST, CREATE_PRODUCT_SUCCESS, GET_PRODUCTS_FAILURE, GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS, SET_PRODUCTS_PAGE_NO, SET_SINGLE_PRODUCT } from '../actions/productActions';
+import { ADD_PRODUCT_CATEGORY_FAILURE, ADD_PRODUCT_CATEGORY_REQUEST, ADD_PRODUCT_CATEGORY_SUCCESS, CREATE_PRODUCT_FAILURE, CREATE_PRODUCT_REQUEST, CREATE_PRODUCT_SUCCESS, GET_PRODUCTS_FAILURE, GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS, SET_CLICK_COUNTS, SET_DISPLAY_SALE_CATEGORY, SET_PRODUCTS_PAGE_NO, SET_SELECTED_SALE_CATEGORY, SET_SINGLE_PRODUCT } from '../actions/productActions';
 
 const initialState = {
     allProducts: [],
@@ -14,7 +14,9 @@ const initialState = {
     addCategoryError: {},
 
     productsPageNo: 1,
-
+    selectedSaleCategory: "all-items",
+    clickCounts: {},
+    displaySaleCategory: [],
     singleProduct: {},
 };
 
@@ -43,6 +45,15 @@ export const productsReducer = (state = initialState, action) => {
 
         case SET_PRODUCTS_PAGE_NO:
             return { ...state, productsPageNo: action.payload };
+
+        case SET_SELECTED_SALE_CATEGORY:
+            return { ...state, selectedSaleCategory: action.payload };
+
+        case SET_CLICK_COUNTS:
+            return { ...state, clickCounts: action.payload };
+
+        case SET_DISPLAY_SALE_CATEGORY:
+            return { ...state, displaySaleCategory: action.payload };
 
         case SET_SINGLE_PRODUCT:
             return { ...state, singleProduct: action.payload };

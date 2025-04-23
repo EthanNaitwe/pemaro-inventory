@@ -191,7 +191,7 @@ const AddSales = () => {
                                 </div>
                             </div>
                             <div className='row'>
-                                <div className='col-lg-6 '>
+                                <div className='col-lg-6'>
                                     <div className='total-order w-100 max-widthauto m-auto mb-4'>
                                         <ul>
                                             <li>
@@ -205,7 +205,7 @@ const AddSales = () => {
                                         </ul>
                                     </div>
                                 </div>
-                                <div className='col-lg-6 '>
+                                <div className='col-lg-6'>
                                     <div className='total-order w-100 max-widthauto m-auto mb-4'>
                                         <ul>
                                             <li>

@@ -5298,7 +5298,29 @@ span.select2-container.select2-container--default.select2-container--open {
 }
 
 .table tbody {
-  border: 0 !important;
+  border-top: 1px;
+  border-color: #E9ECEF;
+  border-style: solid;
+}
+
+.td-sales {
+  padding: .5rem .5rem !important;
+}
+
+.btn-radio {
+  text-align: center;
+  min-width: 30px;
+}
+
+.btn-add-sales {
+  background: #4d5e91 !important;
+  padding: 3px 8px !important;
+  cursor: pointer !important;
+  color: #fff;
+
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
 }
 
 .table tbody tr:hover {
@@ -7003,6 +7025,7 @@ span.select2-container.select2-container--default.select2-container--open {
   .category-form .form-group {
     margin-right: 15px;
   }
+
   /* .general-details {
     display: none;
   } */
@@ -7302,6 +7325,96 @@ span.select2-container.select2-container--default.select2-container--open {
 
 .card-sales-split li {
   margin: 0 15px;
+}
+
+.parent-container-header,
+.parent-container {
+  display: flex;
+  height: 100%;
+}
+
+.sales-grid-ch {
+  flex: 1;
+  display: grid;
+  /* Adjust card width */
+  grid-template: repeat(auto-fill, minmax(112px, 127px)) / repeat(auto-fill, minmax(112px, 127px));
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  width: 100%;
+
+  background-color: #ebebeb;
+}
+
+.payment-modal .form-select {
+  padding: .125rem 2.25rem .125rem .75rem;
+}
+
+.payment-header {
+  padding-top: 15px;
+}
+
+.payment-header,
+.sales-payment-ch {
+  width: 350px;
+}
+
+.grid-header {
+  flex: 1;
+  /* background-color: yellow; */
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.btn-category-focus {
+  background-color: #4d5e91;
+}
+
+.btn-category-unfocus {
+  background: #1B2850;
+}
+
+.btn-category-unfocus:hover {
+  background: #30437b;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.btn-category {
+  margin: 5px 10px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  /* font-size: 14px; */
+}
+
+.grid-card {
+  width: 112px;
+  height: 112px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  background-color: #fff;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.grid-card h5 {
+  font-size: 15px;
+  color: #555;
+  font-weight: 900;
+}
+
+.grid-card h6 {
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
 }
 
 .image-upload-new {

@@ -60,7 +60,7 @@ const ProductDetails = () => {
                                         </li>
                                         <li>
                                             <h4>Selling Price</h4>
-                                            <h6>{`${parseInt(singleProduct?.purchasing_price, 10).toLocaleString()} UGX`}</h6>
+                                            <h6>{`${parseInt(singleProduct?.minimum_price, 10).toLocaleString()} UGX`}</h6>
                                         </li>
                                         <li>
                                             <h4>Description</h4>

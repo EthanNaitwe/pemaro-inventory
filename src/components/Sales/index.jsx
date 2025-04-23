@@ -8,13 +8,14 @@ import { dataPaginationFn } from '../../config/helpers/dataHelpers';
 import { getSalesRequest, setSalesPageNo } from '../../config/store/actions/saleActions';
 import WithDataLoader from '../common/loaders/WithDataLoader';
 import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
-import AddSalesForm from './AddSalesForm';
+
+import AddSalesGrid from './AddSalesGrid';
 
 const SalesList = () => {
     const dispatch = useDispatch();
     const { allSales, loading, salesPageNo } = useSelector((state) => state.sales);
 
-    const [showForm, setShowForm] = useState(false);
+    const [showForm, setShowForm] = useState(true);
     const [pageItems, setPageItems] = useState(9);
 
     const onPagination = (page) => dispatch(setSalesPageNo(page))
@@ -45,12 +46,13 @@ const SalesList = () => {
                         </div>
 
                         <div className='card'>
-                            {showForm && <AddSalesForm />}
+                            {/* {showForm && <AddSalesForm />} */}
+                            {showForm && <AddSalesGrid />}
                             {!isEmpty(allSales) && loading && <WithDataLoader />}
                             <div className="card-body">
                                 {isEmpty(allSales) && !loading && <Empty />}
-                                {isEmpty(allSales) && loading && <WithNoDataLoader />}
-                                {!isEmpty(allSales) && <div className='table-responsive'>
+                                {!showForm && isEmpty(allSales) && loading && <WithNoDataLoader />}
+                                {!showForm && !isEmpty(allSales) && <div className='table-responsive'>
                                     <table className='table  datanew'>
                                         <thead>
                                             <tr>

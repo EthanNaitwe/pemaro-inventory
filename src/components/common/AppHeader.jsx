@@ -29,11 +29,6 @@ const AppHeader = () => {
         }
     }, []);
 
-    useEffect(() => {
-        console.log('authUser', authUser);
-    }, [authUser])
-
-
     return (
         <div className='header'>
             {/* {`: /${selectedSidebarMenu}`} */}
