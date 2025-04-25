@@ -43,14 +43,14 @@ jobs:
     - name: Build project
       run: npm run build
 
-    - name: Deploy to server
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        SERVER_USER: ${{ secrets.SERVER_USER }}
-        SERVER_HOST: ${{ secrets.SERVER_HOST }}
-        DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-      run: |
-        echo "$SSH_PRIVATE_KEY" > private_key
-        chmod 600 private_key
-        rsync -avz -e "ssh -i private_key" ./build/ $SERVER_USER@$SERVER_HOST:$DEPLOY_PATH
-        rm private_key
+    # - name: Deploy to server
+    #   env:
+    #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+    #     SERVER_USER: ${{ secrets.SERVER_USER }}
+    #     SERVER_HOST: ${{ secrets.SERVER_HOST }}
+    #     DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+    #   run: |
+    #     echo "$SSH_PRIVATE_KEY" > private_key
+    #     chmod 600 private_key
+    #     rsync -avz -e "ssh -i private_key" ./build/ $SERVER_USER@$SERVER_HOST:$DEPLOY_PATH
+    #     rm private_key

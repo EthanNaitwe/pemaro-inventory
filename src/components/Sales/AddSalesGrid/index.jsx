@@ -2,22 +2,23 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Empty, Modal, Radio } from "antd";
 import { isEmpty } from "lodash";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
-import { paymentOptions, salesCategories, sumSalesSubTotal } from "../../../config/helpers/dataHelpers";
+import { clickZeroFilter, paymentOptions, salesCategories, sumSalesSubTotal } from "../../../config/helpers/dataHelpers";
 import { getProductsRequest, setClickCounts, setDisplaySaleCategory, setSelectedSaleCategory } from "../../../config/store/actions/productActions";
+import { addNewSalesRequest, setShowPayModal } from "../../../config/store/actions/saleActions";
 
 const AddSalesGrid = () => {
   const dispatch = useDispatch();
   const { allProducts, selectedSaleCategory, displaySaleCategory, clickCounts } = useSelector((state) => state.products);
-
-  const [showDelete, setShowDelete] = useState(false);
+  const { creatingBulk, showPayModal } = useSelector((state) => state.sales);
 
   // Start
   const schema = yup
     .object({
+      print_receipt: yup.boolean().required(),
       payment_method: yup.string().required()
     })
     .required();
@@ -27,21 +28,28 @@ const AddSalesGrid = () => {
     handleSubmit,
     formState: { errors } } = useForm({
       resolver: yupResolver(schema),
+      defaultValues: {
+        print_receipt: true,
+        payment_method: 'cash',
+      }
     });
   // End
 
   const onSubmit = (data) => {
-    console.log('data 000123', data);
-    console.log('clickCounts 000123', clickCounts);
-    // const dataToSend = 
-    clickCounts.map((item) => {
-      // const _id = 
-      console.log('item', item);
-      return {
-        id: 8
-      }
+    const dataToSend = [];
+    Object.keys(clickZeroFilter(clickCounts)).map((item) => {
+      let tl = allProducts.find(prod => prod.id === item);
+      dataToSend.push({
+        quantity: clickCounts[item],
+        artNumber: tl.artNumber,
+        amount: parseInt(tl.minimum_price, 10),
+        sub_total: parseInt(tl.minimum_price, 10) * parseInt(clickCounts[item], 10),
+        payment_method: data.payment_method,
+        prod_id: tl.id,
+      })
     })
-  }
+    dispatch(addNewSalesRequest(dataToSend));
+  };
 
   const handleCardClick = (id) => {
     dispatch(setClickCounts({
@@ -67,6 +75,10 @@ const AddSalesGrid = () => {
         dispatch(setDisplaySaleCategory(allProducts.filter(item => item.food_category === selectedSaleCategory)));
         break;
 
+      case "extras":
+        dispatch(setDisplaySaleCategory(allProducts.filter(item => item.food_category === selectedSaleCategory)));
+        break;
+
       case "break-fast":
         dispatch(setDisplaySaleCategory(allProducts.filter(item => item.sub_category === "Break Fast")));
         break;
@@ -88,14 +100,30 @@ const AddSalesGrid = () => {
     }
   }, [selectedSaleCategory, allProducts]);
 
-  const handleCancel = () => setShowDelete(false);
+  const handleCancel = () => dispatch(setShowPayModal(!showPayModal));
 
   return (
     <div>
-      <Modal className="payment-modal" okText="Confirm & Print" cancelText="Close" title="Sales" open={showDelete} onOk={handleSubmit(onSubmit)} onCancel={handleCancel}>
+      <Modal
+        className="payment-modal"
+        okText="Confirm & Print"
+        cancelText="Close"
+        title="Sales"
+        open={showPayModal}
+        onOk={handleSubmit(onSubmit)}
+        onCancel={handleCancel}
+        okButtonProps={{ loading: creatingBulk }}
+      >
         <div className="row">
-          <div className="col-lg-12 col-sm-12 col-12">
+          <div className='col-lg-3 col-sm-3 col-3'>
+            <div className='form-group'>
+              <label>Print Receipt</label>
+              <input type='checkbox' {...register("print_receipt")} />
+            </div>
+          </div>
+          <div className="col-lg-9 col-sm-9 col-9">
             <div className="form-group">
+              <label>Payment Method</label>
               <select className="form-select" {...register("payment_method")}
                 aria-invalid={errors.payment_method ? "true" : "false"} >
                 <option value=''>Payment Method</option>
@@ -112,6 +140,14 @@ const AddSalesGrid = () => {
             </div>
           </div>
         </div>
+        {/* footer={[
+          <Button key="back" onClick={handleCancel}>
+            Return
+          </Button>,
+          <Button key="submit" type="primary" loading={true} onClick={handleSubmit(onSubmit)}>
+            Submit
+          </Button>,
+        ]} */}
       </Modal>
       <div className="parent-container-header">
         <div className="payment-header">
@@ -141,7 +177,12 @@ const AddSalesGrid = () => {
                     {
                       clickCounts[item] > 0 && <tr key={i}>
                         <td className="td-sales">{clickCounts[item]}</td>
-                        <td className="td-sales">{allProducts.find(prod => prod.id === item).food}</td>
+                        <td className="td-sales">{(allProducts.find(prod => prod.id === item).food).replace("/", "/\n").split("\n").map((line, idx) => (
+                          <Fragment key={idx}>
+                            {line.trim()}
+                            <br />
+                          </Fragment>
+                        ))}</td>
                         <td className="td-sales">{(allProducts.find(prod => prod.id === item).minimum_price * clickCounts[item]).toLocaleString()}</td>
                         <td className="td-sales">
                           <Radio.Group size="small" value="" onChange={e => {
@@ -165,7 +206,7 @@ const AddSalesGrid = () => {
                 <td className="td-sales">{`${sumSalesSubTotal(allProducts, clickCounts).toLocaleString()}/=`}</td>
                 <td className="td-sales">
                   <div className="btn-add-sales text-center"
-                    onClick={() => setShowDelete(!showDelete)}>
+                    onClick={() => dispatch(setShowPayModal(!showPayModal))}>
                     Add Sales
                   </div>
                 </td>
@@ -173,19 +214,23 @@ const AddSalesGrid = () => {
             </tbody>
           </table>}
         </div>
-        {!isEmpty(allProducts) && <div className="sales-grid-ch">
-          {displaySaleCategory.map((item, i) => {
-            return (
-              <div key={i} className='grid-card'
-                onClick={() => handleCardClick(item.id || i)}
-              >
-                <h5 className="text-center">{`${item.sub_category}:`}</h5>
-                <h6 className="text-center">{item.food}</h6>
-                {clickCounts[item.id] > 0 && <h6 className="text-center">{clickCounts[item.id]}</h6>}
-              </div>
-            )
-          })}
-        </div>}
+
+        <div className="card-body">
+          {isEmpty(allProducts) && <Empty />}
+          {!isEmpty(allProducts) && <div className="sales-grid-ch">
+            {displaySaleCategory.map((item, i) => {
+              return (
+                <div key={i} className='grid-card'
+                  onClick={() => handleCardClick(item.id || i)}
+                >
+                  <h5 className="text-center">{`${item.sub_category}:`}</h5>
+                  <h6 className="text-center">{item.food}</h6>
+                  {clickCounts[item.id] > 0 && <h6 className="text-center">{clickCounts[item.id]}</h6>}
+                </div>
+              )
+            })}
+          </div>}
+        </div>
       </div>
     </div>
   )

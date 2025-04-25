@@ -16,9 +16,16 @@ import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
 
 const PeopleList = () => {
     const dispatch = useDispatch();
-    const { allUsers, gettingUsers } = useSelector((state) => state.users);
+    const { allUsers: _allUsers, gettingUsers } = useSelector((state) => state.users);
+    const { authUser } = useSelector((state) => state.users);
 
-    // const [showForm] = useState(false);
+    // Filter users based on authUser.role
+    const allUsers = _allUsers.filter((item) => {
+        if (authUser.role === 'Stuff') {
+            return item.role === 'Stuff'; // Return only users with role 'Stuff'
+        }
+        return true; // Return all users for other roles
+    });
 
     useEffect(() => {
         dispatch(getAllUsers());
@@ -77,9 +84,7 @@ const PeopleList = () => {
                                     </div>
                                 </div>
                             </div>
-                            {isEmpty(allUsers) &&
-                                gettingUsers &&
-                                <WithNoDataLoader />}
+                            {isEmpty(allUsers) && gettingUsers && <WithNoDataLoader />}
                             {!isEmpty(allUsers) &&
                                 <div className='table-responsive'>
                                     <table className='table  datanew'>
@@ -309,4 +314,4 @@ const PeopleList = () => {
     )
 }
 
-export default PeopleList
+export default PeopleList;

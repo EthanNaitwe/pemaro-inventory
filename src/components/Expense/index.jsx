@@ -1,24 +1,84 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Empty } from "antd";
 import { isEmpty } from "lodash";
-import { useEffect } from "react";
+import { DateTime } from "luxon";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import * as yup from "yup";
 import plus from '../../assets/img/icons/plus.svg';
-import { getAllExpenses, setShowCreateForm } from "../../config/store/actions/expenseActions";
+import { dateRangeOptions } from "../../config/helpers/dataHelpers";
+import { getAllExpenses, setExpensesToDisplay, setShowCreateForm } from "../../config/store/actions/expenseActions";
 import WithDataLoader from "../common/loaders/WithDataLoader";
 import WithNoDataLoader from "../common/loaders/WithNoDataLoader";
 import AddExpenseForm from "./AddExpenseForm";
 
 const Expense = () => {
     const dispatch = useDispatch();
-    const { allExpenses, loading, showCreateForm } = useSelector((state) => state.expenses);
+    const { allExpenses: _allExpenses, loading, showCreateForm, expensesToDisplay } = useSelector((state) => state.expenses);
+    const { authUser } = useSelector((state) => state.users);
 
     const setShowForm = () => dispatch(setShowCreateForm(!showCreateForm));
+
+    let now = DateTime.local();
+
+    const [dateToday] = useState(now.toFormat('dd/MM/yyyy'));
+    const [dateYesterday] = useState(now.plus({ days: -1 }).toFormat('dd/MM/yyyy'));
+
+    const schema = yup
+        .object({
+            category: yup.string().required(),
+            amount: yup.string().required(),
+            description: yup.string().required(),
+
+        })
+        .required();
+
+    const {
+        watch,
+        register,
+        formState: { errors } } = useForm({
+            resolver: yupResolver(schema),
+            defaultValues: {
+                date_range: 'all',
+            },
+        });
+
+    let watchDateRange = watch('date_range');
 
     useEffect(() => {
         dispatch(getAllExpenses());
         return () => dispatch(setShowCreateForm(false));
     }, []);
+
+    // Filter users based on authUser.role
+    const allExpenses = _allExpenses.filter((item) => {
+        if (authUser.role === 'Stuff') {
+            return item.user_id === authUser.id; // Return only my sales if my role is 'Stuff'
+        }
+        return true; // Return all sales for other roles
+    });
+
+    useEffect(() => {
+        switch (watchDateRange) {
+            case "today":
+                dispatch(setExpensesToDisplay(allExpenses.filter((item) => item.date === dateToday)));
+                break;
+
+            case "yesterday":
+                dispatch(setExpensesToDisplay(allExpenses.filter((item) => item.date === dateYesterday)));
+                break;
+
+            default:
+                dispatch(setExpensesToDisplay(allExpenses));
+        }
+    }, [watchDateRange, _allExpenses]);
+
+    useEffect(() => {
+        console.log('expensesToDisplay', expensesToDisplay);
+    }, [expensesToDisplay])
+
 
     return (
         <div className="page-wrapper">
@@ -27,6 +87,22 @@ const Expense = () => {
                     <div className="page-title">
                         <h4>Expenses List</h4>
                         <h6>Manage your purchases</h6>
+                    </div>
+                    <div className='date-range col-lg-3 col-sm-6 col-6'>
+                        <div className='form-group'>
+                            <select className='form-select' style={{ lineHeight: '1.2rem', padding: '0.25rem 0.5rem' }} {...register("date_range")}
+                                aria-invalid={errors.category ? "true" : "false"} >
+                                {/* <option value=''>Choose Date Range</option> */}
+                                {dateRangeOptions.map((item) => (
+                                    <option
+                                        key={item.value}
+                                        value={item.value}>
+                                        {item.label}
+                                    </option>
+                                ))}
+                            </select>
+                            <p>{errors.category?.message && "This field is required"}</p>
+                        </div>
                     </div>
                     <div className="page-btn">
                         <div className="btn btn-added" onClick={() => setShowForm()}>
@@ -38,12 +114,10 @@ const Expense = () => {
 
                 <div className="card">
                     {showCreateForm && <AddExpenseForm />}
-                    {!isEmpty(allExpenses) && loading && <WithDataLoader />}
+                    {!isEmpty(expensesToDisplay) && loading && <WithDataLoader />}
                     <div className="card-body">
-                        {isEmpty(allExpenses) && !loading && <Empty />}
-                        {isEmpty(allExpenses) &&
-                            loading &&
-                            <WithNoDataLoader />}
+                        {isEmpty(expensesToDisplay) && !loading && <Empty />}
+                        {isEmpty(expensesToDisplay) && loading && <WithNoDataLoader />}
                         <div className="card" id="filter_inputs">
                             <div className="card-body pb-0">
                                 <div className="row">
@@ -88,7 +162,7 @@ const Expense = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>{!isEmpty(allExpenses) &&
+                        </div>{!isEmpty(expensesToDisplay) &&
                             <div className="table-responsive">
                                 <table className="table  datanew">
                                     <thead>
@@ -108,7 +182,7 @@ const Expense = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {allExpenses.map((exp, i) => (
+                                        {expensesToDisplay.map((exp, i) => (
                                             <tr key={i}>
                                                 <td>
                                                     <label className="checkboxs">

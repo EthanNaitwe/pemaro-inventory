@@ -12,19 +12,20 @@ export const clothSizes = [
 
 export const paymentOptions = [
     { value: "cash", label: "CASH" },
-    { value: "mtn-mobile-money", label: "AIRTEL MONEY" },
-    { value: "airtel-mobile-money", label: "MTN MOBILE MONEY" },
-    { value: "credit-card", label: "CREDIT CARD" },
-    { value: "gloval", label: "GLOVAL" },
+    { value: "airtel-mobile-money", label: "AIRTEL MONEY" },
+    { value: "mtn-mobile-money", label: "MTN MOBILE MONEY" },
+    { value: "visa-card", label: "VISA CARD" },
+    { value: "glovo", label: "GLOVO" },
 ];
 
 export const salesCategories = [
     { value: "all-items", label: "ALL ITEMS" },
     { value: "foods", label: "FOODS" },
+    { value: "extras", label: "EXTRAS" },
     { value: "beverages", label: "BEVERAGES" },
-    { value: "break-fast", label: "BREAK FAST" },
+    // { value: "break-fast", label: "BREAK FAST" },
     { value: "special-dishes", label: "SPECIAL DISHES" },
-    { value: "bites", label: "BITES" },
+    // { value: "bites", label: "BITES" },
     { value: "others", label: "OTHERS" },
 ];
 
@@ -39,7 +40,7 @@ export const filterSizeOptionsFn = (prod, opt) => {
 };
 
 export const formatColorOptionsFn = (colors) => {
-    return colors.map(color => ({ value: color, label: color }))
+    return colors.map(color => ({ value: color, label: color }));
 };
 
 export const dataPaginationFn = (arr, pageItems, pageNo) => {
@@ -62,7 +63,7 @@ export const sumSalesSubTotal = (sales, clicks) => {
 };
 
 export const groupProductVariants = (variants) => {
-    const grouped = groupBy(variants, (item) => `${item.size}-${item.color}`) // Group by size and color
+    const grouped = groupBy(variants, (item) => `${item.size}-${item.color}`); // Group by size and color
 
     const result = [];
 
@@ -79,3 +80,45 @@ export const groupProductVariants = (variants) => {
 };
 
 export const expenseCategories = ["Employee Benefits", "Entertainment", "Office Expenses & Postage", "Other Expenses"];
+export const dateRangeOptions = [
+    { value: "all", label: "All" },
+    { value: "today", label: "Today" },
+    { value: "yesterday", label: "Yesterday" },
+    // { value: "last-7-days", label: "Last 7 Days" },
+    // { value: "last-30-days", label: "Last 30 Days" },
+    // { value: "this-month", label: "This Month" },
+    // { value: "last-month", label: "Last Month" },
+];
+
+export const clickZeroFilter = (data) => {
+    return Object.fromEntries(
+        Object.entries(data).filter(([, value]) => value !== 0)
+    );
+};
+
+export const _allProducts = [
+    {
+        id: '1',
+        name: 'Chips & Chicken',
+        sub_category: 'foods',
+        artNumber: 'DW0004',
+        food: 'Chips & Chicken',
+        minimum_price: 15000,
+    },
+    {
+        id: '2',
+        name: 'Chips & Pork',
+        sub_category: 'foods',
+        artNumber: 'DW0005',
+        food: 'Chips & Pork',
+        minimum_price: 35000,
+    },
+    {
+        id: '3',
+        name: 'Plain Chips',
+        sub_category: 'foods',
+        artNumber: 'DW0006',
+        food: 'Plain Chips',
+        minimum_price: 7000,
+    }
+];

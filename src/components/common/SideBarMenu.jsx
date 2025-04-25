@@ -1,22 +1,31 @@
-import { setProductVED, setSelectedSidebarMenu } from '../../config/store/actions/settingsActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { menu } from '../../config/helpers/menuHelper';
+import { menu as _menu } from '../../config/helpers/menuHelper';
+import { setProductVED, setSelectedSidebarMenu } from '../../config/store/actions/settingsActions';
 
 const SideBarMenu = () => {
     const dispatch = useDispatch();
     const { selectedSidebarMenu } = useSelector((state) => state.settings);
+    const { authUser } = useSelector((state) => state.users);
 
     const sidebarMenuClick = (payload) => {
         dispatch(setSelectedSidebarMenu(payload))
         dispatch(setProductVED(''))
     }
 
+    // Dynamically update the hidden property based on authUser.role
+    const menu = _menu.map((item) => {
+        if (authUser.role === 'Stuff' && item.key === 'index') {
+            return { ...item, hidden: true };
+        }
+        return item;
+    });
+
     return (
         <div className='sidebar' id='sidebar'>
             <div className='sidebar-inner slimscroll'>
                 <div id='sidebar-menu' className='sidebar-menu'>
                     <ul>
-                        {menu.map((item) => (
+                        {menu.filter((item) => !item.hidden).map((item) => (
                             <li key={item.id} className={`sidebar-menu-item ${selectedSidebarMenu === item.key ? 'active' : ''}`}>
                                 <div onClick={() => sidebarMenuClick(item.key)}>
                                     <img src={item.img} alt='img' />

@@ -12,18 +12,18 @@ import dashboardImg from '../../assets/img/icons/dashboard.svg';
 
 // Menu array
 export const menu = [
-    { id: 1, key: 'index', name: 'Dashboard', img: dashboardImg },
-    { id: 2, key: 'product-list', name: 'Products', img: productImg },
-    { id: 3, key: 'sales-list', name: 'Sales', img: sales1Img },
-    { id: 9, key: 'people-list', name: 'People', img: users1Img },
-    { id: 5, key: 'expense-list', name: 'Expense', img: expense1Img },
-    // { id: 4, key: 'purchase-list', name: 'Purchases', img: purchase1Img },
-    // { id: 6, key: 'quotation-list', name: 'Quotation', img: quotation1Img },
-    // { id: 7, key: 'transfer-list', name: 'Transfer', img: transfer1Img },
-    // { id: 8, key: 'salesreturnlist', name: 'Return', img: return1Img },
-    // { id: 9, key: 'customer-list', name: 'People', img: users1Img },
-    // { id: 10, key: 'new-country', name: 'Places', img: placesImg }
-    // { id: 11, key: '404-error', name: '404 Error', img: users1Img },
+    { id: 1, key: 'index', name: 'Dashboard', img: dashboardImg, hidden: false },
+    { id: 2, key: 'product-list', name: 'Products', img: productImg, hidden: false },
+    { id: 3, key: 'sales-list', name: 'Sales', img: sales1Img, hidden: false },
+    { id: 9, key: 'people-list', name: 'People', img: users1Img, hidden: false },
+    { id: 5, key: 'expense-list', name: 'Expense', img: expense1Img, hidden: false },
+    // { id: 4, key: 'purchase-list', name: 'Purchases', img: purchase1Img, hidden: false },
+    // { id: 6, key: 'quotation-list', name: 'Quotation', img: quotation1Img, hidden: false },
+    // { id: 7, key: 'transfer-list', name: 'Transfer', img: transfer1Img, hidden: false },
+    // { id: 8, key: 'salesreturnlist', name: 'Return', img: return1Img, hidden: false },
+    // { id: 9, key: 'customer-list', name: 'People', img: users1Img, hidden: false },
+    // { id: 10, key: 'new-country', name: 'Places', img: placesImg, hidden: false },
+    // { id: 11, key: '404-error', name: '404 Error', img: users1Img, hidden: false },
 ];
 
 // Function to get a menu item by key

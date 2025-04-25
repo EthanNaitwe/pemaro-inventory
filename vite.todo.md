@@ -32,3 +32,12 @@ Ariana, Arieta, Annet, Angel, Abriana [Siblings]
 Nakibuule Joan [Flavia]
 Nasongo Sarah [Mum]
 -->
+
+<!--
+ - Aisha & Zainabu that I met in the Tax while I was headed to Dine & Wine.
+ - They were coming from school heading home [4th gate from Izabella].
+ - Their uniforms were white with blue stripes.
+-->
+
+  <!-- // Jovin, 11th June --
+ [[]] >

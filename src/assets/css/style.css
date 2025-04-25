@@ -7346,6 +7346,11 @@ span.select2-container.select2-container--default.select2-container--open {
   background-color: #ebebeb;
 }
 
+.payment-modal .checkboxs {
+  padding: 5px;
+}
+
+.date-range .form-select,
 .payment-modal .form-select {
   padding: .125rem 2.25rem .125rem .75rem;
 }

@@ -15,8 +15,9 @@ const ProductsList = () => {
     const { allProducts, loading, productsPageNo } = useSelector((state) => state.products);
 
     const [pageItems] = useState(10);
+    const [booll] = useState(false);
 
-    const onPagination = (page) => dispatch(setProductsPageNo(page))
+    const onPagination = (page) => dispatch(setProductsPageNo(page));
 
     useEffect(() => {
         dispatch(getProductsRequest());
@@ -30,7 +31,7 @@ const ProductsList = () => {
                         <h4>Product List</h4>
                         <h6>Manage your products</h6>
                     </div>
-                    {false && <div className='page-btn'>
+                    {booll && <div className='page-btn'>
                         <div className='btn btn-added' onClick={() => {
                             dispatch(setProductVED('add-product'))
                         }}>
@@ -45,20 +46,13 @@ const ProductsList = () => {
                     {!isEmpty(allProducts) && loading && <WithDataLoader />}
                     <div className='card-body'>
                         {isEmpty(allProducts) && !loading && <Empty />}
-                        {isEmpty(allProducts) &&
-                            loading &&
-                            <WithNoDataLoader />}
+                        {isEmpty(allProducts) && loading && <WithNoDataLoader />}
                         {!isEmpty(allProducts) &&
                             <div className='table-responsive'>
                                 <table className='table  datanew'>
                                     <thead>
                                         <tr>
-                                            <th>
-                                                <label className='checkboxs'>
-                                                    <input type='checkbox' id='select-all' />
-                                                    <span className='checkmarks'></span>
-                                                </label>
-                                            </th>
+                                            <th>S/N</th>
                                             <th>Art Number</th>
                                             <th>Product Name</th>
                                             <th>Price (UGX)</th>
@@ -68,13 +62,8 @@ const ProductsList = () => {
                                     <tbody>
                                         {dataPaginationFn(allProducts, pageItems, productsPageNo).map((item) => {
                                             return (
-                                                <tr key={item.id}>
-                                                    <td>
-                                                        <label className='checkboxs'>
-                                                            <input type='checkbox' />
-                                                            <span className='checkmarks'></span>
-                                                        </label>
-                                                    </td>
+                                                <tr key={item.index}>
+                                                    <td>{toUpper(item.index + 1)}</td>
                                                     <td>{toUpper(item.artNumber)}</td>
                                                     <td className='productimgname'>
                                                         {/* <span className='product-img'>

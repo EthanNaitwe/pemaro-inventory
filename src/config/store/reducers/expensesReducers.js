@@ -1,4 +1,4 @@
-import { ADD_NEW_EXPENSE_FAILURE, ADD_NEW_EXPENSE_REQUEST, ADD_NEW_EXPENSE_SUCCESS, GET_EXPENSES_FAILURE, GET_EXPENSES_REQUEST, GET_EXPENSES_SUCCESS, SET_SHOW_CREATE_FORM } from '../actions/expenseActions';
+import { ADD_NEW_EXPENSE_FAILURE, ADD_NEW_EXPENSE_REQUEST, ADD_NEW_EXPENSE_SUCCESS, GET_EXPENSES_FAILURE, GET_EXPENSES_REQUEST, GET_EXPENSES_SUCCESS, SET_EXPENSES_TO_DISPLAY, SET_SHOW_CREATE_FORM } from '../actions/expenseActions';
 
 const initialState = {
     allExpenses: [],
@@ -9,6 +9,7 @@ const initialState = {
     createError: null,
 
     showCreateForm: false,
+    expensesToDisplay: [],
 };
 
 export const expensesReducer = (state = initialState, action) => {
@@ -29,6 +30,9 @@ export const expensesReducer = (state = initialState, action) => {
 
         case SET_SHOW_CREATE_FORM:
             return { ...state, showCreateForm: action.payload };
+
+        case SET_EXPENSES_TO_DISPLAY:
+            return { ...state, expensesToDisplay: action.payload };
 
         default:
             return state;

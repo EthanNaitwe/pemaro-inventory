@@ -3,26 +3,79 @@ import { Empty, Pagination } from 'antd';
 import { isEmpty, orderBy } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import * as yup from "yup";
 import plus from '../../assets/img/icons/plus.svg';
-import { dataPaginationFn } from '../../config/helpers/dataHelpers';
-import { getSalesRequest, setSalesPageNo } from '../../config/store/actions/saleActions';
+import { dataPaginationFn, dateRangeOptions } from '../../config/helpers/dataHelpers';
+import { getSalesRequest, setSalesPageNo, setSalesToDisplay, setShowSalesGrid } from '../../config/store/actions/saleActions';
 import WithDataLoader from '../common/loaders/WithDataLoader';
 import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
 
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 import AddSalesGrid from './AddSalesGrid';
+import { DateTime } from 'luxon';
 
 const SalesList = () => {
     const dispatch = useDispatch();
-    const { allSales, loading, salesPageNo } = useSelector((state) => state.sales);
+    const { allSales: _allSales, loading, salesPageNo, showSalesGrid, salesToDisplay } = useSelector((state) => state.sales);
+    const { authUser } = useSelector((state) => state.users);
 
-    const [showForm, setShowForm] = useState(true);
     const [pageItems, setPageItems] = useState(9);
 
-    const onPagination = (page) => dispatch(setSalesPageNo(page))
+    let now = DateTime.local();
+
+    const [dateToday] = useState(now.toFormat('dd/MM/yyyy'));
+    const [dateYesterday] = useState(now.plus({ days: -1 }).toFormat('dd/MM/yyyy'));
+
+    const schema = yup
+        .object({
+            category: yup.string().required(),
+            amount: yup.string().required(),
+            description: yup.string().required(),
+
+        })
+        .required();
+
+    const {
+        watch,
+        register,
+        formState: { errors } } = useForm({
+            resolver: yupResolver(schema),
+            defaultValues: {
+                date_range: 'all',
+            },
+        });
+    let watchDateRange = watch('date_range');
+
+    const onPagination = (page) => dispatch(setSalesPageNo(page));
 
     useEffect(() => {
         dispatch(getSalesRequest());
     }, []);
+
+    // Filter users based on authUser.role
+    const allSales = _allSales.filter((item) => {
+        if (authUser.role === 'Stuff') {
+            return item.user_id === authUser.id; // Return only my sales if my role is 'Stuff'
+        }
+        return true; // Return all sales for other roles
+    });
+
+    useEffect(() => {
+        switch (watchDateRange) {
+            case "today":
+                dispatch(setSalesToDisplay(allSales.filter((item) => item.date === dateToday)));
+                break;
+
+            case "yesterday":
+                dispatch(setSalesToDisplay(allSales.filter((item) => item.date === dateYesterday)));
+                break;
+
+            default:
+                dispatch(setSalesToDisplay(allSales));
+        }
+    }, [watchDateRange, _allSales]);
+
 
     return (
         <div>
@@ -34,25 +87,41 @@ const SalesList = () => {
                                 <h4>Sales List</h4>
                                 <h6>Manage your sales</h6>
                             </div>
+                            {!showSalesGrid && <div className='date-range col-lg-3 col-sm-6 col-6'>
+                                <div className='form-group'>
+                                    <select className='form-select' style={{ lineHeight: '1.2rem', padding: '0.25rem 0.5rem' }} {...register("date_range")}
+                                        aria-invalid={errors.category ? "true" : "false"} >
+                                        {/* <option value=''>Choose Date Range</option> */}
+                                        {dateRangeOptions.map((item) => (
+                                            <option
+                                                key={item.value}
+                                                value={item.value}>
+                                                {item.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <p>{errors.category?.message && "This field is required"}</p>
+                                </div>
+                            </div>}
                             <div className='page-btn'>
                                 <div className='btn btn-added' onClick={() => {
-                                    setShowForm(!showForm);
-                                    setPageItems(showForm ? 9 : 6)
+                                    dispatch(setShowSalesGrid(!showSalesGrid));
+                                    setPageItems(showSalesGrid ? 9 : 6)
                                 }}>
-                                    {showForm ? <i className="fa-solid fa-eye-slash me-2"></i> : <img src={plus} alt='img' className='me-1' />}
-                                    {showForm ? 'Hide Form' : 'Add Sales'}
+                                    {showSalesGrid ? <i className="fa-solid fa-eye-slash me-2"></i> : <img src={plus} alt='img' className='me-1' />}
+                                    {showSalesGrid ? 'Hide Form' : 'Add Sales'}
                                 </div>
                             </div>
                         </div>
 
                         <div className='card'>
-                            {/* {showForm && <AddSalesForm />} */}
-                            {showForm && <AddSalesGrid />}
-                            {!isEmpty(allSales) && loading && <WithDataLoader />}
+                            {/* {showSalesGrid && <AddSalesForm />} */}
+                            {showSalesGrid && <AddSalesGrid />}
+                            {!isEmpty(salesToDisplay) && loading && <WithDataLoader />}
                             <div className="card-body">
-                                {isEmpty(allSales) && !loading && <Empty />}
-                                {!showForm && isEmpty(allSales) && loading && <WithNoDataLoader />}
-                                {!showForm && !isEmpty(allSales) && <div className='table-responsive'>
+                                {isEmpty(salesToDisplay) && !loading && <Empty />}
+                                {!showSalesGrid && isEmpty(salesToDisplay) && loading && <WithNoDataLoader />}
+                                {!showSalesGrid && !isEmpty(salesToDisplay) && <div className='table-responsive'>
                                     <table className='table  datanew'>
                                         <thead>
                                             <tr>
@@ -72,7 +141,7 @@ const SalesList = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {dataPaginationFn(orderBy(allSales, ['date'], ['desc']), pageItems, salesPageNo).map((sale, i) => {
+                                            {dataPaginationFn(orderBy(salesToDisplay, ['date'], ['desc']), pageItems, salesPageNo).map((sale, i) => {
                                                 return (
                                                     <tr key={i}>
                                                         <td>
@@ -93,7 +162,7 @@ const SalesList = () => {
                                         </tbody>
                                     </table>
                                     <div className='my-2'>
-                                        <Pagination onChange={onPagination} responsive hideOnSinglePage align="center" defaultCurrent={salesPageNo} total={allSales.length} />
+                                        <Pagination onChange={onPagination} responsive hideOnSinglePage align="center" defaultCurrent={salesPageNo} total={salesToDisplay.length} />
                                     </div>
                                 </div>}
                             </div>

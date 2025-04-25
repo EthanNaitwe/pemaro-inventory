@@ -43,6 +43,11 @@ export const addNewSaleApi = async (productId, data) => {
     return response.data;
 };
 
+export const addNewSalesApi = async (data) => {
+    const response = await api.post(`/sales/product`, data);
+    return response.data;
+};
+
 export const getExpensessApi = async () => {
     const response = await api.get("/expenses");
     return response.data;
