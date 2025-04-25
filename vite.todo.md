@@ -26,7 +26,7 @@
   - 
 
 
-<!-- 
+<!--
 Title: Flavia Home Bulindo
 Ariana, Arieta, Annet, Angel, Abriana [Siblings]
 Nakibuule Joan [Flavia]
@@ -34,10 +34,27 @@ Nasongo Sarah [Mum]
 -->
 
 <!--
- - Aisha & Zainabu that I met in the Tax while I was headed to Dine & Wine.
+ - Aisha & Zainabu that I met in the Tax while I was headed to Dine & Wine.payment_method
  - They were coming from school heading home [4th gate from Izabella].
  - Their uniforms were white with blue stripes.
 -->
 
-  <!-- // Jovin, 11th June --
- [[]] >
+<!-- // Jovin, 11th June -->
+<!--
+Search Filter,
+Name Filter,
+Payment Categories,
+Bites Stock,
+-->
+<!--
+ - Filters on Expenses.
+ - Exporting Filtered Reports.
+ - Editing Products.
+ - Printing Receipt.
+ - Previewing Receipt.
+ - Close that first space up.
+ - Payment Category Reports.
+ - Fix changing page number.
+ - Bites Stock.
+ - Top 5 Trending Foods [minus Bites & Beverages].
+-->

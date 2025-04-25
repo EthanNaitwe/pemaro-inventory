@@ -28,9 +28,8 @@ const Expense = () => {
 
     const schema = yup
         .object({
-            category: yup.string().required(),
-            amount: yup.string().required(),
-            description: yup.string().required(),
+            date_range: yup.string().required(),
+            stuff: yup.string().required(),
 
         })
         .required();
@@ -42,6 +41,7 @@ const Expense = () => {
             resolver: yupResolver(schema),
             defaultValues: {
                 date_range: 'all',
+                stuff: 'all',
             },
         });
 
@@ -75,11 +75,6 @@ const Expense = () => {
         }
     }, [watchDateRange, _allExpenses]);
 
-    useEffect(() => {
-        console.log('expensesToDisplay', expensesToDisplay);
-    }, [expensesToDisplay])
-
-
     return (
         <div className="page-wrapper">
             <div className="content">
@@ -88,11 +83,10 @@ const Expense = () => {
                         <h4>Expenses List</h4>
                         <h6>Manage your purchases</h6>
                     </div>
-                    <div className='date-range col-lg-3 col-sm-6 col-6'>
+                    {/* <div className='date-range col-lg-3 col-sm-6 col-6'>
                         <div className='form-group'>
                             <select className='form-select' style={{ lineHeight: '1.2rem', padding: '0.25rem 0.5rem' }} {...register("date_range")}
                                 aria-invalid={errors.category ? "true" : "false"} >
-                                {/* <option value=''>Choose Date Range</option> */}
                                 {dateRangeOptions.map((item) => (
                                     <option
                                         key={item.value}
@@ -103,7 +97,7 @@ const Expense = () => {
                             </select>
                             <p>{errors.category?.message && "This field is required"}</p>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="page-btn">
                         <div className="btn btn-added" onClick={() => setShowForm()}>
                             {showCreateForm ? <i className="fa-solid fa-eye-slash me-2"></i> : <img src={plus} alt='img' className='me-1' />}

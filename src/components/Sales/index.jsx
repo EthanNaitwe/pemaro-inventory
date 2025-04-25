@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Empty, Pagination } from 'antd';
 import { isEmpty, orderBy } from 'lodash';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from "yup";
 import plus from '../../assets/img/icons/plus.svg';
@@ -11,16 +11,24 @@ import WithDataLoader from '../common/loaders/WithDataLoader';
 import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { DateTime } from 'luxon';
 import { useForm } from 'react-hook-form';
 import AddSalesGrid from './AddSalesGrid';
-import { DateTime } from 'luxon';
 
 const SalesList = () => {
     const dispatch = useDispatch();
     const { allSales: _allSales, loading, salesPageNo, showSalesGrid, salesToDisplay } = useSelector((state) => state.sales);
-    const { authUser } = useSelector((state) => state.users);
+    const { authUser, allUsers } = useSelector((state) => state.users);
 
     const [pageItems, setPageItems] = useState(9);
+
+    const formatUsersOptions = (users) => {
+        const options = users.filter((_user) => _user.role === "Stuff").map((user) => ({
+            label: `${user.surname} ${user.other_names}`,
+            value: user.id,
+        }));
+        return [{ value: "all", label: "All Stuff" }, ...options];
+    };
 
     let now = DateTime.local();
 
@@ -29,10 +37,8 @@ const SalesList = () => {
 
     const schema = yup
         .object({
-            category: yup.string().required(),
-            amount: yup.string().required(),
-            description: yup.string().required(),
-
+            date_range: yup.string().required(),
+            stuff: yup.string().required(),
         })
         .required();
 
@@ -43,39 +49,39 @@ const SalesList = () => {
             resolver: yupResolver(schema),
             defaultValues: {
                 date_range: 'all',
+                stuff: 'all',
             },
         });
+
     let watchDateRange = watch('date_range');
+    let watchUser = watch('stuff');
 
     const onPagination = (page) => dispatch(setSalesPageNo(page));
+
+    // Filter users based on authUser.role
+    const allSales = _allSales.filter((item) => {
+        if (authUser.role === 'Stuff') {
+            return item.user_id_id === authUser.id; // Return only my sales if my role is 'Stuff'
+        }
+        return true; // Return all sales for other roles
+    });
+
+    const filteredItems = useMemo(() => {
+        if (watchDateRange === 'all' && watchUser === 'all') return allSales;
+        if (watchDateRange === 'all' && watchUser !== 'all') return allSales.filter(item => item.user_id === watchUser);
+        if (watchDateRange === 'today' && watchUser === 'all') return allSales.filter(item => item.date === dateToday);
+        if (watchDateRange === 'today' && watchUser !== 'all') return allSales.filter(item => item.date === dateToday && item.user_id === watchUser);
+        if (watchDateRange === 'yesterday' && watchUser === 'all') return allSales.filter(item => item.date === dateYesterday);
+        if (watchDateRange === 'yesterday' && watchUser !== 'all') return allSales.filter(item => item.date === dateYesterday && item.user_id === watchUser);
+    }, [_allSales, watchDateRange, watchUser, dateToday, dateYesterday]);
 
     useEffect(() => {
         dispatch(getSalesRequest());
     }, []);
 
-    // Filter users based on authUser.role
-    const allSales = _allSales.filter((item) => {
-        if (authUser.role === 'Stuff') {
-            return item.user_id === authUser.id; // Return only my sales if my role is 'Stuff'
-        }
-        return true; // Return all sales for other roles
-    });
-
     useEffect(() => {
-        switch (watchDateRange) {
-            case "today":
-                dispatch(setSalesToDisplay(allSales.filter((item) => item.date === dateToday)));
-                break;
-
-            case "yesterday":
-                dispatch(setSalesToDisplay(allSales.filter((item) => item.date === dateYesterday)));
-                break;
-
-            default:
-                dispatch(setSalesToDisplay(allSales));
-        }
-    }, [watchDateRange, _allSales]);
-
+        dispatch(setSalesToDisplay(filteredItems));
+    }, [filteredItems]);
 
     return (
         <div>
@@ -87,22 +93,6 @@ const SalesList = () => {
                                 <h4>Sales List</h4>
                                 <h6>Manage your sales</h6>
                             </div>
-                            {!showSalesGrid && <div className='date-range col-lg-3 col-sm-6 col-6'>
-                                <div className='form-group'>
-                                    <select className='form-select' style={{ lineHeight: '1.2rem', padding: '0.25rem 0.5rem' }} {...register("date_range")}
-                                        aria-invalid={errors.category ? "true" : "false"} >
-                                        {/* <option value=''>Choose Date Range</option> */}
-                                        {dateRangeOptions.map((item) => (
-                                            <option
-                                                key={item.value}
-                                                value={item.value}>
-                                                {item.label}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    <p>{errors.category?.message && "This field is required"}</p>
-                                </div>
-                            </div>}
                             <div className='page-btn'>
                                 <div className='btn btn-added' onClick={() => {
                                     dispatch(setShowSalesGrid(!showSalesGrid));
@@ -117,54 +107,89 @@ const SalesList = () => {
                         <div className='card'>
                             {/* {showSalesGrid && <AddSalesForm />} */}
                             {showSalesGrid && <AddSalesGrid />}
-                            {!isEmpty(salesToDisplay) && loading && <WithDataLoader />}
+                            {!isEmpty(_allSales) && loading && <WithDataLoader />}
                             <div className="card-body">
+                                {!showSalesGrid && !isEmpty(_allSales) && <div className="row">
+                                    <div className="date-range-border col-lg-3 col-sm-6 col-12"></div>
+                                    <div className='date-range col-lg-3 col-sm-6 col-12'>
+                                        <div className='form-group'>
+                                            <select className='form-select' style={{ lineHeight: '1.2rem', padding: '0.25rem 0.5rem' }} {...register("date_range")}
+                                                aria-invalid={errors.date_range ? "true" : "false"} >
+                                                {dateRangeOptions.map((item) => (
+                                                    <option
+                                                        key={item.value}
+                                                        value={item.value}>
+                                                        {item.label === "All" ? "All Sales" : item.label}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            <p>{errors.date_range?.message && "This field is required"}</p>
+                                        </div>
+                                    </div>
+                                    <div className='date-range col-lg-3 col-sm-6 col-12'>
+                                        <div className='form-group'>
+                                            <select className='form-select' style={{ lineHeight: '1.2rem', padding: '0.25rem 0.5rem' }} {...register("stuff")}
+                                                aria-invalid={errors.stuff ? "true" : "false"} >
+                                                {formatUsersOptions(allUsers).map((item) => (
+                                                    <option
+                                                        key={item.value}
+                                                        value={item.value}>
+                                                        {item.label === "All" ? "All Sales" : item.label}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            <p>{errors.stuff?.message && "This field is required"}</p>
+                                        </div>
+                                    </div>
+                                    <div className="date-range-border col-lg-3 col-sm-6 col-12"></div>
+                                </div>}
                                 {isEmpty(salesToDisplay) && !loading && <Empty />}
                                 {!showSalesGrid && isEmpty(salesToDisplay) && loading && <WithNoDataLoader />}
-                                {!showSalesGrid && !isEmpty(salesToDisplay) && <div className='table-responsive'>
-                                    <table className='table  datanew'>
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' id='select-all' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </th>
-                                                {/* <th>Reference</th> */}
-                                                <th>Product</th>
-                                                <th>Payment Status</th>
-                                                <th>Quantity</th>
-                                                <th>Price per Item</th>
-                                                <th>Total Amount (UGX)</th>
-                                                <th>Date</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {dataPaginationFn(orderBy(salesToDisplay, ['date'], ['desc']), pageItems, salesPageNo).map((sale, i) => {
-                                                return (
-                                                    <tr key={i}>
-                                                        <td>
-                                                            <label className='checkboxs'>
-                                                                <input type='checkbox' />
-                                                                <span className='checkmarks'></span>
-                                                            </label>
-                                                        </td>
-                                                        <td>{`${sale.artNumber.artNumber}: ${sale.artNumber.name}`}</td>
-                                                        <td><span className={`badges ${sale.payment === 'Paid' ? 'bg-lightgreen' : 'bg-lightred'}`}>{sale.payment}</span></td>
-                                                        <td>{sale.quantity}</td>
-                                                        <td>{parseInt(sale.amount, 10).toLocaleString()}</td>
-                                                        <td>{parseInt(sale.amount * sale.quantity, 10).toLocaleString()}</td>
-                                                        <td>{sale.date}</td>
-                                                    </tr>
-                                                )
-                                            })}
-                                        </tbody>
-                                    </table>
-                                    <div className='my-2'>
-                                        <Pagination onChange={onPagination} responsive hideOnSinglePage align="center" defaultCurrent={salesPageNo} total={salesToDisplay.length} />
+                                {!showSalesGrid && !isEmpty(salesToDisplay) &&
+                                    <div className='table-responsive'>
+                                        <table className='table  datanew'>
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <label className='checkboxs'>
+                                                            <input type='checkbox' id='select-all' />
+                                                            <span className='checkmarks'></span>
+                                                        </label>
+                                                    </th>
+                                                    <th>Product</th>
+                                                    <th>Payment Status</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price per Item</th>
+                                                    <th>Total Amount (UGX)</th>
+                                                    <th>Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {dataPaginationFn(orderBy(salesToDisplay, ['date'], ['desc']), pageItems, salesPageNo).map((sale, i) => {
+                                                    return (
+                                                        <tr key={i}>
+                                                            <td>
+                                                                <label className='checkboxs'>
+                                                                    <input type='checkbox' />
+                                                                    <span className='checkmarks'></span>
+                                                                </label>
+                                                            </td>
+                                                            <td>{`${sale.artNumber.artNumber}: ${sale.artNumber.name}`}</td>
+                                                            <td><span className={`badges ${sale.payment === 'Paid' ? 'bg-lightgreen' : 'bg-lightred'}`}>{sale.payment}</span></td>
+                                                            <td>{sale.quantity}</td>
+                                                            <td>{parseInt(sale.amount, 10).toLocaleString()}</td>
+                                                            <td>{parseInt(sale.amount * sale.quantity, 10).toLocaleString()}</td>
+                                                            <td>{sale.date}</td>
+                                                        </tr>
+                                                    )
+                                                })}
+                                            </tbody>
+                                        </table>
+                                        <div className='my-2'>
+                                            <Pagination onChange={onPagination} responsive hideOnSinglePage align="center" defaultCurrent={salesPageNo} total={salesToDisplay.length} />
+                                        </div>
                                     </div>
-                                </div>}
+                                }
                             </div>
                         </div>
                     </div>

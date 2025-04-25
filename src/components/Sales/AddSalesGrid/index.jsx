@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Empty, Modal, Radio } from "antd";
-import { isEmpty } from "lodash";
+import { isEmpty, lowerCase } from "lodash";
 import { Fragment, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,6 @@ const AddSalesGrid = () => {
   const { allProducts, selectedSaleCategory, displaySaleCategory, clickCounts } = useSelector((state) => state.products);
   const { creatingBulk, showPayModal } = useSelector((state) => state.sales);
 
-  // Start
   const schema = yup
     .object({
       print_receipt: yup.boolean().required(),
@@ -24,6 +23,7 @@ const AddSalesGrid = () => {
     .required();
 
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors } } = useForm({
@@ -31,9 +31,11 @@ const AddSalesGrid = () => {
       defaultValues: {
         print_receipt: true,
         payment_method: 'cash',
+        search_key: '',
       }
     });
-  // End
+
+  const watchSearchKey = watch("search_key");
 
   const onSubmit = (data) => {
     const dataToSend = [];
@@ -63,42 +65,51 @@ const AddSalesGrid = () => {
   }, []);
 
   useEffect(() => {
+
     switch (selectedSaleCategory) {
       case "all-items":
-        dispatch(setDisplaySaleCategory(allProducts));
+        dispatch(setDisplaySaleCategory(allProducts.filter(item =>
+          lowerCase(item.food).includes(lowerCase(watchSearchKey)))));
         break;
       case "foods":
-        dispatch(setDisplaySaleCategory(allProducts.filter(item => item.food_category === selectedSaleCategory)));
+        dispatch(setDisplaySaleCategory(allProducts.filter(item =>
+          item.food_category === selectedSaleCategory && lowerCase(item.food).includes(lowerCase(watchSearchKey)))));
         break;
 
       case "beverages":
-        dispatch(setDisplaySaleCategory(allProducts.filter(item => item.food_category === selectedSaleCategory)));
+        dispatch(setDisplaySaleCategory(allProducts.filter(item =>
+          item.food_category === selectedSaleCategory && lowerCase(item.food).includes(lowerCase(watchSearchKey)))));
         break;
 
       case "extras":
-        dispatch(setDisplaySaleCategory(allProducts.filter(item => item.food_category === selectedSaleCategory)));
+        dispatch(setDisplaySaleCategory(allProducts.filter(item =>
+          item.food_category === selectedSaleCategory && lowerCase(item.food).includes(lowerCase(watchSearchKey)))));
         break;
 
       case "break-fast":
-        dispatch(setDisplaySaleCategory(allProducts.filter(item => item.sub_category === "Break Fast")));
+        dispatch(setDisplaySaleCategory(allProducts.filter(item =>
+          item.sub_category === "Break Fast" && lowerCase(item.food).includes(lowerCase(watchSearchKey)))));
         break;
 
       case "special-dishes":
-        dispatch(setDisplaySaleCategory(allProducts.filter(item => item.sub_category === "Special Dishes")));
+        dispatch(setDisplaySaleCategory(allProducts.filter(item =>
+          item.sub_category === "Special Dishes" && lowerCase(item.food).includes(lowerCase(watchSearchKey)))));
         break;
 
       case "bites":
-        dispatch(setDisplaySaleCategory(allProducts.filter(item => item.sub_category === "Bites")));
+        dispatch(setDisplaySaleCategory(allProducts.filter(item =>
+          item.sub_category === "Bites" && lowerCase(item.food).includes(lowerCase(watchSearchKey)))));
         break;
 
       case "others":
-        dispatch(setDisplaySaleCategory(allProducts.filter(item => item.sub_category === "Others")));
+        dispatch(setDisplaySaleCategory(allProducts.filter(item =>
+          item.sub_category === "Others" && lowerCase(item.food).includes(lowerCase(watchSearchKey)))));
         break;
 
       default:
         break;
     }
-  }, [selectedSaleCategory, allProducts]);
+  }, [selectedSaleCategory, allProducts, watchSearchKey]);
 
   const handleCancel = () => dispatch(setShowPayModal(!showPayModal));
 
@@ -140,18 +151,18 @@ const AddSalesGrid = () => {
             </div>
           </div>
         </div>
-        {/* footer={[
-          <Button key="back" onClick={handleCancel}>
-            Return
-          </Button>,
-          <Button key="submit" type="primary" loading={true} onClick={handleSubmit(onSubmit)}>
-            Submit
-          </Button>,
-        ]} */}
       </Modal>
-      <div className="parent-container-header">
-        <div className="payment-header">
+      <div className="row">
+        <div className="col-lg-4 col-sm-3 col-12"></div>
+        <div className='date-range col-lg-4 col-sm-6 col-12'>
+          <div className="form-group form-search">
+            <input type="text" placeholder="Search Product..." {...register("search_key")} />
+          </div>
         </div>
+        <div className="col-lg-4 col-sm-3 col-12"></div>
+      </div>
+      <div className="parent-container-header">
+        <div className="payment-header"></div>
         <div className="grid-header">
           {salesCategories.map((item, i) => {
             return (
@@ -232,7 +243,7 @@ const AddSalesGrid = () => {
           </div>}
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

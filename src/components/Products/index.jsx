@@ -9,6 +9,7 @@ import { setProductVED } from '../../config/store/actions/settingsActions';
 import WithDataLoader from '../common/loaders/WithDataLoader';
 import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
 import { dataPaginationFn } from '../../config/helpers/dataHelpers';
+import { getAllUsers } from '../../config/store/actions/userActions';
 
 const ProductsList = () => {
     const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const ProductsList = () => {
 
     useEffect(() => {
         dispatch(getProductsRequest());
+        dispatch(getAllUsers());
     }, []);
 
     return (

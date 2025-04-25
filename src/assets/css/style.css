@@ -7355,6 +7355,16 @@ span.select2-container.select2-container--default.select2-container--open {
   padding: .125rem 2.25rem .125rem .75rem;
 }
 
+.date-range .form-search {
+  margin: 10px 0px 0px 0px;
+}
+
+@media (max-width: 991px) {
+  .date-range-border {
+    display: none;
+  }
+}
+
 .payment-header {
   padding-top: 15px;
 }
