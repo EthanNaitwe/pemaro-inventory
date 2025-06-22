@@ -1,9 +1,10 @@
 import axios from "axios";
 import { logoutUser } from "../store/actions/settingsActions";
+import { findBaseUrl } from "../helpers/configHelpers";
 
 // Create an Axios instance
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL, // Replace with your API URL
+    baseURL: findBaseUrl(import.meta.env.VITE_APP_NAME), // Replace with your API URL
     headers: {
         "Content-Type": "application/json",
     },

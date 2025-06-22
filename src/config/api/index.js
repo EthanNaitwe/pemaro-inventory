@@ -14,6 +14,12 @@ export const getProfileApi = async () => {
     const response = await api.get("/users/profile");
     return response.data;
 };
+
+export const getSettingsApi = async () => {
+    const response = await api.get("/settings");
+    return response.data;
+};
+
 export const getAllUsersApi = async () => {
     const response = await api.get("/users");
     return response.data;

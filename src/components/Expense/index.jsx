@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Empty } from "antd";
+import { Empty, Pagination } from "antd";
 import { isEmpty } from "lodash";
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
@@ -8,18 +8,23 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import plus from '../../assets/img/icons/plus.svg';
-import { dateRangeOptions } from "../../config/helpers/dataHelpers";
+import { dataPaginationFn } from "../../config/helpers/dataHelpers";
 import { getAllExpenses, setExpensesToDisplay, setShowCreateForm } from "../../config/store/actions/expenseActions";
+import { setProductsPageNo } from "../../config/store/actions/productActions";
 import WithDataLoader from "../common/loaders/WithDataLoader";
 import WithNoDataLoader from "../common/loaders/WithNoDataLoader";
 import AddExpenseForm from "./AddExpenseForm";
 
 const Expense = () => {
     const dispatch = useDispatch();
+    const { productsPageNo } = useSelector((state) => state.products);
     const { allExpenses: _allExpenses, loading, showCreateForm, expensesToDisplay } = useSelector((state) => state.expenses);
     const { authUser } = useSelector((state) => state.users);
 
+    const [pageItems] = useState(10);
+
     const setShowForm = () => dispatch(setShowCreateForm(!showCreateForm));
+    const onPagination = (page) => dispatch(setProductsPageNo(page));
 
     let now = DateTime.local();
 
@@ -83,21 +88,6 @@ const Expense = () => {
                         <h4>Expenses List</h4>
                         <h6>Manage your purchases</h6>
                     </div>
-                    {/* <div className='date-range col-lg-3 col-sm-6 col-6'>
-                        <div className='form-group'>
-                            <select className='form-select' style={{ lineHeight: '1.2rem', padding: '0.25rem 0.5rem' }} {...register("date_range")}
-                                aria-invalid={errors.category ? "true" : "false"} >
-                                {dateRangeOptions.map((item) => (
-                                    <option
-                                        key={item.value}
-                                        value={item.value}>
-                                        {item.label}
-                                    </option>
-                                ))}
-                            </select>
-                            <p>{errors.category?.message && "This field is required"}</p>
-                        </div>
-                    </div> */}
                     <div className="page-btn">
                         <div className="btn btn-added" onClick={() => setShowForm()}>
                             {showCreateForm ? <i className="fa-solid fa-eye-slash me-2"></i> : <img src={plus} alt='img' className='me-1' />}
@@ -176,7 +166,7 @@ const Expense = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {expensesToDisplay.map((exp, i) => (
+                                        {dataPaginationFn(expensesToDisplay, showCreateForm ? 6 : pageItems, productsPageNo).map((exp, i) => (
                                             <tr key={i}>
                                                 <td>
                                                     <label className="checkboxs">
@@ -193,6 +183,9 @@ const Expense = () => {
                                             </tr>))}
                                     </tbody>
                                 </table>
+                                <div className='my-2'>
+                                    <Pagination onChange={onPagination} responsive hideOnSinglePage align="center" defaultCurrent={productsPageNo} total={expensesToDisplay.length} />
+                                </div>
                             </div>}
                     </div>
                 </div>

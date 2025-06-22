@@ -3,7 +3,8 @@ import { userSaga } from './userSaga';
 import { productSaga } from './productSaga';
 import { saleSaga } from './saleSagas';
 import { expenseSaga } from './expenseSaga';
+import { settingSagas } from './settingSagas';
 
 export default function* rootSaga() {
-    yield all([userSaga(), productSaga(), saleSaga(), expenseSaga()]);
+    yield all([userSaga(), settingSagas(), productSaga(), saleSaga(), expenseSaga()]);
 }

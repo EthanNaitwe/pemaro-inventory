@@ -1,12 +1,12 @@
 import { isEmpty, some } from 'lodash';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import mail from '../../assets/img/icons/mail.svg';
-import eye from '../../assets/img/icons/eye.svg';
-import logo from '../../assets/img/nile-suites-logo.png';
+import nileLogo from '../../assets/img/nile-suites-logo.png';
+import warndaLogo from '../../assets/img/warnda-logo.png';
 import { setAuthRoute } from '../../config/store/actions/settingsActions';
 import { loginUserRequest } from '../../config/store/actions/userActions';
-import { useState } from 'react';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -15,10 +15,14 @@ const Login = () => {
     const registerInputs = watch(["email", "password"]);
     const [showPassword, setShowPassword] = useState(false)
     const [email, password] = registerInputs;
-    const userData = {
-        password,
-        email,
-    }
+    const userData = { password, email };
+
+    let imgLogo = null
+    if (import.meta.env.VITE_APP_NAME?.includes('warnda')) {
+        imgLogo = <img src={warndaLogo} alt="logo" />
+    } else {
+        imgLogo = <img src={nileLogo} alt="logo" />
+    };
 
     return (
         <div>
@@ -29,7 +33,7 @@ const Login = () => {
                         <div className="login-content">
                             <div className="login-userset auth-wrapper">
                                 <div className="auth-login-logo login-logo">
-                                    <img src={logo} alt="img" />
+                                    {imgLogo}
                                 </div>
                                 <div className="login-userheading text-center">
                                     <h3>Sign In</h3>

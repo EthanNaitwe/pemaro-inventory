@@ -7,6 +7,7 @@
 import expense1Img from '../../assets/img/icons/expense1.svg';
 import users1Img from '../../assets/img/icons/users1.svg';
 import sales1Img from '../../assets/img/icons/sales1.svg';
+import settingsImg from '../../assets/img/icons/settings.svg';
 import productImg from '../../assets/img/icons/product.svg';
 import dashboardImg from '../../assets/img/icons/dashboard.svg';
 
@@ -17,6 +18,7 @@ export const menu = [
     { id: 3, key: 'sales-list', name: 'Sales', img: sales1Img, hidden: false },
     { id: 9, key: 'people-list', name: 'People', img: users1Img, hidden: false },
     { id: 5, key: 'expense-list', name: 'Expense', img: expense1Img, hidden: false },
+    { id: 5, key: 'settings-home', name: 'Settings', img: settingsImg, hidden: false },
     // { id: 4, key: 'purchase-list', name: 'Purchases', img: purchase1Img, hidden: false },
     // { id: 6, key: 'quotation-list', name: 'Quotation', img: quotation1Img, hidden: false },
     // { id: 7, key: 'transfer-list', name: 'Transfer', img: transfer1Img, hidden: false },

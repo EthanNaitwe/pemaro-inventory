@@ -61,7 +61,7 @@ const SalesList = () => {
     // Filter users based on authUser.role
     const allSales = _allSales.filter((item) => {
         if (authUser.role === 'Stuff') {
-            return item.user_id_id === authUser.id; // Return only my sales if my role is 'Stuff'
+            return item.user_id === authUser.id; // Return only my sales if my role is 'Stuff'
         }
         return true; // Return all sales for other roles
     });
@@ -126,7 +126,7 @@ const SalesList = () => {
                                             <p>{errors.date_range?.message && "This field is required"}</p>
                                         </div>
                                     </div>
-                                    <div className='date-range col-lg-3 col-sm-6 col-12'>
+                                    {authUser.role !== "Stuff" && <div className='date-range col-lg-3 col-sm-6 col-12'>
                                         <div className='form-group'>
                                             <select className='form-select' style={{ lineHeight: '1.2rem', padding: '0.25rem 0.5rem' }} {...register("stuff")}
                                                 aria-invalid={errors.stuff ? "true" : "false"} >
@@ -140,7 +140,7 @@ const SalesList = () => {
                                             </select>
                                             <p>{errors.stuff?.message && "This field is required"}</p>
                                         </div>
-                                    </div>
+                                    </div>}
                                     <div className="date-range-border col-lg-3 col-sm-6 col-12"></div>
                                 </div>}
                                 {isEmpty(salesToDisplay) && !loading && <Empty />}
@@ -165,7 +165,15 @@ const SalesList = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {dataPaginationFn(orderBy(salesToDisplay, ['date'], ['desc']), pageItems, salesPageNo).map((sale, i) => {
+                                                {dataPaginationFn(
+                                                    orderBy(
+                                                        salesToDisplay,
+                                                        [(sale) => DateTime.fromFormat(sale.date, 'dd/MM/yyyy').toMillis()], // Convert to milliseconds for proper comparison
+                                                        ['desc'] // Sort in descending order
+                                                    ),
+                                                    pageItems,
+                                                    salesPageNo
+                                                ).map((sale, i) => {
                                                     return (
                                                         <tr key={i}>
                                                             <td>
@@ -174,14 +182,14 @@ const SalesList = () => {
                                                                     <span className='checkmarks'></span>
                                                                 </label>
                                                             </td>
-                                                            <td>{`${sale.artNumber.artNumber}: ${sale.artNumber.name}`}</td>
+                                                            <td>{`${sale.artNumber.artNumber}: ${sale.artNumber.name.split(":")[1] || sale.artNumber.name}`}</td>
                                                             <td><span className={`badges ${sale.payment === 'Paid' ? 'bg-lightgreen' : 'bg-lightred'}`}>{sale.payment}</span></td>
                                                             <td>{sale.quantity}</td>
                                                             <td>{parseInt(sale.amount, 10).toLocaleString()}</td>
                                                             <td>{parseInt(sale.amount * sale.quantity, 10).toLocaleString()}</td>
                                                             <td>{sale.date}</td>
                                                         </tr>
-                                                    )
+                                                    );
                                                 })}
                                             </tbody>
                                         </table>

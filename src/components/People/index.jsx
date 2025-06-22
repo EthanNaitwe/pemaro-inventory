@@ -40,12 +40,6 @@ const PeopleList = () => {
                             <h4>User List</h4>
                             <h6>Manage your Users</h6>
                         </div>
-                        {/* <div className="page-btn">
-                                <div className="btn btn-added">
-                                    {showForm ? <i className="fa-solid fa-eye-slash me-2"></i> : <img src={plus} alt='img' className='me-1' />}
-                                    Add User
-                                </div>
-                            </div> */}
                     </div>
                     <div className='card'>
                         {!isEmpty(allUsers) && gettingUsers && <WithDataLoader />}
@@ -105,27 +99,29 @@ const PeopleList = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {allUsers.map((item, i) => (
-                                                <tr key={i}>
-                                                    <td>
-                                                        <label className='checkboxs'>
-                                                            <input type='checkbox' />
-                                                            <span className='checkmarks'></span>
-                                                        </label>
-                                                    </td>
-                                                    <td className='productimgname'>
-                                                        <span className='product-img'>
-                                                            <img src={item.gender === 'Male' ? customer5 : customer1} alt='people' />
-                                                        </span>
-                                                        <span>{`${item.surname} ${item.other_names}`}</span>
-                                                    </td>
-                                                    <td>{item.email}</td>
-                                                    <td>{item.gender}</td>
-                                                    <td>{item.phone_number} </td>
-                                                    <td>{item.address}</td>
-                                                    <td>{item.role}</td>
-                                                </tr>
-                                            ))}
+                                            {allUsers
+                                                .filter(item => item.role !== 'Support')
+                                                .map((item, i) => (
+                                                    <tr key={i}>
+                                                        <td>
+                                                            <label className='checkboxs'>
+                                                                <input type='checkbox' />
+                                                                <span className='checkmarks'></span>
+                                                            </label>
+                                                        </td>
+                                                        <td className='productimgname'>
+                                                            <span className='product-img'>
+                                                                <img src={item.gender === 'Male' ? customer5 : customer1} alt='people' />
+                                                            </span>
+                                                            <span>{`${item.surname} ${item.other_names}`}</span>
+                                                        </td>
+                                                        <td>{item.email}</td>
+                                                        <td>{item.gender}</td>
+                                                        <td>{item.phone_number}</td>
+                                                        <td>{item.address}</td>
+                                                        <td>{item.role}</td>
+                                                    </tr>
+                                                ))}
                                         </tbody>
                                     </table>
                                 </div>}
@@ -180,7 +176,6 @@ const PeopleList = () => {
                     </div>
                 </div>
             </div>
-
             <div className='modal fade' id='createpayment' tabIndex='-1' aria-labelledby='createpayment' aria-hidden='true'>
                 <div className='modal-dialog modal-lg'>
                     <div className='modal-content'>

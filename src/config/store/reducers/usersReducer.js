@@ -1,4 +1,4 @@
-import { CREATE_USER_FAILURE, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, FETCH_USER_FAILURE, FETCH_USER_REQUEST, FETCH_USER_SUCCESS, GET_ALL_USERS_FAILURE, GET_ALL_USERS_REQUEST, GET_ALL_USERS_SUCCESS, GET_PROFILE_FAILURE, GET_PROFILE_REQUEST, GET_PROFILE_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS } from '../actions/userActions';
+import { CREATE_USER_FAILURE, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, FETCH_USER_FAILURE, FETCH_USER_REQUEST, FETCH_USER_SUCCESS, GET_ALL_USERS_FAILURE, GET_ALL_USERS_REQUEST, GET_ALL_USERS_SUCCESS, GET_PROFILE_FAILURE, GET_PROFILE_REQUEST, GET_PROFILE_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, SET_AUTH_DOMAIN } from '../actions/userActions';
 
 const initialState = {
     user: null,
@@ -13,6 +13,8 @@ const initialState = {
     gettingUsers: false,
     usersError: null,
     allUsers: [],
+
+    authDomain: null,
 };
 
 export const usersReducer = (state = initialState, action) => {
@@ -32,6 +34,7 @@ export const usersReducer = (state = initialState, action) => {
             return { ...state, creating: false, error: action.payload };
 
         case LOGIN_USER_REQUEST:
+            localStorage.setItem("authDomain", action.payload.email.split('@')[1]);
             return { ...state, logging: true, authUser: {} };
         case LOGIN_USER_SUCCESS:
             localStorage.setItem("token", action.payload.token);
@@ -42,7 +45,7 @@ export const usersReducer = (state = initialState, action) => {
         case GET_PROFILE_REQUEST:
             return { ...state, gettingProfile: true, profileError: null };
         case GET_PROFILE_SUCCESS:
-            return { ...state, gettingProfile: false, authUser: action.payload };
+            return { ...state, gettingProfile: false, authUser: action.payload, authDomain: action.payload.email.split('@')[1] };
         case GET_PROFILE_FAILURE:
             return { ...state, gettingProfile: false, profileError: action.payload };
 
@@ -52,6 +55,9 @@ export const usersReducer = (state = initialState, action) => {
             return { ...state, gettingUsers: false, allUsers: action.payload };
         case GET_ALL_USERS_FAILURE:
             return { ...state, gettingUsers: false, usersError: action.payload };
+
+        case SET_AUTH_DOMAIN:
+            return { ...state, authDomain: action.payload };
         default:
             return state;
     }

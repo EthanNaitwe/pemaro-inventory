@@ -15,6 +15,7 @@ const AppHeader = () => {
     const dispatch = useDispatch();
     const { mobSideBar } = useSelector((state) => state.settings);
     const { authUser } = useSelector((state) => state.users);
+
     const [showLogout, setShowLogout] = useState(false);
 
     const sidebarMenuClick = () => {
@@ -49,7 +50,7 @@ const AppHeader = () => {
                     <span></span>
                 </span>
             </a>
-            <ul className='nav user-menu'>
+            {true && <ul className='nav user-menu'>
                 <li className='nav-item dropdown has-arrow main-drop'>
                     <span className={`dropdown-toggle nav-link userset ${showLogout ? 'show' : ''}`} data-bs-toggle='dropdown' aria-expanded={showLogout}>
                         <span className='user-img' onClick={() => {
@@ -90,8 +91,8 @@ const AppHeader = () => {
                         </div>
                     </div>
                 </li>
-            </ul>
-            <div className='dropdown mobile-user-menu'>
+            </ul>}
+            {true && <div className='dropdown mobile-user-menu'>
                 <span className={`nav-link dropdown-toggle ${showLogout ? 'show' : ''}`} data-bs-toggle='dropdown' aria-expanded={showLogout}>
                     <i className='fa fa-ellipsis-v' onClick={() => {
                         setShowLogout(!showLogout);
@@ -106,7 +107,7 @@ const AppHeader = () => {
                         dispatch(logoutUser());
                     }}>Logout</span>
                 </div>
-            </div>
+            </div>}
         </div>
     )
 }
