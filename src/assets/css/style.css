@@ -6617,7 +6617,7 @@ span.select2-container.select2-container--default.select2-container--open {
   height: 100vh;
 }
 
-.change-password-wrapper {
+.login-wrapper .login-content {
   width: 40%;
   height: 100vh;
   padding: 30px;
@@ -6625,17 +6625,6 @@ span.select2-container.select2-container--default.select2-container--open {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  align-items: center;
-}
-
-.login-wrapper .login-content {
-  width: 40%;
-  height: 100vh;
-  padding: 30px;
-  overflow: auto;
-  /* display: flex; */
-  /* justify-content: center; */
-  /* flex-wrap: wrap; */
   align-items: center;
 }
 
