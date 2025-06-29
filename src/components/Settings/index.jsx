@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import datepicker from '../../assets/img/icons/datepicker.svg';
 import deleteImg from '../../assets/img/icons/delete.svg';
@@ -8,14 +8,23 @@ import printer from '../../assets/img/icons/printer.svg';
 import { getSettings } from '../../config/store/actions/settingsActions';
 import NotificationsCard from '../Dashboard/NotificationsCard';
 import { isEmpty } from 'lodash';
+import ChangePassword from '../Dashboard/ChangePassword';
+import TabMenu from '../common/TabMenu';
 
 const SettingsHome = () => {
     const dispatch = useDispatch();
+    const [activeTab, setActiveTab] = useState('system-settings');
     const { systemSettings } = useSelector((state) => state.settings);
 
     useEffect(() => {
         isEmpty(systemSettings) && dispatch(getSettings());
     }, []);
+
+    const tabs = [
+        { value: 'system-settings', label: 'System Settings' },
+        // { value: 'change-password', label: 'Change Password' }
+    ];
+
 
     return (
         <div>
@@ -27,7 +36,14 @@ const SettingsHome = () => {
                             <h6>Manage your Settings</h6>
                         </div>
                     </div>
-                    <NotificationsCard title="System Settings" />
+
+                    <TabMenu
+                        tabs={tabs}
+                        activeTab={activeTab}
+                        onTabChange={setActiveTab}
+                    />
+                    {activeTab === "system-settings" && <NotificationsCard title="System Settings" />}
+                    {activeTab === "change-password" && <ChangePassword title="Change Password" />}
                 </div>
             </div >
 
@@ -92,7 +108,7 @@ const SettingsHome = () => {
                                     <div className='form-group'>
                                         <label>Customer</label>
                                         <div className='input-group'>
-                                            <input type='text' value='2022-03-07' className='datetimepicker' />
+                                            {/* <input type='text' value='2022-03-07' className='datetimepicker' /> */}
                                             <a className='scanner-set input-group-text'>
                                                 <img src={datepicker} alt='img' />
                                             </a>
@@ -102,19 +118,19 @@ const SettingsHome = () => {
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Reference</label>
-                                        <input type='text' value='INV/SL0101' />
+                                        {/* <input type='text' value='INV/SL0101' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Received Amount</label>
-                                        <input type='text' value='1500.00' />
+                                        {/* <input type='text' value='1500.00' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Paying Amount</label>
-                                        <input type='text' value='1500.00' />
+                                        {/* <input type='text' value='1500.00' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
@@ -157,7 +173,7 @@ const SettingsHome = () => {
                                     <div className='form-group'>
                                         <label>Customer</label>
                                         <div className='input-group'>
-                                            <input type='text' value='2022-03-07' className='datetimepicker' />
+                                            {/* <input type='text' value='2022-03-07' className='datetimepicker' /> */}
                                             <a className='scanner-set input-group-text'>
                                                 <img src={datepicker} alt='img' />
                                             </a>
@@ -167,19 +183,19 @@ const SettingsHome = () => {
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Reference</label>
-                                        <input type='text' value='INV/SL0101' />
+                                        {/* <input type='text' value='INV/SL0101' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Received Amount</label>
-                                        <input type='text' value='1500.00' />
+                                        {/* <input type='text' value='1500.00' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Paying Amount</label>
-                                        <input type='text' value='1500.00' />
+                                        {/* <input type='text' value='1500.00' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>

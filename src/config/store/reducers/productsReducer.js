@@ -1,4 +1,4 @@
-import { ADD_PRODUCT_CATEGORY_FAILURE, ADD_PRODUCT_CATEGORY_REQUEST, ADD_PRODUCT_CATEGORY_SUCCESS, CREATE_PRODUCT_FAILURE, CREATE_PRODUCT_REQUEST, CREATE_PRODUCT_SUCCESS, GET_PRODUCTS_FAILURE, GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS, SET_CLICK_COUNTS, SET_DISPLAY_SALE_CATEGORY, SET_PRODUCTS_PAGE_NO, SET_SELECTED_SALE_CATEGORY, SET_SINGLE_PRODUCT } from '../actions/productActions';
+import { ADD_PRODUCT_CATEGORY_FAILURE, ADD_PRODUCT_CATEGORY_REQUEST, ADD_PRODUCT_CATEGORY_SUCCESS, CREATE_PRODUCT_FAILURE, CREATE_PRODUCT_FAILURE_, CREATE_PRODUCT_REQUEST, CREATE_PRODUCT_REQUEST_, CREATE_PRODUCT_SUCCESS, CREATE_PRODUCT_SUCCESS_, GET_PRODUCTS_FAILURE, GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS, SET_CLICK_COUNTS, SET_DISPLAY_SALE_CATEGORY, SET_PRODUCTS_PAGE_NO, SET_SELECTED_SALE_CATEGORY, SET_SINGLE_PRODUCT } from '../actions/productActions';
 
 const initialState = {
     allProducts: [],
@@ -18,10 +18,21 @@ const initialState = {
     clickCounts: {},
     displaySaleCategory: [],
     singleProduct: {},
+
+    addingProd: false,
+    addProductSuccess: {},
+    addProductError: {},
 };
 
 export const productsReducer = (state = initialState, action) => {
     switch (action.type) {
+        case CREATE_PRODUCT_REQUEST_:
+            return { ...state, addingProd: true };
+        case CREATE_PRODUCT_SUCCESS_:
+            return { ...state, addingProd: false, addProductSuccess: action.payload };
+        case CREATE_PRODUCT_FAILURE_:
+            return { ...state, addingProd: false, addProductError: action.payload };
+
         case GET_PRODUCTS_REQUEST:
             return { ...state, loading: true };
         case GET_PRODUCTS_SUCCESS:

@@ -38,7 +38,6 @@ export const settingsReducer = (state = initialState, action) => {
         case SET_SOW_ADD_PRODUCT:
             return { ...state, showAddProduct: action.payload };
         case SET_SALE_BTN_TEXT:
-            console.log('action.payload', action);
             return { ...state, saleBtnText: action.payload };
         case SET_SALE_FORM_NO:
             return { ...state, saleFormNo: action.payload };

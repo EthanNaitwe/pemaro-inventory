@@ -1,4 +1,7 @@
+import { DateTime } from 'luxon';
 import { groupBy, sumBy } from "lodash";
+
+let now = DateTime.local();
 
 export const tax = [2, 3, 4, 5];
 export const discount = [5, 10, 15, 20];
@@ -82,10 +85,7 @@ export const groupProductVariants = (variants) => {
   return result;
 };
 
-export const foodCategories = [
-  "Beverages",
-  "Foods",
-];
+export const foodCategories = ["Beverages", "Foods"];
 
 export const foodSubCategories = [
   { category: "Foods", subcategory: "Break Fast" },
@@ -161,4 +161,26 @@ export const formatSubCategoryAndName = (subCat, foodNam) => {
   } else {
     return `${subCat}: ${foodNam}`;
   }
+};
+
+export const formatOrderNumber = (orderNo = 0) => {
+  return orderNo.toString().padStart(6, "0");
+};
+
+export const filterSales = (sales, activeTab, activeTime) => {
+  const today = now.toFormat('dd/MM/yyyy');
+  const yesterday = now.plus({ days: -1 }).toFormat('dd/MM/yyyy');
+
+  return sales.filter(item => {
+    const userMatch = activeTab === 'all-stuff' || item.user_id === activeTab;
+    let dateMatch = true;
+
+    if (activeTime === today) {
+      dateMatch = item.date === today;
+    } else if (activeTime === yesterday) {
+      dateMatch = item.date === yesterday;
+    }
+
+    return userMatch && dateMatch;
+  });
 };

@@ -37,7 +37,6 @@ const TopSalesReport = ({ title }) => {
       food_category: product.food_category,
     };
   });
-  console.log("products > products", products);
 
   const filteredProd = products
     .filter(

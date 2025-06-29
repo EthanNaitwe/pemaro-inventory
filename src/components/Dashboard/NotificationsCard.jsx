@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 const NotificationsCard = ({ title }) => {
     const { allSales } = useSelector((state) => state.sales);
 
-    const { systemSettings: { showAddProduct } } = useSelector((state) => state.settings);
+    const { systemSettings: { showAddProduct, storeName, address1, address2 } } = useSelector((state) => state.settings);
 
     const grouped = groupBy(allSales, 'product_id');
 
@@ -26,7 +26,7 @@ const NotificationsCard = ({ title }) => {
     });
 
     return (
-        <div className="col-lg-4 col-sm-12 col-12 d-flex">
+        <div className="col-lg-4 col-sm-12 col-12 d-flex m-2">
             <div className="card flex-fill">
                 <div className="card-header pb-0 d-flex justify-content-between align-items-center">
                     <h4 className="card-title mb-0">{title}</h4>
@@ -64,6 +64,18 @@ const NotificationsCard = ({ title }) => {
                                             )}
                                         />
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td>Business Name</td>
+                                    <td>{storeName}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address 1</td>
+                                    <td>{address1}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address 2</td>
+                                    <td>{address2}</td>
                                 </tr>
                             </tbody>
                         </table>

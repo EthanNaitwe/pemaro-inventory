@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from "yup";
 import plus from '../../assets/img/icons/plus.svg';
-import { clearCreateError, createProductRequest } from "../../config/store/actions/productActions";
+import { _createProductRequest, clearCreateError, createProductRequest } from "../../config/store/actions/productActions";
 import { setProductVED } from '../../config/store/actions/settingsActions';
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import { useEffect } from "react";
@@ -12,7 +12,7 @@ import { foodCategories, foodSubCategories } from "../../config/helpers/dataHelp
 
 const AddProduct = () => {
     const dispatch = useDispatch();
-    const { creating, createError } = useSelector((state) => state.products);
+    const { creating, createError, addingProd } = useSelector((state) => state.products);
     const schema = yup
         .object({
             price: yup.string().required(),
@@ -39,13 +39,9 @@ const AddProduct = () => {
     
     let watchCategory = watch('category');
 
-    useEffect(() => {
-        console.log('watchCategory', watchCategory);
-    }, [watchCategory])
-    
-
-    const onSubmit = (data) =>
-        dispatch(createProductRequest(data));
+    const onSubmit = (data) =>{
+        dispatch(_createProductRequest(data));
+    }
 
     return (
         <div className='page-wrapper'>
@@ -131,11 +127,11 @@ const AddProduct = () => {
                             <div className='col-lg-1 col-sm-6 col-6'>
                                 <button
                                     // disabled
-                                    disabled={creating}
+                                    disabled={addingProd}
                                     className='btn btn-submit me-2 mt-4 py-2 w-100'
                                     onClick={handleSubmit(onSubmit)}>
                                     Submit{' '}
-                                    {creating && (
+                                    {addingProd && (
                                         <div className="spinner-border spinner-border-sm" role="status">
                                             <span className="sr-only">Loading...</span>
                                         </div>

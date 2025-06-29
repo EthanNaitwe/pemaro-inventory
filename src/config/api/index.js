@@ -30,6 +30,11 @@ export const getProductsApi = async () => {
     return response.data;
 };
 
+export const addProductApi_ = async (data) => {
+    const response = await api.post("/products", data);
+    return response.data;
+};
+
 export const createProductApi = async (prodData) => {
     const response = await api.post("/products", prodData);
     return response.data;

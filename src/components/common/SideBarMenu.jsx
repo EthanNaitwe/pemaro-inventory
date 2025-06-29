@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import smallLogo from '../../assets/img/logo-small.png';
 import logo from '../../assets/img/nile-suites-logo.png';
 import { menu as _menu } from '../../config/helpers/menuHelper';
-import { setProductVED, setSelectedSidebarMenu } from '../../config/store/actions/settingsActions';
+import { setProductVED, setSaleVED, setSelectedSidebarMenu } from '../../config/store/actions/settingsActions';
 
 const SideBarMenu = () => {
     const dispatch = useDispatch();

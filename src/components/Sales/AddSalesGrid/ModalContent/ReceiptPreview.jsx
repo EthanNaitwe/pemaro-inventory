@@ -1,4 +1,18 @@
+import { DateTime } from "luxon";
+import { useSelector } from "react-redux";
+import {
+  formatOrderNumber,
+  sumSalesSubTotal,
+} from "../../../../config/helpers/dataHelpers";
+import { Fragment, useEffect } from "react";
 const ReceiptPreview = () => {
+  const { allProducts, clickCounts } = useSelector((state) => state.products);
+  const { allSales } = useSelector((state) => state.sales);
+  const {
+    systemSettings: { storeName, address1, address2 },
+  } = useSelector((state) => state.settings);
+  let now = DateTime.local();
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return (
@@ -13,78 +27,120 @@ const ReceiptPreview = () => {
   };
 
   const receiptData = {
-    storeName: "SQUARE COFFEE SHOP",
-    orderNumber: "#12345",
-    customer: "John Doe",
-    date: "6/22/2025 3:00 AM",
-    items: [{
-        name: "Cappuccino (L)",
-        price: 3.0,
-      }, {
-        name: "Blueberry Muffin",
-        price: 3.0,
-      }, {
-        name: "Croissant",
-        price: 3.0,
-    }],
+    storeName: storeName,
+    orderNumber: formatOrderNumber(allSales.length + 1),
+    items: [
+      { name: "Cappuccino (L)", price: 4.5 },
+      { name: "Blueberry Muffin", price: 3.25 },
+      { name: "Extra Shot", price: 0.79 },
+    ],
   };
-  const subtotal = 3;
-  const tax = 3;
-  const total = 3;
 
   return (
     <div className="bg-gray-50 p-4 rounded-lg">
-      <div className="bg-white p-6 rounded border-2 border-dashed border-gray-300 thermal-receipt text-sm max-w-xs mx-auto">
-        <div className="text-center mb-4">
-          <h4 className="font-bold text-base">
-            {receiptData.storeName.toUpperCase()}
-          </h4>
-          <p className="text-xs text-[#757575]">123 Main Street</p>
-          <p className="text-xs text-[#757575]">City, ST 12345</p>
+      <div
+        className="receipt-border bg-white p-6 rounded border-2 border-dashed border-gray-300 max-w-xs mx-auto"
+        style={{
+          fontFamily: "monospace",
+          minWidth: 320,
+          letterSpacing: "0.01em",
+        }}
+      >
+        <div className="text-center mb-2">
+          <div
+            className="font-bold text-base mb-1"
+            style={{ fontSize: "1rem" }}
+          >
+            {receiptData.storeName}
+          </div>
+          <div className="text-xs" style={{ color: "#757575" }}>
+            {address1}
+          </div>
+          <div className="text-xs" style={{ color: "#757575" }}>
+            {address2}
+          </div>
         </div>
 
-        <div className="border-t border-b border-gray-300 py-2 my-4">
+        <div
+          className="border-t border-b border-gray-300 py-2 my-3"
+          style={{ marginTop: 16, marginBottom: 16 }}
+        >
           <div className="flex justify-between text-xs">
-            <span>Order:</span>
-            <span>{receiptData.orderNumber}</span>
+            <span className="sale-child-l">Order:</span>
+            <span className="sale-child-r">{receiptData.orderNumber}</span>
           </div>
-          <div className="flex justify-between text-xs">
-            <span>Date:</span>
-            <span>{formatDate(receiptData.date)}</span>
-          </div>
-          <div className="flex justify-between text-xs">
-            <span>Customer:</span>
-            <span>{receiptData.customer}</span>
+          <div
+            className="flex justify-between text-xs"
+            style={{ marginBottom: 2 }}
+          >
+            <span className="sale-child-l">Date:</span>
+            <span className="sale-child-r">{formatDate(now)}</span>
           </div>
         </div>
 
-        <div className="space-y-1 mb-4">
-          {receiptData.items.map((item, index) => (
-            <div key={index} className="flex justify-between text-xs">
-              <span>{item.name}</span>
-              <span>${item.price.toFixed(2)}</span>
-            </div>
-          ))}
+        <div className="mb-2" style={{ marginBottom: 18 }}>
+          {Object.keys(clickCounts).map((item, idx) => {
+            return (
+              <div
+                key={idx}
+                className="flex justify-between text-xs"
+                style={{ marginBottom: 2 }}
+              >
+                <span className="sale-child-l">{`${
+                  clickCounts[item]
+                } ${allProducts
+                  .find((prod) => prod.id === item)
+                  .food.replace("/", "/\n")
+                  .split("\n")
+                  .map((line) => line?.trim())}`}</span>
+                <span className="sale-child-r">{`UGX ${(
+                  allProducts.find((prod) => prod.id === item).minimum_price *
+                  clickCounts[item]
+                ).toLocaleString()}`}</span>
+              </div>
+            );
+          })}
         </div>
 
-        <div className="border-t border-gray-300 pt-2">
+        <div
+          className="border-t border-gray-300 pt-2 mt-2"
+          style={{ marginTop: 12, paddingTop: 8 }}
+        >
           <div className="flex justify-between text-xs mb-1">
-            <span>Subtotal:</span>
-            <span>${subtotal.toFixed(2)}</span>
+            <span className="sale-child-l">Subtotal:</span>
+            <span className="sale-child-r">{`UGX ${sumSalesSubTotal(
+              allProducts,
+              clickCounts
+            ).toLocaleString()}`}</span>
           </div>
           <div className="flex justify-between text-xs mb-1">
-            <span>Tax:</span>
-            <span>${tax.toFixed(2)}</span>
+            <span className="sale-child-l">Tax:</span>
+            <span className="sale-child-r">{`UGX 0.00`}</span>
           </div>
-          <div className="flex justify-between font-bold text-sm">
-            <span>Total:</span>
-            <span>${total.toFixed(2)}</span>
+          <div
+            className="flex justify-between font-bold text-base mt-1"
+            style={{
+              fontWeight: "bold",
+              fontSize: "1.1em",
+              marginTop: 8,
+            }}
+          >
+            <span className="sale-child-l">Total:</span>
+            <span className="sale-child-r">
+              {`UGX ${sumSalesSubTotal(
+                allProducts,
+                clickCounts
+              ).toLocaleString()}`}
+            </span>
           </div>
         </div>
 
-        <div className="text-center mt-4 text-xs text-[#757575]">
-          <p>Thank you for your business!</p>
-          <p>Powered by Square</p>
+        <div
+          className="text-center mt-6 text-xs"
+          style={{ color: "#757575", marginTop: 24 }}
+        >
+          <p style={{ marginBottom: 2 }}>Thank you for your business!</p>
+          <p style={{ marginTop: 0 }}>Powered by Atom Software</p>
         </div>
       </div>
     </div>

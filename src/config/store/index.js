@@ -25,7 +25,10 @@ export const store = configureStore({
         expenses: expensesReducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
+        getDefaultMiddleware({
+            thunk: false,
+            immutableCheck: false,
+        }).concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(rootSaga);

@@ -190,7 +190,7 @@ const PeopleList = () => {
                                     <div className='form-group'>
                                         <label>Customer</label>
                                         <div className='input-group'>
-                                            <input type='text' value='2022-03-07' className='datetimepicker' />
+                                            {/* <input type='text' value='2022-03-07' className='datetimepicker' /> */}
                                             <a className='scanner-set input-group-text'>
                                                 <img src={datepicker} alt='img' />
                                             </a>
@@ -200,19 +200,19 @@ const PeopleList = () => {
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Reference</label>
-                                        <input type='text' value='INV/SL0101' />
+                                        {/* <input type='text' value='INV/SL0101' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Received Amount</label>
-                                        <input type='text' value='1500.00' />
+                                        {/* <input type='text' value='1500.00' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Paying Amount</label>
-                                        <input type='text' value='1500.00' />
+                                        {/* <input type='text' value='1500.00' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
@@ -255,7 +255,7 @@ const PeopleList = () => {
                                     <div className='form-group'>
                                         <label>Customer</label>
                                         <div className='input-group'>
-                                            <input type='text' value='2022-03-07' className='datetimepicker' />
+                                            {/* <input type='text' value='2022-03-07' className='datetimepicker' /> */}
                                             <a className='scanner-set input-group-text'>
                                                 <img src={datepicker} alt='img' />
                                             </a>
@@ -265,19 +265,19 @@ const PeopleList = () => {
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Reference</label>
-                                        <input type='text' value='INV/SL0101' />
+                                        {/* <input type='text' value='INV/SL0101' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Received Amount</label>
-                                        <input type='text' value='1500.00' />
+                                        {/* <input type='text' value='1500.00' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Paying Amount</label>
-                                        <input type='text' value='1500.00' />
+                                        {/* <input type='text' value='1500.00' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>

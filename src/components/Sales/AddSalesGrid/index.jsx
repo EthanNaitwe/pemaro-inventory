@@ -39,7 +39,7 @@ const AddSalesGrid = () => {
   // const { saleBtnText, saleFormNo } = useSelector((state) => state.settings);
 
   const [formNumber, setFormNumber] = useState("form-one");
-  const [saleBtnText, setSaleBtnText] = useState("Next");
+  const [saleBtnText, setSaleBtnText] = useState("Confirm & Print");
 
   const schema = yup
     .object({
@@ -65,31 +65,21 @@ const AddSalesGrid = () => {
 
   const watchSearchKey = watch("search_key");
 
-  useEffect(() => {
-    console.log("saleBtnText", saleBtnText);
-  }, [saleBtnText]);
-
   const onSubmit = (data) => {
-    if (formNumber === "form-one") {
-      setFormNumber("form-two");
-      setSaleBtnText("Confirm & Print");
-      console.log("form-two 02", saleBtnText);
-    } else {
-      const dataToSend = [];
-      Object.keys(clickZeroFilter(clickCounts)).map((item) => {
-        let tl = allProducts.find((prod) => prod.id === item);
-        dataToSend.push({
-          quantity: clickCounts[item],
-          artNumber: tl.artNumber,
-          amount: parseInt(tl.minimum_price, 10),
-          sub_total:
-            parseInt(tl.minimum_price, 10) * parseInt(clickCounts[item], 10),
-          payment_method: data.payment_method,
-          prod_id: tl.id,
-        });
+    const dataToSend = [];
+    Object.keys(clickZeroFilter(clickCounts)).map((item) => {
+      let tl = allProducts.find((prod) => prod.id === item);
+      dataToSend.push({
+        quantity: clickCounts[item],
+        artNumber: tl.artNumber,
+        amount: parseInt(tl.minimum_price, 10),
+        sub_total:
+          parseInt(tl.minimum_price, 10) * parseInt(clickCounts[item], 10),
+        payment_method: data.payment_method,
+        prod_id: tl.id,
       });
-      dispatch(addNewSalesRequest(dataToSend));
-    }
+    });
+    dispatch(addNewSalesRequest(dataToSend));
   };
 
   const handleCardClick = (id) => {
@@ -209,13 +199,9 @@ const AddSalesGrid = () => {
 
   useEffect(() => {
     resetField("print_receipt");
-    setSaleBtnText("Next");
+    setSaleBtnText("Confirm & Print");
     setFormNumber("form-one");
   }, [showPayModal]);
-
-  useEffect(() => {
-    console.log("formNumber", formNumber);
-  }, [formNumber]);
 
   return (
     <div>
@@ -224,19 +210,22 @@ const AddSalesGrid = () => {
           className="payment-modal"
           okText={saleBtnText}
           cancelText="Close"
-          title="Sales"
+          title=""
           open={showPayModal}
           onOk={handleSubmit(onSubmit)}
           onCancel={handleCancel}
           okButtonProps={{ loading: creatingBulk }}
         >
-          {formNumber === "form-one" && <ReceiptPreview />}
-          {formNumber === "form-two" && (
-            <PaymentType
-              register={register}
-              errors={errors}
-              paymentOptions={paymentOptions}
-            />
+          {/* {formNumber === "form-one" && <ReceiptPreview />} */}
+          {formNumber === "form-one" && (
+            <>
+              <PaymentType
+                register={register}
+                errors={errors}
+                paymentOptions={paymentOptions}
+              />
+              <ReceiptPreview />
+            </>
           )}
         </Modal>
       )}

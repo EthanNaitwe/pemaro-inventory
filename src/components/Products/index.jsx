@@ -14,7 +14,7 @@ import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
 const ProductsList = () => {
     const dispatch = useDispatch();
     const { allProducts, loading, productsPageNo } = useSelector((state) => state.products);
-    const { systemSettings, systemSettings: { showAddProduct } } = useSelector((state) => state.settings);
+    const { systemSettings: { showAddProduct } } = useSelector((state) => state.settings);
 
     const [pageItems] = useState(10);
 
@@ -23,7 +23,7 @@ const ProductsList = () => {
     useEffect(() => {
         dispatch(getProductsRequest());
         dispatch(getAllUsers());
-        isEmpty(systemSettings) && dispatch(getSettings());
+        dispatch(getSettings());
     }, []);
 
     return (
