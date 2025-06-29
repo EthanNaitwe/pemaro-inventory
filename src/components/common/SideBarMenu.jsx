@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import smallLogo from '../../assets/img/logo-small.png';
 import logo from '../../assets/img/nile-suites-logo.png';
+import customer1 from '../../assets/img/customer/customer1.jpg';
+import customer5 from '../../assets/img/customer/customer5.jpg';
 import { menu as _menu } from '../../config/helpers/menuHelper';
 import { setProductVED, setSaleVED, setSelectedSidebarMenu } from '../../config/store/actions/settingsActions';
 
@@ -42,9 +44,9 @@ const SideBarMenu = () => {
                 </div>
             </div>
             <div className='sidebar' id='sidebar'>
-                <div className='sidebar-inner slimscroll'>
-                    <div id='sidebar-menu' className='sidebar-menu'>
-                        <ul>
+                <div className='sidebar-inner slimscroll' style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                    <div id='sidebar-menu' className='sidebar-menu' style={{ flex: 1 }}>
+                        <ul style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                             {menu.filter((item) => !item.hidden).map((item) => (
                                 <li key={item.id} className={`sidebar-menu-item ${selectedSidebarMenu === item.key ? 'active' : ''}`}>
                                     <div onClick={() => sidebarMenuClick(item.key)}>
@@ -53,6 +55,17 @@ const SideBarMenu = () => {
                                     </div>
                                 </li>
                             ))}
+                            <li
+                                className="sidebar-menu-item"
+                                style={{ marginTop: 'auto' }}
+                            >
+                                <div className="text-center rounded bg-light p-3 mb-3 border no-hover">
+                                    <div className="avatar avatar-lg online mb-3">
+                                        <img src={authUser.gender === 'Male' ? customer5 : customer1} alt='' />
+                                    </div>
+                                    <span className="fs-12 fw-bold mb-1 no-hover">Adrian Herman</span>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>

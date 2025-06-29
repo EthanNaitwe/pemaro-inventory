@@ -4610,7 +4610,7 @@ span.select2-container.select2-container--default.select2-container--open {
   filter: brightness(0) invert(1);
 }
 
-.sidebar .sidebar-menu>ul>li>div:hover span {
+.sidebar .sidebar-menu>ul>li>div:hover span:not(.no-hover) {
   color: #fff;
 }
 
