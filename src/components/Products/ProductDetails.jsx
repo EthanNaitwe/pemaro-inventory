@@ -14,8 +14,7 @@ const ProductDetails = () => {
 
     useEffect(() => {
         const filter = allProducts.find((prod) => prod.id === singleProduct?.id)
-        if (!isEmpty(singleProduct))
-            dispatch(setSingleProduct(filter))
+        if (!isEmpty(singleProduct)) dispatch(setSingleProduct(filter))
     }, [allProducts])
 
     const barcodeRef = useRef(null);

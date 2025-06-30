@@ -4,25 +4,26 @@ import { isEmpty, toUpper } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import plus from '../../assets/img/icons/plus.svg';
-import { getProductsRequest, setProductsPageNo, setSingleProduct } from '../../config/store/actions/productActions';
-import { setProductVED } from '../../config/store/actions/settingsActions';
-import WithDataLoader from '../common/loaders/WithDataLoader';
-import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
 import { dataPaginationFn } from '../../config/helpers/dataHelpers';
+import { getProductsRequest, setProductsPageNo, setSingleProduct } from '../../config/store/actions/productActions';
+import { getSettings, setProductVED } from '../../config/store/actions/settingsActions';
 import { getAllUsers } from '../../config/store/actions/userActions';
+import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
 
 const ProductsList = () => {
     const dispatch = useDispatch();
+    const { allUsers } = useSelector((state) => state.users);
     const { allProducts, loading, productsPageNo } = useSelector((state) => state.products);
+    const { systemSettings, systemSettings: { showAddProduct } } = useSelector((state) => state.settings);
 
     const [pageItems] = useState(10);
-    const [booll] = useState(false);
 
     const onPagination = (page) => dispatch(setProductsPageNo(page));
 
     useEffect(() => {
         dispatch(getProductsRequest());
-        dispatch(getAllUsers());
+        if (isEmpty(allUsers)) dispatch(getAllUsers());
+        if (isEmpty(systemSettings)) dispatch(getSettings());
     }, []);
 
     return (
@@ -33,7 +34,7 @@ const ProductsList = () => {
                         <h4>Product List</h4>
                         <h6>Manage your products</h6>
                     </div>
-                    {booll && <div className='page-btn'>
+                    {showAddProduct && <div className='page-btn'>
                         <div className='btn btn-added' onClick={() => {
                             dispatch(setProductVED('add-product'))
                         }}>
@@ -45,13 +46,13 @@ const ProductsList = () => {
                 </div>
 
                 <div className='card'>
-                    {!isEmpty(allProducts) && loading && <WithDataLoader />}
+                    {/* {!isEmpty(allProducts) && loading && <WithDataLoader />} */}
                     <div className='card-body'>
                         {isEmpty(allProducts) && !loading && <Empty />}
                         {isEmpty(allProducts) && loading && <WithNoDataLoader />}
                         {!isEmpty(allProducts) &&
                             <div className='table-responsive'>
-                                <table className='table  datanew'>
+                                <table className='table datanew'>
                                     <thead>
                                         <tr>
                                             <th>S/N</th>

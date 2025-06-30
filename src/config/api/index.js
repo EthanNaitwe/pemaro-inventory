@@ -14,6 +14,12 @@ export const getProfileApi = async () => {
     const response = await api.get("/users/profile");
     return response.data;
 };
+
+export const getSettingsApi = async () => {
+    const response = await api.get("/settings");
+    return response.data;
+};
+
 export const getAllUsersApi = async () => {
     const response = await api.get("/users");
     return response.data;
@@ -21,6 +27,11 @@ export const getAllUsersApi = async () => {
 
 export const getProductsApi = async () => {
     const response = await api.get("/products");
+    return response.data;
+};
+
+export const addProductApi_ = async (data) => {
+    const response = await api.post("/products", data);
     return response.data;
 };
 

@@ -1,4 +1,5 @@
-import { useSelector } from 'react-redux';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useDispatch, useSelector } from 'react-redux';
 
 import './App.css';
 import './assets/css/animate.css';
@@ -7,14 +8,16 @@ import './assets/css/bootstrap.min.css';
 import './assets/css/dataTables.bootstrap4.min.css';
 import './assets/css/style.css';
 
+import { useEffect } from 'react';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import PageWrapper from './components/PageWrapper';
-import AppHeader from './components/common/AppHeader';
 import SideBarMenu from './components/common/SideBarMenu';
+import { setAuthDomain } from './config/store/actions/userActions';
 
 function App() {
+  const dispatch = useDispatch();
   const {
     selectedSidebarMenu,
     isAuthenticated,
@@ -22,16 +25,19 @@ function App() {
     authRoute,
   } = useSelector((state) => state.settings);
 
-  const Authenticated = () => (
+  useEffect(() => {
+    dispatch(setAuthDomain());
+  }, []);
+
+  const UnAuthenticated = () => (
     <>
       {authRoute === "login" && <Login />}
       {authRoute === "register" && <Register />}
       {authRoute === "forgetpassword" && <ForgotPassword />}
     </>
   )
-  const UnAuthenticated = () => (
+  const Authenticated = () => (
     <>
-      <AppHeader />
       <SideBarMenu />
       <PageWrapper />
     </>
@@ -40,8 +46,8 @@ function App() {
   return (
     <div className={`${selectedSidebarMenu === '404-error' ? 'error-page' : ''}`}>
       <div className={`main-wrapper ${mobSideBar ? 'slide-nav' : ''}`}>
-        {isAuthenticated && UnAuthenticated()}
-        {!isAuthenticated && Authenticated()}
+        {!isAuthenticated && UnAuthenticated()}
+        {isAuthenticated && Authenticated()}
       </div>
     </div>
   )

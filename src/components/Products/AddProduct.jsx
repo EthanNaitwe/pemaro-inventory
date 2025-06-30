@@ -4,24 +4,25 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from "yup";
 import plus from '../../assets/img/icons/plus.svg';
-import { clearCreateError, createProductRequest } from "../../config/store/actions/productActions";
+import { _createProductRequest, clearCreateError, createProductRequest } from "../../config/store/actions/productActions";
 import { setProductVED } from '../../config/store/actions/settingsActions';
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import { useEffect } from "react";
+import { foodCategories, foodSubCategories } from "../../config/helpers/dataHelpers";
 
 const AddProduct = () => {
     const dispatch = useDispatch();
-    const { creating, createError } = useSelector((state) => state.products);
+    const { creating, createError, addingProd } = useSelector((state) => state.products);
     const schema = yup
         .object({
-            minimum_price: yup.string().required(),
+            price: yup.string().required(),
             name: yup.string().required(),
-            purchasing_price: yup.string().required(),
-            description: yup.string().required(),
+            category: yup.string().required(),
         })
         .required();
 
     const {
+        watch,
         register,
         handleSubmit,
         formState: { errors } } = useForm({
@@ -35,9 +36,12 @@ const AddProduct = () => {
             dispatch(clearCreateError());
         }
     }, [createError, creating]);
+    
+    let watchCategory = watch('category');
 
-    const onSubmit = (data) =>
-        dispatch(createProductRequest(data));
+    const onSubmit = (data) =>{
+        dispatch(_createProductRequest(data));
+    }
 
     return (
         <div className='page-wrapper'>
@@ -70,45 +74,64 @@ const AddProduct = () => {
                 <div className='card'>
                     <div className='card-body'>
                         <div className='row'>
-                            <div className='col-lg-4 col-sm-6 col-6'>
+                            <div className='col-lg-3 col-sm-6 col-6'>
                                 <div className='form-group'>
-                                    <label>Product Name</label>
+                                    <label>Category</label>
+                                    <select className='form-select' {...register("category")}
+                                        aria-invalid={errors.category ? "true" : "false"} >
+                                        <option value=''>Choose Category</option>
+                                        {foodCategories.map((i) => (
+                                            <option
+                                                key={i}
+                                                value={i}>
+                                                {i}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <p>{errors.category?.message && "This field is required"}</p>
+                                </div>
+                            </div>
+                            <div className='col-lg-3 col-sm-6 col-6'>
+                                <div className='form-group'>
+                                    <label>SubCategory</label>
+                                    <select className='form-select' {...register("sub-category")}
+                                        aria-invalid={errors.category ? "true" : "false"} >
+                                        <option value=''>Choose Category</option>
+                                        {foodSubCategories.filter(it=>it.category === watchCategory).map((i) => (
+                                            <option
+                                                key={i.subcategory}
+                                                value={i.subcategory}>
+                                                {i.subcategory}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <p>{errors.category?.message && "This field is required"}</p>
+                                </div>
+                            </div>
+                            <div className='col-lg-2 col-sm-6 col-6'>
+                                <div className='form-group'>
+                                    <label>FoodName</label>
                                     <input type='text' {...register("name", { required: true })}
                                         aria-invalid={errors.name ? "true" : "false"} />
                                     <p>{errors.name?.message && "This field is required"}</p>
                                 </div>
                             </div>
-                            <div className='col-lg-4 col-sm-6 col-6'>
+                            <div className='col-lg-2 col-sm-6 col-6'>
                                 <div className='form-group'>
-                                    <label>Selling Price</label>
-                                    <input placeholder='Price' type="number" min={1} {...register("purchasing_price", { required: true })}
-                                        aria-invalid={errors.purchasing_price ? "true" : "false"} />
-                                    <p>{errors.purchasing_price?.message && "This field is required"}</p>
+                                    <label>Price (UGX)</label>
+                                    <input placeholder='Price' type="number" min={1} {...register("price", { required: true })}
+                                        aria-invalid={errors.price ? "true" : "false"} />
+                                    <p>{errors.price?.message && "This field is required"}</p>
                                 </div>
                             </div>
-                            <div className='col-lg-4 col-sm-6 col-6'>
-                                <div className='form-group'>
-                                    <label>Minimum Selling Price</label>
-                                    <input placeholder='Price' type="number" min={1} {...register("minimum_price", { required: true })}
-                                        aria-invalid={errors.minimum_price ? "true" : "false"} />
-                                    <p>{errors.minimum_price?.message && "This field is required"}</p>
-                                </div>
-                            </div>
-                            <div className='col-lg-12 col-sm-6 col-12'>
-                                <div className='form-group'>
-                                    <label>Description</label>
-                                    <textarea className='form-control' {...register("description")}
-                                        aria-invalid={errors.description ? "true" : "false"}></textarea>
-                                    <p>{errors.description?.message && "This field is required"}</p>
-                                </div>
-                            </div>
-                            <div className='col-lg-12'>
+                            <div className='col-lg-1 col-sm-6 col-6'>
                                 <button
-                                    disabled={creating}
-                                    className='btn btn-submit me-2'
+                                    // disabled
+                                    disabled={addingProd}
+                                    className='btn btn-submit me-2 mt-4 py-2 w-100'
                                     onClick={handleSubmit(onSubmit)}>
                                     Submit{' '}
-                                    {creating && (
+                                    {addingProd && (
                                         <div className="spinner-border spinner-border-sm" role="status">
                                             <span className="sr-only">Loading...</span>
                                         </div>

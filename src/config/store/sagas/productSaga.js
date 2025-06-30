@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { addCategoryApi, createProductApi, getProductsApi } from "../../api";
-import { ADD_PRODUCT_CATEGORY_FAILURE, ADD_PRODUCT_CATEGORY_REQUEST, ADD_PRODUCT_CATEGORY_SUCCESS, CREATE_PRODUCT_FAILURE, CREATE_PRODUCT_REQUEST, CREATE_PRODUCT_SUCCESS, GET_PRODUCTS_FAILURE, GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS } from "../actions/productActions";
+import { addCategoryApi, addProductApi_, createProductApi, getProductsApi } from "../../api";
+import { ADD_PRODUCT_CATEGORY_FAILURE, ADD_PRODUCT_CATEGORY_REQUEST, ADD_PRODUCT_CATEGORY_SUCCESS, CREATE_PRODUCT_FAILURE, CREATE_PRODUCT_FAILURE_, CREATE_PRODUCT_REQUEST, CREATE_PRODUCT_REQUEST_, CREATE_PRODUCT_SUCCESS, CREATE_PRODUCT_SUCCESS_, GET_PRODUCTS_FAILURE, GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS } from "../actions/productActions";
+import { SET_PRODUCT_VED } from "../actions/settingsActions";
 // import { SET_PRODUCT_VED } from "../actions/settingsActions";
 
 // Worker Saga: Create Product
@@ -13,6 +14,19 @@ function* createProductRequest(action) {
   } catch (error) {
     const payload = error.response?.data?.message || "Failed to Create Product";
     yield put({ type: CREATE_PRODUCT_FAILURE, payload });
+  }
+}
+
+// New
+// Worker Saga: Add Product
+function* addProductRequest(action) {
+  try {
+    const { products: payload } = yield call(addProductApi_, action.payload);
+    yield put({ type: CREATE_PRODUCT_SUCCESS_, payload });
+    yield put({ type: SET_PRODUCT_VED, payload: "" });
+  } catch (error) {
+    const payload = error.response?.data?.message || "Failed to Fetch User";
+    yield put({ type: CREATE_PRODUCT_FAILURE_, payload });
   }
 }
 
@@ -43,5 +57,6 @@ function* addCategoryRequest(action) {
 export function* productSaga() {
   yield takeLatest(CREATE_PRODUCT_REQUEST, createProductRequest);
   yield takeLatest(GET_PRODUCTS_REQUEST, getProductsRequest);
+  yield takeLatest(CREATE_PRODUCT_REQUEST_, addProductRequest);
   yield takeLatest(ADD_PRODUCT_CATEGORY_REQUEST, addCategoryRequest);
 }

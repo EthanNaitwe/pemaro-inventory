@@ -5,14 +5,14 @@ import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from "yup";
 import plus from '../../assets/img/icons/plus.svg';
-import { dataPaginationFn, dateRangeOptions } from '../../config/helpers/dataHelpers';
-import { getSalesRequest, setSalesPageNo, setSalesToDisplay, setShowSalesGrid } from '../../config/store/actions/saleActions';
-import WithDataLoader from '../common/loaders/WithDataLoader';
+import { dataPaginationFn, filterSales } from '../../config/helpers/dataHelpers';
+import { getSalesRequest, setSalesPageNo, setShowSalesGrid } from '../../config/store/actions/saleActions';
 import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DateTime } from 'luxon';
 import { useForm } from 'react-hook-form';
+import TabMenu from '../common/TabMenu';
 import AddSalesGrid from './AddSalesGrid';
 
 const SalesList = () => {
@@ -21,14 +21,6 @@ const SalesList = () => {
     const { authUser, allUsers } = useSelector((state) => state.users);
 
     const [pageItems, setPageItems] = useState(9);
-
-    const formatUsersOptions = (users) => {
-        const options = users.filter((_user) => _user.role === "Stuff").map((user) => ({
-            label: `${user.surname} ${user.other_names}`,
-            value: user.id,
-        }));
-        return [{ value: "all", label: "All Stuff" }, ...options];
-    };
 
     let now = DateTime.local();
 
@@ -61,27 +53,40 @@ const SalesList = () => {
     // Filter users based on authUser.role
     const allSales = _allSales.filter((item) => {
         if (authUser.role === 'Stuff') {
-            return item.user_id_id === authUser.id; // Return only my sales if my role is 'Stuff'
+            return item.user_id === authUser.id; // Return only my sales if my role is 'Stuff'
         }
         return true; // Return all sales for other roles
     });
-
-    const filteredItems = useMemo(() => {
-        if (watchDateRange === 'all' && watchUser === 'all') return allSales;
-        if (watchDateRange === 'all' && watchUser !== 'all') return allSales.filter(item => item.user_id === watchUser);
-        if (watchDateRange === 'today' && watchUser === 'all') return allSales.filter(item => item.date === dateToday);
-        if (watchDateRange === 'today' && watchUser !== 'all') return allSales.filter(item => item.date === dateToday && item.user_id === watchUser);
-        if (watchDateRange === 'yesterday' && watchUser === 'all') return allSales.filter(item => item.date === dateYesterday);
-        if (watchDateRange === 'yesterday' && watchUser !== 'all') return allSales.filter(item => item.date === dateYesterday && item.user_id === watchUser);
-    }, [_allSales, watchDateRange, watchUser, dateToday, dateYesterday]);
 
     useEffect(() => {
         dispatch(getSalesRequest());
     }, []);
 
-    useEffect(() => {
-        dispatch(setSalesToDisplay(filteredItems));
-    }, [filteredItems]);
+    const formatUsersOptions = (users) => {
+        const options = users.filter((_user) => _user.role === "Stuff").map((user) => ({
+            label: `${user.surname}`,
+            value: user.id,
+        }));
+        return [{ value: "all-stuff", label: "All Stuff" }, ...options];
+    };
+
+    const tabs = formatUsersOptions(allUsers);
+    const [activeTab, setActiveTab] = useState('all-stuff');
+    const [activeTime, setActiveTime] = useState('all-sales');
+
+    const filteredSales = useMemo(() => filterSales(_allSales, activeTab, activeTime), [
+        _allSales,
+        activeTab,
+        activeTime,
+        dateToday,
+        dateYesterday
+    ]);
+
+    const dateTimes = useMemo(() => ([
+        { label: 'All Sales', value: 'all-sales' },
+        { label: 'Today', value: dateToday },
+        { label: 'Yesterday', value: dateYesterday }
+    ]), [dateToday, dateYesterday]);
 
     return (
         <div>
@@ -104,48 +109,36 @@ const SalesList = () => {
                             </div>
                         </div>
 
-                        <div className='card'>
+                        <div className='card p-2'>
                             {/* {showSalesGrid && <AddSalesForm />} */}
                             {showSalesGrid && <AddSalesGrid />}
-                            {!isEmpty(_allSales) && loading && <WithDataLoader />}
+                            {!showSalesGrid && <div>
+                                <TabMenu
+                                    fill
+                                    tabs={tabs}
+                                    activeTab={activeTab}
+                                    onTabChange={setActiveTab}
+                                />
+                                <nav className="nav nav-pills nav-justified mt-3 sales-times">
+                                    {dateTimes.map((item) => (
+                                        <div
+                                            key={item.value}
+                                            className={`nav-item nav-link actmive rounded-0 ${item.value === activeTime ? "active" : ""}`}
+                                            onClick={() => setActiveTime(item.value)}
+                                        >{item.label}</div>
+                                    ))
+                                    }
+                                </nav>
+                            </div>}
+                            {/* {!isEmpty(_allSales) && loading && <WithDataLoader />} */}
                             <div className="card-body">
-                                {!showSalesGrid && !isEmpty(_allSales) && <div className="row">
-                                    <div className="date-range-border col-lg-3 col-sm-6 col-12"></div>
-                                    <div className='date-range col-lg-3 col-sm-6 col-12'>
-                                        <div className='form-group'>
-                                            <select className='form-select' style={{ lineHeight: '1.2rem', padding: '0.25rem 0.5rem' }} {...register("date_range")}
-                                                aria-invalid={errors.date_range ? "true" : "false"} >
-                                                {dateRangeOptions.map((item) => (
-                                                    <option
-                                                        key={item.value}
-                                                        value={item.value}>
-                                                        {item.label === "All" ? "All Sales" : item.label}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            <p>{errors.date_range?.message && "This field is required"}</p>
-                                        </div>
-                                    </div>
-                                    <div className='date-range col-lg-3 col-sm-6 col-12'>
-                                        <div className='form-group'>
-                                            <select className='form-select' style={{ lineHeight: '1.2rem', padding: '0.25rem 0.5rem' }} {...register("stuff")}
-                                                aria-invalid={errors.stuff ? "true" : "false"} >
-                                                {formatUsersOptions(allUsers).map((item) => (
-                                                    <option
-                                                        key={item.value}
-                                                        value={item.value}>
-                                                        {item.label === "All" ? "All Sales" : item.label}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            <p>{errors.stuff?.message && "This field is required"}</p>
-                                        </div>
-                                    </div>
+
+                                {!showSalesGrid && !isEmpty(filteredSales) && <div className="row">
                                     <div className="date-range-border col-lg-3 col-sm-6 col-12"></div>
                                 </div>}
-                                {isEmpty(salesToDisplay) && !loading && <Empty />}
-                                {!showSalesGrid && isEmpty(salesToDisplay) && loading && <WithNoDataLoader />}
-                                {!showSalesGrid && !isEmpty(salesToDisplay) &&
+                                {isEmpty(filteredSales) && !loading && <Empty />}
+                                {!showSalesGrid && isEmpty(filteredSales) && loading && <WithNoDataLoader />}
+                                {!showSalesGrid && !isEmpty(filteredSales) &&
                                     <div className='table-responsive'>
                                         <table className='table  datanew'>
                                             <thead>
@@ -165,7 +158,15 @@ const SalesList = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {dataPaginationFn(orderBy(salesToDisplay, ['date'], ['desc']), pageItems, salesPageNo).map((sale, i) => {
+                                                {dataPaginationFn(
+                                                    orderBy(
+                                                        filteredSales,
+                                                        [(sale) => DateTime.fromFormat(sale.date, 'dd/MM/yyyy').toMillis()], // Convert to milliseconds for proper comparison
+                                                        ['desc'] // Sort in descending order
+                                                    ),
+                                                    pageItems,
+                                                    salesPageNo
+                                                ).map((sale, i) => {
                                                     return (
                                                         <tr key={i}>
                                                             <td>
@@ -174,19 +175,19 @@ const SalesList = () => {
                                                                     <span className='checkmarks'></span>
                                                                 </label>
                                                             </td>
-                                                            <td>{`${sale.artNumber.artNumber}: ${sale.artNumber.name}`}</td>
+                                                            <td>{`${sale.artNumber.artNumber}: ${sale.artNumber.name.split(":")[1] || sale.artNumber.name}`}</td>
                                                             <td><span className={`badges ${sale.payment === 'Paid' ? 'bg-lightgreen' : 'bg-lightred'}`}>{sale.payment}</span></td>
                                                             <td>{sale.quantity}</td>
                                                             <td>{parseInt(sale.amount, 10).toLocaleString()}</td>
                                                             <td>{parseInt(sale.amount * sale.quantity, 10).toLocaleString()}</td>
                                                             <td>{sale.date}</td>
                                                         </tr>
-                                                    )
+                                                    );
                                                 })}
                                             </tbody>
                                         </table>
                                         <div className='my-2'>
-                                            <Pagination onChange={onPagination} responsive hideOnSinglePage align="center" defaultCurrent={salesPageNo} total={salesToDisplay.length} />
+                                            <Pagination onChange={onPagination} responsive hideOnSinglePage align="center" defaultCurrent={salesPageNo} total={filteredSales.length} />
                                         </div>
                                     </div>
                                 }
@@ -257,7 +258,7 @@ const SalesList = () => {
                                     <div className='form-group'>
                                         <label>Customer</label>
                                         <div className='input-groupicon'>
-                                            <input type='text' value='2022-03-07' className='datetimepicker' />
+                                            {/* <input type='text' value='2022-03-07' className='datetimepicker' /> */}
                                             <div className='addonset'>
                                                 <img src='assets/img/icons/calendars.svg' alt='img' />
                                             </div>
@@ -267,19 +268,19 @@ const SalesList = () => {
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Reference</label>
-                                        <input type='text' value='INV/SL0101' />
+                                        {/* <input type='text' value='INV/SL0101' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Received Amount</label>
-                                        <input type='text' value='0.00' />
+                                        {/* <input type='text' value='0.00' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Paying Amount</label>
-                                        <input type='text' value='0.00' />
+                                        {/* <input type='text' value='0.00' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
@@ -322,7 +323,7 @@ const SalesList = () => {
                                     <div className='form-group'>
                                         <label>Customer</label>
                                         <div className='input-groupicon'>
-                                            <input type='text' value='2022-03-07' className='datetimepicker' />
+                                            {/* <input type='text' value='2022-03-07' className='datetimepicker' /> */}
                                             <div className='addonset'>
                                                 <img src='assets/img/icons/datepicker.svg' alt='img' />
                                             </div>
@@ -332,19 +333,19 @@ const SalesList = () => {
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Reference</label>
-                                        <input type='text' value='INV/SL0101' />
+                                        {/* <input type='text' value='INV/SL0101' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Received Amount</label>
-                                        <input type='text' value='0.00' />
+                                        {/* <input type='text' value='0.00' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
                                     <div className='form-group'>
                                         <label>Paying Amount</label>
-                                        <input type='text' value='0.00' />
+                                        {/* <input type='text' value='0.00' /> */}
                                     </div>
                                 </div>
                                 <div className='col-lg-6 col-sm-12 col-12'>
