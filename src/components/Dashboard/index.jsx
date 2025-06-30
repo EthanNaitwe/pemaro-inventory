@@ -76,7 +76,7 @@ const Dashboard = () => {
                         </div>
                     </div>
                     <div className="date-range-border col-lg-4 col-sm-6 col-12"></div> */}
-                    {/* <div className="col-lg-3 col-sm-6 col-12">
+                    <div className="col-lg-3 col-sm-6 col-12">
                         <div className="dash-widget">
                             <div className="dash-widgetimg">
                                 <span>
@@ -127,7 +127,7 @@ const Dashboard = () => {
                                 <h6>Monthly Expenses</h6>
                             </div>
                         </div>
-                    </div> */}
+                    </div>
                     <MethodsReport title="Payment Methods' Report" />
                     <TopSalesReport title="Top Sales Report" />
                     <BottomSalesReport title="Bottom Sales Report" />
