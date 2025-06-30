@@ -91,15 +91,15 @@ const NotificationsCard = ({ title }) => {
                                 </tr>
                                 <tr>
                                     <td>Business Name</td>
-                                    <td>DINE & WINE</td>
+                                    <td>{storeName}</td>
                                 </tr>
                                 <tr>
                                     <td>Address 1</td>
-                                    <td>Ntinda - Kiwatule Road</td>
+                                    <td>{address1}</td>
                                 </tr>
                                 <tr>
                                     <td>Address 2</td>
-                                    <td>Kiwatule</td>
+                                    <td>{address2}</td>
                                 </tr>
                             </tbody>
                         </table>

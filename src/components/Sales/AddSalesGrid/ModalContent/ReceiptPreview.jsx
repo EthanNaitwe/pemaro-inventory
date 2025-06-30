@@ -51,13 +51,13 @@ const ReceiptPreview = () => {
             className="font-bold text-base mb-1"
             style={{ fontSize: "1rem" }}
           >
-            {receiptData.storeName}
+            {receiptData.storeName || "DINE & WINE"}
           </div>
           <div className="text-xs" style={{ color: "#757575" }}>
-            {address1}
+            {address1 || "Ntinda - Kiwatule Road"}
           </div>
           <div className="text-xs" style={{ color: "#757575" }}>
-            {address2}
+            {address2 || "Kiwatule"}
           </div>
         </div>
 
