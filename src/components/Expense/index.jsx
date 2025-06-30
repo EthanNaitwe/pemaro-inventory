@@ -11,7 +11,6 @@ import plus from '../../assets/img/icons/plus.svg';
 import { dataPaginationFn } from "../../config/helpers/dataHelpers";
 import { getAllExpenses, setExpensesToDisplay, setShowCreateForm } from "../../config/store/actions/expenseActions";
 import { setProductsPageNo } from "../../config/store/actions/productActions";
-import WithDataLoader from "../common/loaders/WithDataLoader";
 import WithNoDataLoader from "../common/loaders/WithNoDataLoader";
 import AddExpenseForm from "./AddExpenseForm";
 
@@ -98,7 +97,7 @@ const Expense = () => {
 
                 <div className="card">
                     {showCreateForm && <AddExpenseForm />}
-                    {!isEmpty(expensesToDisplay) && loading && <WithDataLoader />}
+                    {/* {!isEmpty(expensesToDisplay) && loading && <WithDataLoader />} */}
                     <div className="card-body">
                         {isEmpty(expensesToDisplay) && !loading && <Empty />}
                         {isEmpty(expensesToDisplay) && loading && <WithNoDataLoader />}

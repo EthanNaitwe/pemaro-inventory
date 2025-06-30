@@ -1,15 +1,23 @@
+import { isEmpty } from 'lodash';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import smallLogo from '../../assets/img/logo-small.png';
-import logo from '../../assets/img/nile-suites-logo.png';
+import defaultImg from '../../assets/img/customer/default.png';
 import customer1 from '../../assets/img/customer/customer1.jpg';
 import customer5 from '../../assets/img/customer/customer5.jpg';
+import smallLogo from '../../assets/img/logo-small.png';
+import logo from '../../assets/img/nile-suites-logo.png';
 import { menu as _menu } from '../../config/helpers/menuHelper';
-import { setProductVED, setSaleVED, setSelectedSidebarMenu } from '../../config/store/actions/settingsActions';
+import { logoutUser, setProductVED, setSaleVED, setSelectedSidebarMenu } from '../../config/store/actions/settingsActions';
+import { getProfile } from '../../config/store/actions/userActions';
 
 const SideBarMenu = () => {
     const dispatch = useDispatch();
     const { selectedSidebarMenu } = useSelector((state) => state.settings);
     const { authUser } = useSelector((state) => state.users);
+
+    useEffect(() => {
+        if (isEmpty(authUser)) dispatch(getProfile());
+    }, []);
 
     const sidebarMenuClick1 = () => {
         dispatch(setSelectedSidebarMenu('index'))
@@ -29,6 +37,18 @@ const SideBarMenu = () => {
         }
         return item;
     });
+
+    const [showProfileMenu, setShowProfileMenu] = useState(false);
+
+    useEffect(() => {
+        if (showProfileMenu) {
+            const timer = setTimeout(() => setShowProfileMenu(false), 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [showProfileMenu]);
+
+    const onClickProfile = () => setShowProfileMenu((prev) => !prev);
+    const onLogout = () => dispatch(logoutUser());
 
     return (
         <>
@@ -55,15 +75,36 @@ const SideBarMenu = () => {
                                     </div>
                                 </li>
                             ))}
-                            <li
-                                className="sidebar-menu-item"
-                                style={{ marginTop: 'auto' }}
-                            >
-                                <div className="text-center rounded bg-light p-3 mb-3 border no-hover">
-                                    <div className="avatar avatar-lg online mb-3">
-                                        <img src={authUser.gender === 'Male' ? customer5 : customer1} alt='' />
+                            <li className="sidebar-menu-item" style={{ position: 'relative' }}>
+                                <div
+                                    onClick={onClickProfile}
+                                    className="text-center rounded bg-light p-3 mb-1 border d-flex flex-column align-items-center"
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <div className="avatar avatar-lg online mb-2">
+                                        {isEmpty(authUser) ? <img src={defaultImg} className='no-hover' alt='' /> :
+                                            <img src={authUser.gender === 'Male' ? customer5 : customer1} className='no-hover' alt='' />}
                                     </div>
-                                    <span className="fs-12 fw-bold mb-1 no-hover">Adrian Herman</span>
+                                    <span className="fs-12 fw-bold no-hover">{!isEmpty(authUser) ? authUser.surname : "Loading..."}</span>
+                                </div>
+                                {/* Profile Sub-menu */}
+                                <div
+                                    className={`profile-sub-menu${showProfileMenu ? ' show' : ''}`}
+                                    style={{
+                                        position: 'absolute',
+                                        left: '50%',
+                                        top: '100%',
+                                        transform: 'translateX(-50%)',
+                                        boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                                        opacity: showProfileMenu ? 1 : 0,
+                                        pointerEvents: showProfileMenu ? 'auto' : 'none',
+                                        transition: 'opacity 0.2s, transform 0.2s',
+                                        zIndex: 10,
+                                    }}
+                                >
+                                    <ul className="list-unstyled mb-0 py-2 px-2">
+                                        <li onClick={() => onLogout()} className="py-1 px-2 hover-bg" style={{ cursor: 'pointer' }}>Logout</li>
+                                    </ul>
                                 </div>
                             </li>
                         </ul>

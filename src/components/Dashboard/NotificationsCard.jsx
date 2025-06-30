@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 const NotificationsCard = ({ title }) => {
     const { allSales } = useSelector((state) => state.sales);
 
-    const { systemSettings: { showAddProduct, storeName, address1, address2 } } = useSelector((state) => state.settings);
+    const { systemSettings: { showAddProduct, showEditProduct, storeName, address1, address2 } } = useSelector((state) => state.settings);
 
     const grouped = groupBy(allSales, 'product_id');
 
@@ -22,7 +22,7 @@ const NotificationsCard = ({ title }) => {
     arr.sort((a, b) => Object.values(b)[0] - Object.values(a)[0]);
 
     const { control } = useForm({
-        defaultValues: { showAddProduct },
+        defaultValues: { showAddProduct, showEditProduct },
     });
 
     return (
@@ -42,7 +42,7 @@ const NotificationsCard = ({ title }) => {
                         <table className="table datatable">
                             <tbody>
                                 <tr>
-                                    <td>Show Add Product</td>
+                                    <td>Can Add Products</td>
                                     <td>
                                         <Controller
                                             name="showAddProduct"
@@ -55,6 +55,30 @@ const NotificationsCard = ({ title }) => {
                                                         id="flexSwitchCheckChecked"
                                                         disabled
                                                         checked={showAddProduct}
+                                                        onChange={e => {
+                                                            field.onChange(e.target.checked);
+                                                            // dispatch(setShowAddProduct(e.target.checked));
+                                                        }}
+                                                    />
+                                                </div>
+                                            )}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Can Edit Products</td>
+                                    <td>
+                                        <Controller
+                                            name="showEditProduct"
+                                            control={control}
+                                            render={({ field }) => (
+                                                <div className="form-check form-switch">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type="checkbox"
+                                                        id="flexSwitchCheckChecked"
+                                                        disabled
+                                                        checked={showEditProduct}
                                                         onChange={e => {
                                                             field.onChange(e.target.checked);
                                                             // dispatch(setShowAddProduct(e.target.checked));

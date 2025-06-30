@@ -6,9 +6,8 @@ import deleteImg from '../../assets/img/icons/delete.svg';
 import edit from '../../assets/img/icons/edit.svg';
 import printer from '../../assets/img/icons/printer.svg';
 import { getSettings } from '../../config/store/actions/settingsActions';
-import NotificationsCard from '../Dashboard/NotificationsCard';
-import { isEmpty } from 'lodash';
 import ChangePassword from '../Dashboard/ChangePassword';
+import NotificationsCard from '../Dashboard/NotificationsCard';
 import TabMenu from '../common/TabMenu';
 
 const SettingsHome = () => {
@@ -17,7 +16,7 @@ const SettingsHome = () => {
     const { systemSettings } = useSelector((state) => state.settings);
 
     useEffect(() => {
-        isEmpty(systemSettings) && dispatch(getSettings());
+        dispatch(getSettings());
     }, []);
 
     const tabs = [

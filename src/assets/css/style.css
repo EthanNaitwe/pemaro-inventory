@@ -1392,7 +1392,7 @@ div#global-loader,
   width: 34px;
   position: relative;
   white-space: nowrap;
-  margin: 0 10px 0 0;
+  /* margin: 0 10px 0 0; */
   border-radius: 50%;
 }
 
@@ -4584,7 +4584,7 @@ span.select2-container.select2-container--default.select2-container--open {
   color: #fff;
 }
 
-.sidebar .sidebar-menu>ul>li>div {
+.sidebar .sidebar-menu>ul>li>div:not(.profile-sub-menu) {
   padding: 10px 15px;
   position: relative;
   color: #212B36;
@@ -4596,17 +4596,21 @@ span.select2-container.select2-container--default.select2-container--open {
 }
 
 .sidebar .sidebar-menu>ul>li>div img {
-  width: 18px;
   color: #637381;
 }
 
-.sidebar .sidebar-menu>ul>li>div:hover {
+.sidebar .sidebar-menu>ul>li>div:not(.profile-sub-menu):hover {
   background: #1B2850;
   color: #fff;
   border-radius: 5px;
 }
 
-.sidebar .sidebar-menu>ul>li>div:hover img {
+.profile-sub-menu:hover {
+  color: #FF0000;
+  padding-bottom: 2px;
+}
+
+.sidebar .sidebar-menu>ul>li>div:hover img:not(.no-hover) {
   filter: brightness(0) invert(1);
 }
 
@@ -4636,8 +4640,11 @@ span.select2-container.select2-container--default.select2-container--open {
   color: #fff;
 }
 
-.sidebar .sidebar-menu>ul>li>div span {
+.sidebar .sidebar-menu>ul>li>div span:not(.no-hover) {
   margin-left: 10px;
+}
+
+.sidebar .sidebar-menu>ul>li>div span {
   font-size: 15px;
   font-weight: 500;
   color: #637381;

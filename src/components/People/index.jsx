@@ -3,15 +3,12 @@ import { Empty } from 'antd';
 import { isEmpty } from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import customer1 from '../../assets/img/customer/customer1.jpg';
-import customer5 from '../../assets/img/customer/customer5.jpg';
 import datepicker from '../../assets/img/icons/datepicker.svg';
 import deleteImg from '../../assets/img/icons/delete.svg';
 import edit from '../../assets/img/icons/edit.svg';
 import printer from '../../assets/img/icons/printer.svg';
 import search from '../../assets/img/icons/search-whites.svg';
 import { getAllUsers } from '../../config/store/actions/userActions';
-import WithDataLoader from '../common/loaders/WithDataLoader';
 import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
 
 const PeopleList = () => {
@@ -42,7 +39,7 @@ const PeopleList = () => {
                         </div>
                     </div>
                     <div className='card'>
-                        {!isEmpty(allUsers) && gettingUsers && <WithDataLoader />}
+                        {/* {!isEmpty(allUsers) && gettingUsers && <WithDataLoader />} */}
                         <div className='card-body'>
                             {isEmpty(allUsers) && !gettingUsers && <Empty />}
                             <div className='card' id='filter_inputs'>
@@ -81,15 +78,9 @@ const PeopleList = () => {
                             {isEmpty(allUsers) && gettingUsers && <WithNoDataLoader />}
                             {!isEmpty(allUsers) &&
                                 <div className='table-responsive'>
-                                    <table className='table  datanew'>
+                                    <table className='table datanew'>
                                         <thead>
                                             <tr>
-                                                <th>
-                                                    <label className='checkboxs'>
-                                                        <input type='checkbox' id='select-all' />
-                                                        <span className='checkmarks'></span>
-                                                    </label>
-                                                </th>
                                                 <th>User Name</th>
                                                 <th>Email</th>
                                                 <th>Gender</th>
@@ -103,18 +94,7 @@ const PeopleList = () => {
                                                 .filter(item => item.role !== 'Support')
                                                 .map((item, i) => (
                                                     <tr key={i}>
-                                                        <td>
-                                                            <label className='checkboxs'>
-                                                                <input type='checkbox' />
-                                                                <span className='checkmarks'></span>
-                                                            </label>
-                                                        </td>
-                                                        <td className='productimgname'>
-                                                            <span className='product-img'>
-                                                                <img src={item.gender === 'Male' ? customer5 : customer1} alt='people' />
-                                                            </span>
-                                                            <span>{`${item.surname} ${item.other_names}`}</span>
-                                                        </td>
+                                                        <td>{`${item.surname} ${item.other_names}`}</td>
                                                         <td>{item.email}</td>
                                                         <td>{item.gender}</td>
                                                         <td>{item.phone_number}</td>

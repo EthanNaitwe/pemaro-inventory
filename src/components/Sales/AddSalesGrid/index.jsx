@@ -2,7 +2,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Empty, Modal, Radio } from "antd";
 import { isEmpty, lowerCase } from "lodash";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
@@ -23,7 +23,6 @@ import {
   setShowPayModal,
 } from "../../../config/store/actions/saleActions";
 import PaymentType from "./ModalContent/PaymentType";
-import { useState } from "react";
 import ReceiptPreview from "./ModalContent/ReceiptPreview";
 // import { setSaleBtnText } from "../../../config/store/actions/settingsActions";
 
@@ -250,11 +249,10 @@ const AddSalesGrid = () => {
               <>
                 <div
                   key={i}
-                  className={`btn-category badges ${
-                    selectedSaleCategory === item.value
+                  className={`btn-category badges ${selectedSaleCategory === item.value
                       ? "btn-category-focus"
                       : "btn-category-unfocus"
-                  }`}
+                    }`}
                   onClick={() => dispatch(setSelectedSaleCategory(item.value))}
                 >
                   {item.label}
@@ -328,7 +326,7 @@ const AddSalesGrid = () => {
                   );
                 })}
                 {sumSalesSubTotal(allProducts, clickCounts) > 0 && (
-                  <>
+                  <tr>
                     <td className="td-sales"></td>
                     <td className="td-sales" style={{ textAlign: "right" }}>
                       Total:
@@ -345,7 +343,7 @@ const AddSalesGrid = () => {
                         Add Sales
                       </div>
                     </td>
-                  </>
+                  </tr>
                 )}
               </tbody>
             </table>

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as yup from "yup";
 import plus from '../../assets/img/icons/plus.svg';
 import { dataPaginationFn, filterSales } from '../../config/helpers/dataHelpers';
-import { getSalesRequest, setSalesPageNo, setSalesToDisplay, setShowSalesGrid } from '../../config/store/actions/saleActions';
+import { getSalesRequest, setSalesPageNo, setShowSalesGrid } from '../../config/store/actions/saleActions';
 import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -112,22 +112,24 @@ const SalesList = () => {
                         <div className='card p-2'>
                             {/* {showSalesGrid && <AddSalesForm />} */}
                             {showSalesGrid && <AddSalesGrid />}
-                            <TabMenu
-                                fill
-                                tabs={tabs}
-                                activeTab={activeTab}
-                                onTabChange={setActiveTab}
-                            />
-                            <nav className="nav nav-pills nav-justified mt-3 sales-times">
-                                {dateTimes.map((item) => (
-                                    <div
-                                        key={item.value}
-                                        className={`nav-item nav-link actmive rounded-0 ${item.value === activeTime ? "active" : ""}`}
-                                        onClick={() => setActiveTime(item.value)}
-                                    >{item.label}</div>
-                                ))
-                                }
-                            </nav>
+                            {!showSalesGrid && <div>
+                                <TabMenu
+                                    fill
+                                    tabs={tabs}
+                                    activeTab={activeTab}
+                                    onTabChange={setActiveTab}
+                                />
+                                <nav className="nav nav-pills nav-justified mt-3 sales-times">
+                                    {dateTimes.map((item) => (
+                                        <div
+                                            key={item.value}
+                                            className={`nav-item nav-link actmive rounded-0 ${item.value === activeTime ? "active" : ""}`}
+                                            onClick={() => setActiveTime(item.value)}
+                                        >{item.label}</div>
+                                    ))
+                                    }
+                                </nav>
+                            </div>}
                             {/* {!isEmpty(_allSales) && loading && <WithDataLoader />} */}
                             <div className="card-body">
 

@@ -8,13 +8,13 @@ import { dataPaginationFn } from '../../config/helpers/dataHelpers';
 import { getProductsRequest, setProductsPageNo, setSingleProduct } from '../../config/store/actions/productActions';
 import { getSettings, setProductVED } from '../../config/store/actions/settingsActions';
 import { getAllUsers } from '../../config/store/actions/userActions';
-import WithDataLoader from '../common/loaders/WithDataLoader';
 import WithNoDataLoader from '../common/loaders/WithNoDataLoader';
 
 const ProductsList = () => {
     const dispatch = useDispatch();
+    const { allUsers } = useSelector((state) => state.users);
     const { allProducts, loading, productsPageNo } = useSelector((state) => state.products);
-    const { systemSettings: { showAddProduct } } = useSelector((state) => state.settings);
+    const { systemSettings, systemSettings: { showAddProduct } } = useSelector((state) => state.settings);
 
     const [pageItems] = useState(10);
 
@@ -22,8 +22,8 @@ const ProductsList = () => {
 
     useEffect(() => {
         dispatch(getProductsRequest());
-        dispatch(getAllUsers());
-        dispatch(getSettings());
+        if (isEmpty(allUsers)) dispatch(getAllUsers());
+        if (isEmpty(systemSettings)) dispatch(getSettings());
     }, []);
 
     return (
@@ -46,13 +46,13 @@ const ProductsList = () => {
                 </div>
 
                 <div className='card'>
-                    {!isEmpty(allProducts) && loading && <WithDataLoader />}
+                    {/* {!isEmpty(allProducts) && loading && <WithDataLoader />} */}
                     <div className='card-body'>
                         {isEmpty(allProducts) && !loading && <Empty />}
                         {isEmpty(allProducts) && loading && <WithNoDataLoader />}
                         {!isEmpty(allProducts) &&
                             <div className='table-responsive'>
-                                <table className='table  datanew'>
+                                <table className='table datanew'>
                                     <thead>
                                         <tr>
                                             <th>S/N</th>
